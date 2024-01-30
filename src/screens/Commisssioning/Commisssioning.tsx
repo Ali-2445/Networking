@@ -93,7 +93,10 @@ const Commisssioning: React.FC<ApplicationScreenProps> = ({ navigation }) => {
             <Text style={[fonts.size_13, fonts[600], fonts.typography]}>
               {item}
             </Text>
-            <View style={{ transform: [{ rotate: "180deg" }] }}>
+            <View>
+              <View style={{ transform: [{ rotate: "180deg" }] }}>
+                <DropdownOutline />
+              </View>
               <DropdownOutline />
             </View>
           </TouchableOpacity>
