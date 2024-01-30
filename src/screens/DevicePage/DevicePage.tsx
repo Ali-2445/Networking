@@ -22,6 +22,9 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
     },
   });
 
+  if (isSuccess) {
+    console.log("Success");
+  }
   return (
     <SafeScreen>
       <View style={[layout.flex_1, backgrounds.offWhite]}>
