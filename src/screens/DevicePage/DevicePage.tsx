@@ -10,21 +10,20 @@ import { calculateHeight, calculateWidth } from "@/theme/utils";
 // import SPU from "@/theme/assets/svgs/SPU";
 import SPU from "@/theme/assets/images/SPU.png";
 import { useQuery } from "@tanstack/react-query";
+import { getDevices } from "@/services/Device";
 
 function DevicePage({ navigation }: ApplicationScreenProps) {
   const { layout, gutters, fonts, backgrounds, colors } = useTheme();
   const { t } = useTranslation(["startup"]);
 
+  var token = "";
   const { isSuccess, isFetching, isError } = useQuery({
-    queryKey: ["startup"],
+    queryKey: ["Devices", token],
     queryFn: () => {
-      return Promise.resolve(true);
+      return getDevices(token);
     },
   });
 
-  if (isSuccess) {
-    console.log("Success");
-  }
   return (
     <SafeScreen>
       <View style={[layout.flex_1, backgrounds.offWhite]}>

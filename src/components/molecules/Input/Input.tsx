@@ -23,6 +23,8 @@ interface CustomInputProps {
   phoneVerification?: boolean;
   iconLeft?: any;
   containerStyles?: any;
+  onChnageText?: (text: string) => void;
+  localValue?: string;
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
@@ -32,6 +34,8 @@ const CustomInput: React.FC<CustomInputProps> = ({
   phoneVerification,
   iconLeft,
   containerStyles,
+  onChnageText,
+  localValue,
 }) => {
   const { colors, backgrounds, fonts } = useTheme();
   const [value, setValue] = useState("");
@@ -46,8 +50,11 @@ const CustomInput: React.FC<CustomInputProps> = ({
         <CodeField
           ref={ref}
           {...propss}
-          value={value}
-          onChangeText={setValue}
+          value={value || localValue}
+          onChangeText={(value) => {
+            setValue(value);
+            onChnageText(value);
+          }}
           cellCount={6}
           rootStyle={styles.codeFieldRoot}
           keyboardType="number-pad"
@@ -91,7 +98,13 @@ const CustomInput: React.FC<CustomInputProps> = ({
             ]}
           >
             {iconLeft && <>{iconLeft}</>}
-            <TextInput style={[styles.input, fonts.size_16]} />
+            <TextInput
+              style={[styles.input, fonts.size_16]}
+              onChangeText={(value) => {
+                setValue(value);
+                onChnageText(value);
+              }}
+            />
             {icon && (
               <TouchableOpacity
                 onPress={onIconPress}

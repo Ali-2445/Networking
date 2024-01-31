@@ -93,12 +93,14 @@ const Commisssioning: React.FC<ApplicationScreenProps> = ({ navigation }) => {
             <Text style={[fonts.size_13, fonts[600], fonts.typography]}>
               {item}
             </Text>
-            <View>
-              <View style={{ transform: [{ rotate: "180deg" }] }}>
+            {item != "INFO" && (
+              <View>
+                <View style={{ transform: [{ rotate: "180deg" }] }}>
+                  <DropdownOutline />
+                </View>
                 <DropdownOutline />
               </View>
-              <DropdownOutline />
-            </View>
+            )}
           </TouchableOpacity>
         ))}
       </View>
@@ -111,7 +113,7 @@ const Commisssioning: React.FC<ApplicationScreenProps> = ({ navigation }) => {
     onRowSelection: any
   ) => {
     return (
-      <View style={[styles.customRow, backgrounds.white]}>
+      <View style={[styles.customHeader, backgrounds.white]}>
         {Object.keys(rowData).map((item, index) => (
           <>
             {item != "id" && (

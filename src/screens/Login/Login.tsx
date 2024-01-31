@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dimensions, Image, Text, View } from "react-native";
+import { Alert, Dimensions, Image, Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
 
 import { useTheme } from "@/theme";
@@ -14,18 +14,22 @@ import { Input } from "@/components/molecules";
 import EyeSlash from "@/theme/assets/svgs/EyeSlash";
 import CheckBox from "@react-native-community/checkbox";
 import { useQuery } from "@tanstack/react-query";
+import { signin } from "@/services/users/Signin";
 
 function Login({ navigation }: ApplicationScreenProps) {
   const { layout, gutters, fonts, backgrounds, colors } = useTheme();
   const { t } = useTranslation(["startup"]);
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const { isSuccess, isFetching, isError } = useQuery({
-    queryKey: ["startup"],
-    queryFn: () => {
-      return Promise.resolve(true);
-    },
-  });
+  const signinUser = async (email: string, password: string) => {
+    if (!email || !password) {
+      Alert.alert("Please enter email and password");
+      return;
+    }
+    await signin(email, password);
+  };
   return (
     <SafeScreen>
       <View style={[layout.flex_1, backgrounds.offWhite]}>
@@ -56,10 +60,15 @@ function Login({ navigation }: ApplicationScreenProps) {
             Please sign in to your account
           </Text>
           <View style={[gutters.marginTop_16]} />
-          <Input title="Email" />
+          <Input title="Email" onChnageText={setEmail} localValue={email} />
           <View style={[gutters.marginTop_16]} />
 
-          <Input title="Password" icon={<EyeSlash />} />
+          <Input
+            title="Password"
+            icon={<EyeSlash />}
+            onChnageText={setPassword}
+            localValue={password}
+          />
           <View
             style={[
               layout.row,
@@ -90,7 +99,11 @@ function Login({ navigation }: ApplicationScreenProps) {
           </View>
           <Button
             text="Sign in"
-            onPress={() => navigation.navigate("TwoFactor")}
+            onPress={() => {
+              // navigation.navigate("TwoFactor")
+
+              signinUser(email, password);
+            }}
             containerStyle={[
               { width: calculateWidth(430), borderRadius: calculateWidth(6) },
               gutters.paddingVertical_10,
