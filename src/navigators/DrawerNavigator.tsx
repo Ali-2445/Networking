@@ -276,6 +276,7 @@ const DrawerNavigator = () => {
           </TouchableOpacity>
         </DrawerContentScrollView>
       )}
+      initialRouteName="DevicePage"
     >
       <Drawer.Screen
         name="Dashboard"

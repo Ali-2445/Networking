@@ -6,3 +6,4 @@ export { default as Login } from "./Login/Login";
 export { default as TwoFactor } from "./Login/TwoFactor";
 export { default as LogsScreen } from "./Logs/Logs";
 export { default as Dashboard } from "./Dashboard/Dashboard";
+export { default as ScanQrPage } from "./DevicePage/ScanQrPage";

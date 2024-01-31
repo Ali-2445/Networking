@@ -11,6 +11,7 @@ export type ApplicationStackParamList = {
   Dashboard: undefined;
   Logs: undefined;
   Commisssioning: undefined;
+  ScanQr: undefined;
 };
 
 export type ApplicationScreenProps =

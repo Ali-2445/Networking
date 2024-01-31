@@ -16,14 +16,14 @@ function Info(props: any) {
         cx={41}
         cy={41}
         r={30.75}
-        stroke="#112F64"
+        stroke={props.color || "#112F64"}
         strokeWidth={5}
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <Path
         d="M41 27.333h.034M37.583 41H41v13.667h3.417"
-        stroke="#112F64"
+        stroke={props.color || "#112F64"}
         strokeWidth={5}
         strokeLinecap="round"
         strokeLinejoin="round"

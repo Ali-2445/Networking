@@ -16,7 +16,7 @@ function Startup({ navigation }: ApplicationScreenProps) {
 
   const [currentId, setCurrentId] = useState(0);
 
-  const { isSuccess, data, isFetching } = useQuery({
+  const { isSuccess, data, isFetching, isError } = useQuery({
     queryKey: ["example", currentId],
     queryFn: () => {
       return fetchOne(currentId);
@@ -47,7 +47,7 @@ function Startup({ navigation }: ApplicationScreenProps) {
           <ActivityIndicator size="large" style={[gutters.marginVertical_24]} />
         )}
         {isError && (
-          <Text style={[fonts.size_16, fonts.red500]}>
+          <Text style={[fonts.size_16, fonts.danger]}>
             {t("startup:error")}
           </Text>
         )}
