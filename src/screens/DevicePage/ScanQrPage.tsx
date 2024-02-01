@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Alert, StyleSheet, Text, View } from "react-native";
 import { useTranslation } from "react-i18next";
 
 import { useTheme } from "@/theme";
@@ -9,11 +9,70 @@ import type { ApplicationScreenProps } from "@/types/navigation";
 import { calculateHeight, calculateWidth } from "@/theme/utils";
 import Button from "@/components/molecules/Button/Button";
 
+import {
+  Camera,
+  useCameraDevice,
+  useCodeScanner,
+  useCameraPermission,
+} from "react-native-vision-camera";
+import WifiManager from "react-native-wifi-reborn";
+
 function ScanQrPage({ navigation }: ApplicationScreenProps) {
   const { layout, gutters, fonts, backgrounds, colors } = useTheme();
   const { t } = useTranslation(["startup"]);
+  const { hasPermission, requestPermission } = useCameraPermission();
+  const device = useCameraDevice("back");
+  const [isScanned, setIsScanned] = useState(false);
 
-  const [currentId, setCurrentId] = useState(0);
+  const codeScanner = useCodeScanner({
+    codeTypes: ["qr", "ean-13"],
+    onCodeScanned: (codes) => {
+      console.log(codes);
+      if (!isScanned) {
+        setIsScanned(true);
+        const wifiValues = parseWifiData(codes[0].value);
+        if (wifiValues) {
+          connectToWifi(wifiValues.S, wifiValues.P).finally(() => {
+            setIsScanned(false);
+          });
+        } else {
+          setIsScanned(false);
+        }
+      }
+    },
+  });
+
+  const parseWifiData = (qrCodeValue: string | null | undefined) => {
+    if (!qrCodeValue) {
+      return null;
+    }
+    const wifiInfo = qrCodeValue.match(/WIFI:S:(.*?);T:(.*?);P:(.*?);H:(.*?);/);
+    if (wifiInfo) {
+      const [, S, T, P, H] = wifiInfo;
+      return { S, T, P, H };
+    }
+    return null;
+  };
+  const connectToWifi = async (ssid: string, password: string | null) => {
+    console.log(ssid, "  ", password);
+    await WifiManager.connectToProtectedSSID(ssid, password, false, false).then(
+      () => {
+        console.log("Connected successfully!");
+      },
+      () => {
+        console.log("Connection failed!");
+      }
+    );
+
+    WifiManager.getCurrentWifiSSID().then(
+      (ssid) => {
+        console.log("Your current connected wifi SSID is " + ssid);
+      },
+      () => {
+        console.log("Cannot get current SSID!");
+      }
+    );
+  };
 
   const onBack = () => {
     navigation.goBack();
@@ -22,6 +81,12 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
   const Continue = () => {
     navigation.navigate("Dashboard");
   };
+
+  useEffect(() => {
+    if (!hasPermission) {
+      requestPermission();
+    }
+  }, [hasPermission]);
   return (
     <SafeScreen>
       <View
@@ -58,14 +123,30 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
               },
             ]}
           >
-            <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
-              Camera
-            </Text>
+            {device && hasPermission ? (
+              <Camera
+                style={StyleSheet.absoluteFill}
+                device={device}
+                codeScanner={codeScanner}
+                isActive={true}
+              />
+            ) : (
+              <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
+                Camera
+              </Text>
+            )}
           </View>
           <View
             style={[layout.itemsCenter, layout.flex_1, layout.justifyCenter]}
           >
-            <Text style={[fonts.size_16, fonts[600], fonts.typography]}>
+            <Text
+              style={[
+                fonts.size_16,
+                fonts[600],
+                fonts.typography,
+                { textAlign: "center" },
+              ]}
+            >
               SCAN QR CODE AND CONNECT WIFI
             </Text>
             <Text
@@ -84,6 +165,8 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
                 fonts[600],
                 fonts.typography,
                 gutters.marginTop_6,
+                ,
+                { textAlign: "center" },
               ]}
             >
               IF YOU ALREADY CONNECTED WIFI

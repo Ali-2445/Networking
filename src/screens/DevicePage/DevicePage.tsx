@@ -171,6 +171,8 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
                 fonts[600],
                 gutters.marginTop_12,
                 gutters.marginBottom_24,
+                gutters.paddingHorizontal_5,
+                { textAlign: "center" },
               ]}
             >
               Please check your wifi connection and try again?

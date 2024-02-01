@@ -220,6 +220,15 @@ console.log('sssss')
     console.log("Storage Permission Status:", status);
   };
 
+  const requestLocationPermission = async () => {
+    const permission =
+      Platform.OS === "ios"
+        ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+        : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+    const status = await request(permission);
+    console.log("Location Permission Status:", status, Platform.OS);
+  };
+
   const handlePermissionClick = () => {
     // Handle the logic for each permission step
     if (permissionStep === "storage") {
@@ -236,8 +245,9 @@ console.log('sssss')
   };
 
   useEffect(() => {
-    // requestCameraPermission();
+    requestCameraPermission();
     // requestStoragePermission();
+    requestLocationPermission();
   }, []);
   return (
     <SafeScreen>
