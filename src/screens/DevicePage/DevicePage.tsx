@@ -29,7 +29,7 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
       console.log(state);
-      setIsConnected(state.isConnected);
+      setIsConnected(state.isInternetReachable);
     });
 
     return () => unsubscribe();
@@ -37,7 +37,7 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
 
   const updateConnectionStatus = () => {
     NetInfo.fetch().then((state) => {
-      setIsConnected(state.isConnected);
+      setIsConnected(state.isInternetReachable);
     });
   };
 

@@ -185,6 +185,18 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
     }
   });
 
+  const [number, setNumber] = useState(0);
+  const getRandomNumber = () =>
+    Math.floor(Math.random() * (100 - -100 + 1)) + -100;
+
+  useEffect(() => {
+    const updateState = () => {
+      setNumber(getRandomNumber());
+    };
+    const intervalId = setInterval(updateState, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <SafeScreen>
       <View
@@ -398,13 +410,39 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                 layout.itemsCenter,
               ]}
             >
-              <View style={{ position: "absolute", top: -calculateHeight(2) }}>
-                <NumbersCircle />
+              <View
+                style={[
+                  layout.row,
+                  layout.justifyBetween,
+                  ,
+                  layout.itemsCenter,
+                  gutters.marginBottom_5,
+                  { width: calculateWidth(210) },
+                ]}
+              >
+                <Text style={[fonts.size_10, fonts.typography, fonts[500]]}>
+                  -60
+                </Text>
+                <Text style={[fonts.size_10, fonts.typography, fonts[500]]}>
+                  -40
+                </Text>
+                <Text style={[fonts.size_10, fonts.typography, fonts[500]]}>
+                  -20
+                </Text>
+                <Text style={[fonts.size_10, fonts.typography, fonts[500]]}>
+                  0
+                </Text>
+                <Text style={[fonts.size_10, fonts.typography, fonts[500]]}>
+                  20
+                </Text>
+                <Text style={[fonts.size_10, fonts.typography, fonts[500]]}>
+                  40
+                </Text>
+                <Text style={[fonts.size_10, fonts.typography, fonts[500]]}>
+                  60
+                </Text>
               </View>
-              <View style={{ position: "absolute", top: calculateHeight(7) }}>
-                <Lines />
-              </View>
-              <HalfCutCircle progress={40} />
+              <HalfCutCircle number={number} />
             </View>
           </View>
           {/*  */}

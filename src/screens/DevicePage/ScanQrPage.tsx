@@ -24,6 +24,7 @@ import {
 } from "react-native-vision-camera";
 import WifiManager from "react-native-wifi-reborn";
 import { PERMISSIONS, request } from "react-native-permissions";
+import NetInfo from "@react-native-community/netinfo";
 
 function ScanQrPage({ navigation }: ApplicationScreenProps) {
   const { layout, gutters, fonts, backgrounds, colors } = useTheme();
@@ -31,14 +32,16 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
   const { hasPermission, requestPermission } = useCameraPermission();
   const device = useCameraDevice("back");
   const [isScanned, setIsScanned] = useState(false);
+  const [isConnected, setIsConnected] = useState(true);
 
   const codeScanner = useCodeScanner({
     codeTypes: ["qr", "ean-13"],
     onCodeScanned: (codes) => {
-      console.log(codes);
       if (!isScanned) {
         setIsScanned(true);
+
         const wifiValues = parseWifiData(codes[0].value);
+        console.log(wifiValues.S);
         if (wifiValues) {
           connectToWifi(wifiValues.S, wifiValues.P).finally(() => {
             setIsScanned(false);
@@ -54,6 +57,7 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
     if (!qrCodeValue) {
       return null;
     }
+
     const wifiInfo = qrCodeValue.match(/WIFI:S:(.*?);T:(.*?);P:(.*?);H:(.*?);/);
     if (wifiInfo) {
       const [, S, T, P, H] = wifiInfo;
@@ -63,23 +67,36 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
   };
   const connectToWifi = async (ssid: string, password: string | null) => {
     console.log(ssid, "  ", password);
-    await WifiManager.connectToProtectedSSID(ssid, password, false, false).then(
-      () => {
-        console.log("Connected successfully!");
-      },
-      () => {
-        console.log("Connection failed!");
-      }
-    );
+    if (ssid.startsWith("SPU100")) {
+      WifiManager.getCurrentWifiSSID().then(
+        (ssid) => {
+          // Alert.alert("Your current connected wifi SSID is " + ssid);
+          console.log("Your current connected wifi SSID is " + ssid);
+          WifiManager.disconnectFromSSID(ssid);
+        },
+        () => {
+          console.log("Cannot get current SSID!");
+        }
+      );
 
-    WifiManager.getCurrentWifiSSID().then(
-      (ssid) => {
-        console.log("Your current connected wifi SSID is " + ssid);
-      },
-      () => {
-        console.log("Cannot get current SSID!");
-      }
-    );
+      await WifiManager.connectToProtectedSSID(
+        ssid,
+        password,
+        false,
+        false
+      ).then(
+        () => {
+          console.log("Connected successfully!");
+        },
+        () => {
+          console.log("Connection failed!");
+        }
+      );
+    } else {
+      Alert.alert(
+        "Please scan the correct QR code of Wifi Starting with SPU100"
+      );
+    }
   };
 
   const onBack = () => {
@@ -87,7 +104,11 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
   };
 
   const Continue = () => {
-    navigation.navigate("Dashboard");
+    if (isConnected) {
+      navigation.navigate("Dashboard");
+    } else {
+      Alert.alert("Please connect to the internet");
+    }
   };
 
   const LocationPermission = async () => {
@@ -107,6 +128,16 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
       requestPermission();
     }
   }, [hasPermission]);
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      console.log(state);
+      setIsConnected(state.isInternetReachable);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <SafeScreen>
       <View
