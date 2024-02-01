@@ -211,22 +211,17 @@ console.log('sssss')
     console.log("Camera Permission Status:", status);
   };
 
-  const requestStoragePermission = async () => {
-    const permission =
-      Platform.OS === "ios"
-        ? PERMISSIONS.IOS.PHOTO_LIBRARY
-        : PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE;
-    const status = await request(permission);
-    console.log("Storage Permission Status:", status);
-  };
-
   const requestLocationPermission = async () => {
-    const permission =
-      Platform.OS === "ios"
-        ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-        : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
-    const status = await request(permission);
-    console.log("Location Permission Status:", status, Platform.OS);
+    const cameraPermissionStatus = await requestCameraPermission().finally(
+      async () => {
+        const permission =
+          Platform.OS === "ios"
+            ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+            : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+        const status = await request(permission);
+        console.log("Location Permission Status:", status, Platform.OS);
+      }
+    );
   };
 
   const handlePermissionClick = () => {
@@ -246,7 +241,6 @@ console.log('sssss')
 
   useEffect(() => {
     requestCameraPermission();
-    // requestStoragePermission();
     requestLocationPermission();
   }, []);
   return (

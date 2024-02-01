@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Image, ScrollView, Text, View, Linking } from "react-native";
+import { Image, ScrollView, Text, View, Linking, Platform } from "react-native";
 import { useTranslation } from "react-i18next";
 import NetInfo from "@react-native-community/netinfo";
 

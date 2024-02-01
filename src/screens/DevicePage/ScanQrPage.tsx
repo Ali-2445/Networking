@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Alert,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useTranslation } from "react-i18next";
 
 import { useTheme } from "@/theme";
@@ -16,6 +23,7 @@ import {
   useCameraPermission,
 } from "react-native-vision-camera";
 import WifiManager from "react-native-wifi-reborn";
+import { PERMISSIONS, request } from "react-native-permissions";
 
 function ScanQrPage({ navigation }: ApplicationScreenProps) {
   const { layout, gutters, fonts, backgrounds, colors } = useTheme();
@@ -82,6 +90,18 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
     navigation.navigate("Dashboard");
   };
 
+  const LocationPermission = async () => {
+    const permission =
+      Platform.OS === "ios"
+        ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+        : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+    const status = await request(permission);
+    console.log("Location Permission Status:", status, Platform.OS);
+  };
+
+  useEffect(() => {
+    LocationPermission();
+  }, []);
   useEffect(() => {
     if (!hasPermission) {
       requestPermission();
