@@ -139,6 +139,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
   const [selectedValue2, setSelectedValue2] = useState<string | null>("RTK");
   const [selectedChipId, setSelectedChipId] = useState<number | null>(1);
   const [StrArr, setStrArr] = useState<string[]>(logData);
+  const [number, setNumber] = useState(0);
 
   const [value1, setValue1] = useState(88);
   const [value2, setValue2] = useState(0);
@@ -185,7 +186,6 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
     }
   });
 
-  const [number, setNumber] = useState(0);
   const getRandomNumber = () =>
     Math.floor(Math.random() * (100 - -100 + 1)) + -100;
 
