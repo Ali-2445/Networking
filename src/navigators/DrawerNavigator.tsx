@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, LogBox, Image, Alert } from "react-native";
 import {
   createDrawerNavigator,
@@ -35,6 +35,7 @@ const DrawerNavigator = () => {
   const [initialRouteName, setInitialRouteName] = React.useState<string | null>(
     null
   );
+  const [isSpu, setSpu] = useState(false);
 
   const isItemActive = (routeName: string, currentRouteName: string) => {
     return routeName === currentRouteName;
@@ -47,8 +48,11 @@ const DrawerNavigator = () => {
       WifiManager.getCurrentWifiSSID().then(
         (ssid) => {
           if (ssid.startsWith("spu100")) {
+            setSpu(true);
             setInitialRouteName("Dashboard");
           } else {
+            setSpu(false);
+
             setInitialRouteName("DevicePage");
           }
         },
@@ -137,7 +141,11 @@ const DrawerNavigator = () => {
                   : colors.blue,
               },
             ]}
-            onPress={() => props.navigation.navigate("Dashboard")}
+            onPress={() => {
+              if (isSpu) {
+                props.navigation.navigate("Dashboard");
+              }
+            }}
           >
             <Cube
               color={
@@ -218,7 +226,11 @@ const DrawerNavigator = () => {
                   : colors.blue,
               },
             ]}
-            onPress={() => props.navigation.navigate("Commisssioning")}
+            onPress={() => {
+              if (isSpu) {
+                props.navigation.navigate("Commisssioning");
+              }
+            }}
           >
             <Devices
               color={
@@ -256,7 +268,11 @@ const DrawerNavigator = () => {
                   : colors.blue,
               },
             ]}
-            onPress={() => props.navigation.navigate("Logs")}
+            onPress={() => {
+              if (isSpu) {
+                props.navigation.navigate("Logs");
+              }
+            }}
           >
             <Logs
               color={
@@ -288,7 +304,9 @@ const DrawerNavigator = () => {
               layout.itemsCenter,
               { width: calculateWidth(270) },
             ]}
-            onPress={() => props.navigation.navigate("Login")}
+            onPress={() => {
+              props.navigation.navigate("Login");
+            }}
           >
             <Logout />
             <Text
