@@ -16,111 +16,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useQuery } from "@tanstack/react-query";
 import WifiManager from "react-native-wifi-reborn";
 
-const logData = [
-  "$GNVTG,000.0,T,,M,000.00,N,000.00,K*7E",
-  "$PTMSX,0,7,3,1,,,,454325000,0*6A",
-  "$PTMSG,0,,,,4,,,*59",
-  "$HEROT,-21.5884,A*04 $GNHDT,51,T*05",
-  "$GNGGA,,,,,,,,,,M,,M,001.5,*62",
-  "$GNVTG,000.0,T,,M,000.00,N,000.00,K*7E",
-  "$GNZDA,,,,,00,00*56",
-  "$HEROT,-71.7886,A*01",
-  "$GNHDT,,T*05 $GNGGA,,,,,,,,,,M,,M,002.0,*64",
-  "$PTMSX,0,7,3,1,,,,454325000,0*6A",
-  "$PTMSG,0,,,,4,,,*59",
-  "$GNVTG,000.0,T,,M,000.00,N,000.00,K*7E",
-  "$HEROT,-71.7886,A*01",
-  "$GNHDT,,T*05",
-  "$GNGGA,,,,,,,,,,M,,M,002.6,*62",
-  "$GNVTG,000.0,T,,M,000.00,N,000.00,K*7E",
-  "$GNZDA,,,,,00,00*56 $HEROT,-41.0199,A*02 $GNHDT,,T*05",
-  "$GNVTG,155.5,T,,M,000.00,N,000.01,K*7B",
-  "$GNGGA,144111.00,5917.28986410,N,01020.34346990,E,4,31,0.6,18.837,M,39.889,M,000.1,2014*6A",
-  "$GNGSA,A,3,19,24,12,14,17,23,02,10,15,22,13,,1.21,0.59,1.05,1*01",
-  "$GNGSA,A,3,76,66,77,84,75,67,68,85,,,,,1.21,0.59,1.05,2*05",
-  "$GNGSA,A,3,27,19,34,04,21,,,,,,,,1.21,0.59,1.05,3*04",
-  "$GNGSA,A,3,10,07,25,23,41,32,40,,,,,,1.21,0.59,1.05,4*0E",
-  "$GNGSA,A,3,,,,,,,,,,,,,1.21,0.59,1.05,5*0F",
-  "$GPGSV,4,1,16,02,12,011,41,10,26,304,46,12,25,220,43,13,22,155,42,1*64",
-  "$GPGSV,4,2,16,14,20,060,45,15,42,194,46,17,39,078,45,19,36,114,45,1*63",
-  "$GPGSV,4,3,16,21,10,000,39,22,39,065,46,23,22,263,43,24,73,253,50,1*65",
-  "$GPGSV,4,4,16,32,05,321,42,36,22,165,42,40,13,131,35,49,23,186,42,1*66",
-  "$GPGSV,1,1,01,32,05,321,37,5*51",
-  "$GPGSV,2,1,07,10,26,304,44,12,25,220,40,14,20,060,42,15,42,194,43,6*6B",
-  "$GPGSV,2,2,07,17,39,078,44,23,22,263,43,24,73,253,49,6*5D",
-  "$GPGSV,1,1,01,41,00,105,,0*55",
-  "$GLGSV,3,1,11,66,29,195,50,67,58,265,52,68,28,329,48,75,10,068,47,1*7D",
-  "$GLGSV,3,2,11,76,68,059,52,77,58,256,43,78,02,250,44,84,15,355,37,1*73",
-  "$GLGSV,3,3,11,85,30,055,49,86,13,103,48,,,,49,1*74",
-  "$GLGSV,3,1,09,66,29,195,47,67,58,265,49,68,28,329,46,75,10,068,42,3*71",
-  "$GLGSV,3,2,09,76,68,059,50,77,58,256,42,84,15,355,37,85,30,055,46,3*7D",
-  "$GLGSV,3,3,09,86,13,103,42,3*4B",
-  "$GAGSV,2,1,07,04,58,270,52,09,18,315,44,15,13,052,44,19,38,174,46,2*7C",
-  "$GAGSV,2,2,07,21,70,098,52,27,21,060,45,34,14,002,43,2*45",
-  "$GAGSV,2,1,08,04,58,270,48,09,18,315,42,15,13,052,40,19,38,174,40,7*79",
-  "$GAGSV,2,2,08,20,,,33,21,70,098,48,27,21,060,43,34,14,002,40,7*43",
-  "$GBGSV,2,1,08,07,26,052,42,10,38,065,43,23,70,237,52,24,02,080,39,1*70",
-  "$GBGSV,2,2,08,25,54,090,50,32,42,246,48,40,24,038,44,41,13,195,45,1*7D",
-  "$GBGSV,1,1,04,07,26,052,45,10,38,065,47,23,70,237,08,40,24,038,12,B*0C",
-  "$GBGSV,2,1,06,05,09,128,,20,28,315,,34,24,099,,37,17,256,,0*78",
-  "$GBGSV,2,2,06,44,22,042,,60,01,108,,0*79",
-  "$GQGSV,1,1,01,03,08,043,36,1*5D",
-  "$GQGSV,1,1,01,03,08,043,41,6*5A",
-  "$HEROT,+0.0229,A*39",
-  "$GNHDT,196.399,T*26",
-  "$GNVTG,144.1,T,,M,000.00,N,000.01,K*7F",
-  "$PTMSG,0,,,,1,1,,*6D",
-  "$GNGGA,144112.00,5917.28986410,N,01020.34347270,E,4,31,0.6,18.839,M,39.889,M,000.6,2014*64",
-  "$GNZDA,144112.00,21,11,2023,00,00*7B",
-  "$PTMSX,0,2,3,1,31,31,2221,454325000,0*6C",
-  "!AIVDM,1,1,,A,402M3>h000Htt<tSF0l4Q@1P0t2s,0*00",
-  "$HEROT,+0.0229,A*39",
-  "$GNHDT,196.399,T*26",
-  "$GNVTG,144.1,T,,M,000.00,N,000.01,K*7F",
-  "$GNGGA,144113.00,5917.28986410,N,01020.34347270,E,4,31,0.6,18.839,M,39.889,M,000.1,2014*62",
-  "$GNGSA,A,3,19,24,12,14,17,23,02,10,15,22,13,,1.21,0.59,1.05,1*01",
-  "$GNGSA,A,3,76,66,77,84,75,67,68,85,,,,,1.21,0.59,1.05,2*05",
-  "$GNGSA,A,3,27,19,34,04,21,,,,,,,,1.21,0.59,1.05,3*04",
-  "$GNGSA,A,3,10,07,25,23,41,32,40,,,,,,1.21,0.59,1.05,4*0E",
-  "$GNGSA,A,3,,,,,,,,,,,,,1.21,0.59,1.05,5*0F",
-  "$GPGSV,4,1,16,02,12,011,42,10,26,304,46,12,25,220,44,13,22,155,42,1*60",
-  "$GPGSV,4,2,16,14,20,060,45,15,42,194,46,17,39,078,45,19,36,114,45,1*63",
-  "$GPGSV,4,3,16,21,10,000,39,22,39,065,46,23,22,263,43,24,73,253,50,1*65",
-  "$GPGSV,4,4,16,32,05,321,42,36,22,165,42,40,13,131,35,49,23,186,42,1*66",
-  "$GPGSV,1,1,01,32,05,321,37,5*51",
-  "$GPGSV,2,1,07,10,26,304,44,12,25,220,40,14,20,060,42,15,42,194,43,6*6B",
-  "$GPGSV,2,2,07,17,39,078,44,23,22,263,43,24,73,253,49,6*5D",
-  "$GPGSV,1,1,01,41,00,105,,0*55",
-  "$GLGSV,3,1,11,66,29,195,50,67,58,265,52,68,28,329,48,75,10,068,47,1*7D",
-  "$GLGSV,3,2,11,76,68,059,52,77,58,256,43,78,02,250,44,84,15,355,37,1*73",
-  "$GLGSV,3,3,11,85,30,055,49,86,13,103,48,,,,49,1*74",
-  "$GLGSV,3,1,09,66,29,195,47,67,58,265,49,68,28,329,46,75,10,068,42,3*71",
-  "$GLGSV,3,2,09,76,68,059,50,77,58,256,42,84,15,355,37,85,30,055,46,3*7D",
-  "$GLGSV,3,3,09,86,13,103,42,3*4B",
-  "$GAGSV,2,1,07,04,58,270,52,09,18,315,44,15,13,052,44,19,38,174,46,2*7C",
-  "$GAGSV,2,2,07,21,70,098,52,27,21,060,45,34,14,002,43,2*45",
-  "$GAGSV,2,1,08,04,58,270,48,09,18,315,42,15,13,052,39,19,38,174,41,7*76",
-  "$GAGSV,2,2,08,20,,,33,21,70,098,48,27,21,060,43,34,14,002,40,7*43",
-  "$GBGSV,2,1,08,07,26,052,42,10,38,065,43,23,70,237,52,24,02,080,39,1*70",
-  "$GBGSV,2,2,08,25,54,090,50,32,42,246,48,40,24,038,44,41,13,195,45,1*7D",
-  "$GBGSV,1,1,04,07,26,052,45,10,38,065,47,23,70,237,08,40,24,038,11,B*0F",
-  "$GBGSV,2,1,06,05,09,128,,20,28,315,,34,24,099,,37,17,256,,0*78",
-  "$GBGSV,2,2,06,44,22,042,,60,01,108,,0*79",
-  "$GQGSV,1,1,01,03,08,043,37,1*5C",
-  "$GQGSV,1,1,01,03,08,043,41,6*5A",
-  "$HEROT,+0.0107,A*36",
-  "$GNHDT,196.396,T*29",
-  "$GNVTG,158.8,T,,M,000.00,N,000.01,K*7B",
-  "$PTMSG,0,,,,1,1,,*6D",
-  "!AIVDM,1,1,,B,13mJIi0P00Pi9PVQqkr>4?vJ25jT,0*4F",
-  "$GNGGA,144113.00,5917.28986440,N,01020.34347270,E,4,31,0.6,18.839,M,39.889,M,000.6,2014*60",
-  "$GNZDA,144113.00,21,11,2023,00,00*7A",
-  "$PTMSX,0,2,3,1,31,31,2221,454325000,0*6C",
-  "$HEROT,+0.0107,A*36",
-  "$GNHDT,196.396,T*29",
-  "$GNVTG,158.8,T,,M,000.00,N,000.01,K*7B",
-];
-
 function Dashboard({ navigation }: ApplicationScreenProps) {
   const scrollViewRef = useRef<ScrollView>(null);
   const { layout, gutters, fonts, backgrounds, colors } = useTheme();
@@ -133,17 +28,68 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
     },
   });
 
+  const [utcTimeGga, setUtcTimeGga] = useState("N/A");
+  const [latitudeGga, setLatitudeGga] = useState("N/A");
+  const [longitudeGga, setLongitudeGga] = useState("N/A");
+  const [fixQuality, setFixQuality] = useState("N/A");
+  const [numSatellites, setNumSatellites] = useState("N/A");
+  const [horizontalDilution, setHorizontalDilution] = useState("N/A");
+  const [altitudeGga, setAltitudeGga] = useState("N/A");
+  const [geoidalSeparation, setGeoidalSeparation] = useState("N/A");
+  const [ageOfDgpsData, setAgeOfDgpsData] = useState("N/A");
+  const [diffRefStationId, setDiffRefStationId] = useState("N/A");
+
+  // State variables for $GNVTG
+  const [trueTrackDegreesVtg, setTrueTrackDegreesVtg] = useState("N/A");
+  const [magneticTrackDegrees, setMagneticTrackDegrees] = useState("N/A");
+  const [speedKnotsVtg, setSpeedKnotsVtg] = useState("N/A");
+  const [speedKphVtg, setSpeedKphVtg] = useState("N/A");
+
+  // State variables for $GNZDA
+  const [utcTimeZda, setUtcTimeZda] = useState("N/A");
+  const [dayZda, setDayZda] = useState("N/A");
+  const [monthZda, setMonthZda] = useState("N/A");
+  const [yearZda, setYearZda] = useState("N/A");
+  const [localZoneHoursZda, setLocalZoneHoursZda] = useState("N/A");
+  const [localZoneMinutesZda, setLocalZoneMinutesZda] = useState("N/A");
+
+  // State variables for $HEROT
+  const [rateOfTurnHerot, setRateOfTurnHerot] = useState("N/A");
+  const [rotStatusHerot, setRotStatusHerot] = useState("N/A");
+
+  // State variables for $GNHDT
+  const [trueHeadingHdt, setTrueHeadingHdt] = useState("N/A");
+
+  // State variables for $PTMSX
+  const [messageVersion, setMessageVersion] = useState("N/A");
+  const [uniqueDeviceId, setUniqueDeviceId] = useState("N/A");
+  const [vendorId, setVendorId] = useState("N/A");
+  const [modelId, setModelId] = useState("N/A");
+  const [gnssPosSatCount, setGnssPosSatCount] = useState("N/A");
+  const [gnssHdgSatCount, setGnssHdgSatCount] = useState("N/A");
+  const [gnssAntennaBaseline, setGnssAntennaBaseline] = useState("N/A");
+  const [uhfFrequency, setUhfFrequency] = useState("N/A");
+  const [poweredByBattery, setPoweredByBattery] = useState("N/A");
+
+  const [jammingStatus, setJammingStatus] = useState("N/A");
+  const [spoofingStatus, setSpoofingStatus] = useState("N/A");
+  const jammingDescriptions = {
+    "0": "Not monitoring",
+    "1": "No jamming detected",
+    "2": "Jamming detected but fix OK",
+    "3": "Jamming detected fix invalid",
+    "4": "Unknown",
+  };
   const [selectedValue, setSelectedValue] = useState<string | null>("GPS1");
   const [selectedValue1, setSelectedValue1] = useState<string | null>("UTC1");
   const [selectedValue2, setSelectedValue2] = useState<string | null>("RTK");
   const [selectedChipId, setSelectedChipId] = useState<number | null>(1);
-  const [StrArr, setStrArr] = useState<string[]>(logData);
+  const [StrArr, setStrArr] = useState<string[]>([]);
   const [number, setNumber] = useState(0);
   const [points, setPoints] = useState([-60, -30, 0, 30, 60]);
 
   const [value1, setValue1] = useState(88);
   const [value2, setValue2] = useState(0);
-  const [vendorId, setVendorId] = useState(4);
   const [ssid, setSSID] = useState("spu100_111");
   const [serialNumber, setSerialNumber] = useState(111);
   const [wifiPass, setWifiPass] = useState("salnav213");
@@ -162,13 +108,92 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
     { name: "RTK", id: 3 },
     { name: "AIS", id: 4 },
   ];
+  function qualityCases(fixQuality) {
+    switch (fixQuality) {
+      case "0":
+        return "Fix Not Valid";
+      case "1":
+        return "GPS fixed";
+      case "2":
+        return "SBAS";
+      case "3":
+        return "NA";
+      case "4":
+        return "RTK Fixed";
+      case "5":
+        return "RTK Float";
+      default:
+        return "";
+    }
+  }
 
   useEffect(() => {
     const socket = dgram.createSocket("udp4");
     socket.bind(17608);
     socket.on("message", function (msg, rinfo) {
+      console.log(msg);
       var str = String.fromCharCode.apply(null, new Uint8Array(msg));
       setStrArr((previousData) => [...previousData, str]);
+
+      const message = msg.toString();
+
+      const parts = message.split(",");
+
+      switch (parts[0]) {
+        case "$GNGGA":
+          setUtcTimeGga(parts[1]);
+          setLatitudeGga(parts[2] + " " + parts[3]);
+          setLongitudeGga(parts[4] + " " + parts[5]);
+          setFixQuality(qualityCases(parts[6]));
+          setNumSatellites(parts[7]);
+          setHorizontalDilution(parts[8]);
+          setAltitudeGga(parts[9] + " " + parts[10]);
+          setGeoidalSeparation(parts[11] + " " + parts[12]);
+          setAgeOfDgpsData(parts[13]);
+          setDiffRefStationId(parts[14]);
+          break;
+        case "$GNVTG":
+          setTrueTrackDegreesVtg(parts[1] + " " + parts[2]);
+          setMagneticTrackDegrees(parts[3] + " " + parts[4]);
+          setSpeedKnotsVtg(parts[5] + " " + parts[6]);
+          setSpeedKphVtg(parts[7] + " " + parts[8].split("*")[0]);
+          break;
+        case "$GNZDA":
+          setUtcTimeZda(parts[1]);
+          setDayZda(parts[2]);
+          setMonthZda(parts[3]);
+          setYearZda(parts[4]);
+          setLocalZoneHoursZda(parts[5]);
+          setLocalZoneMinutesZda(parts[6].split("*")[0]);
+          break;
+        case "$HEROT":
+          setRateOfTurnHerot(parts[1]);
+          setRotStatusHerot(parts[2].split("*")[0]);
+          break;
+        case "$GNHDT":
+          setTrueHeadingHdt(parts[1] + " " + parts[2].split("*")[0]);
+          break;
+        case "$PTMSX":
+          setMessageVersion(parts[1]);
+          setUniqueDeviceId(parts[2]);
+          setVendorId(parts[3]);
+          setModelId(parts[4]);
+          setGnssPosSatCount(parts[5]);
+          setGnssHdgSatCount(parts[6]);
+          setGnssAntennaBaseline(parts[7]);
+          setUhfFrequency(parts[8]);
+          setPoweredByBattery(parts[9].charAt(0)); // Assuming the battery indicator is the first character before the checksum
+          break;
+        case "$PTMSG":
+          setMessageVersion(parts[1]);
+          // parts[2], parts[3], and parts[4] are N/A and therefore not used
+          setJammingStatus(parts[5]); // Make sure to convert this to the description using a function or a map
+          setSpoofingStatus(parts[6]); // Convert this to the description similarly
+          // parts[7] and parts[8] are N/A and not used
+          // Checksum is typically not stored in state as it's used for validating the message
+          setJammingStatus(jammingDescriptions[parts[5]] || "Unknown");
+          break;
+      }
     });
   }, []);
   const getFontSize = (size: number) => {
@@ -190,23 +215,25 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
     }
   });
 
-  useEffect(() => {
-    WifiManager.getCurrentWifiSSID().then(
+  const getWifiInfo = async () => {
+    await WifiManager.getCurrentWifiSSID().then(
       (ssid) => {
         setSSID(ssid);
       },
-      (err) => {}
+      () => {
+        console.log("Cannot get current SSID!");
+      }
     );
-  }, []);
+  };
   const getRandomNumber = () =>
     Math.floor(Math.random() * (60 - -60 + 1)) + -60;
 
   useEffect(() => {
+    getWifiInfo();
     const updateState = () => {
       setNumber(getRandomNumber());
     };
     const intervalId = setInterval(updateState, 1000);
-
     return () => clearInterval(intervalId);
   }, []);
 
@@ -240,7 +267,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
           </View>
           <View style={{ marginLeft: "auto" }}>
             <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
-              Device Serial Number : {serialNumber}
+              Device Serial Number : {uniqueDeviceId}
             </Text>
             <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
               WiFi Password : {wifiPass}
@@ -291,7 +318,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                 </View>
               ))}
             </View>
-            <HalfCutCircle number={number} />
+            <HalfCutCircle number={rateOfTurnHerot} />
           </View>
         </View>
         <View style={[layout.row, layout.fullWidth]}>
@@ -321,19 +348,6 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                 >
                   <Text
                     style={[
-                      {
-                        fontFamily: "NotoSans-Regular",
-                        fontSize: getFontSize(72),
-                      },
-
-                      fonts.bold,
-                      fonts.lightBlack,
-                    ]}
-                  >
-                    {value1 ? 0 : "00"}
-                  </Text>
-                  <Text
-                    style={[
                       fonts.bold,
                       fonts.dodgerBlue,
                       {
@@ -342,7 +356,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                       },
                     ]}
                   >
-                    {value1 || "--"}°
+                    {Math.round(parseFloat(trueHeadingHdt) * 10) / 10 || "--"}°
                   </Text>
                 </View>
                 <View
@@ -577,7 +591,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                     { textAlign: "right", fontSize: getFontSize(24) },
                   ]}
                 >
-                  41°03.441’ N
+                  {latitudeGga}’ N
                 </Text>
                 <Text
                   style={[
@@ -586,7 +600,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                     { textAlign: "right", fontSize: getFontSize(24) },
                   ]}
                 >
-                  071°16.676’ W
+                  {longitudeGga} W
                 </Text>
               </View>
               <CustomPicker
@@ -621,7 +635,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                     { textAlign: "right", fontSize: getFontSize(24) },
                   ]}
                 >
-                  14:34:32
+                  {utcTimeGga}
                 </Text>
                 <Text
                   style={[
@@ -667,7 +681,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                     { textAlign: "right", fontSize: getFontSize(24) },
                   ]}
                 >
-                  WIFI RTK
+                  GPS Q.IND
                 </Text>
                 <Text
                   style={[
@@ -677,7 +691,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                     { textAlign: "right", fontSize: getFontSize(24) },
                   ]}
                 >
-                  DATA
+                  {fixQuality}
                 </Text>
               </View>
               <CustomPicker

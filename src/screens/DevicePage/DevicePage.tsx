@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Image, ScrollView, Text, View, Linking, Platform } from "react-native";
+import {
+  Image,
+  ScrollView,
+  Text,
+  View,
+  Linking,
+  Platform,
+  Alert,
+} from "react-native";
 import { useTranslation } from "react-i18next";
 import NetInfo from "@react-native-community/netinfo";
 
@@ -15,7 +23,9 @@ import { useIsFocused } from "@react-navigation/native";
 
 import CustomModal from "@/components/molecules/Modal/Modal";
 import Info from "@/theme/assets/svgs/info";
+import WifiManager from "react-native-wifi-reborn";
 
+import { LocationPermission } from "@/theme/utils";
 function DevicePage({ navigation }: ApplicationScreenProps) {
   const { layout, gutters, fonts, backgrounds, colors } = useTheme();
   const isFocused = useIsFocused();
@@ -27,6 +37,7 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
   const [deviceNotFOundPage, setIsDeviceNotFound] = useState(
     devices.length == 0
   );
+  const [wifiSSID, setWifiSSID] = useState("");
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
@@ -51,6 +62,18 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
     setSelectedDevice(index);
   };
 
+  useEffect(() => {
+    LocationPermission().then(() => {
+      WifiManager.getCurrentWifiSSID().then(
+        (ssid) => {
+          setWifiSSID(ssid);
+        },
+        () => {
+          console.log("Error");
+        }
+      );
+    });
+  }, []);
   return (
     <SafeScreen>
       <ScrollView
@@ -85,7 +108,11 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
                       setIsModalVisible(true);
                       setIsDeviceNotFound(true);
                     } else {
-                      navigation.navigate("Dashboard");
+                      if (wifiSSID.startsWith("spu100")) {
+                        navigation.navigate("Dashboard");
+                      } else {
+                        Alert.alert("Please connect with SPU wifi");
+                      }
                     }
                   }}
                 >
