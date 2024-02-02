@@ -41,13 +41,26 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
         setIsScanned(true);
 
         const wifiValues = parseWifiData(codes[0].value);
-        console.log(wifiValues.S);
+
         if (wifiValues) {
           connectToWifi(wifiValues.S, wifiValues.P).finally(() => {
             setIsScanned(false);
           });
         } else {
-          setIsScanned(false);
+          setIsScanned(true);
+
+          Alert.alert(
+            "Alert",
+            "Invalid QR code. Please scan a Wi-Fi QR code.",
+            [
+              {
+                text: "Cancel",
+                onPress: () => setIsScanned(false),
+                style: "cancel",
+              },
+              { text: "OK", onPress: () => setIsScanned(false) },
+            ]
+          );
         }
       }
     },
@@ -59,7 +72,7 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
     }
 
     const wifiInfo = qrCodeValue.match(/WIFI:S:(.*?);T:(.*?);P:(.*?);H:(.*?);/);
-    if (wifiInfo) {
+    if (wifiInfo && wifiInfo.length === 5) {
       const [, S, T, P, H] = wifiInfo;
       return { S, T, P, H };
     }
@@ -70,7 +83,6 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
     if (ssid.startsWith("SPU100")) {
       WifiManager.getCurrentWifiSSID().then(
         (ssid) => {
-          // Alert.alert("Your current connected wifi SSID is " + ssid);
           console.log("Your current connected wifi SSID is " + ssid);
           WifiManager.disconnectFromSSID(ssid);
         },
@@ -93,8 +105,19 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
         }
       );
     } else {
+      setIsScanned(true);
+
       Alert.alert(
-        "Please scan the correct QR code of Wifi Starting with SPU100"
+        "Alert",
+        "Please scan the correct QR code of Wifi Starting with SPU100",
+        [
+          {
+            text: "Cancel",
+            onPress: () => setIsScanned(false),
+            style: "cancel",
+          },
+          { text: "OK", onPress: () => setIsScanned(false) },
+        ]
       );
     }
   };
