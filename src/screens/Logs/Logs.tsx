@@ -25,9 +25,8 @@ function Startup({ navigation }: ApplicationScreenProps) {
   });
 
   const columnTitles = ["LOG FILES", "CREATED DATE", "SIZE", "DURATION"];
-  const handleRowSelectionChange = useCallback((selectedRows: number[]) => {
-    console.log("Selected Rows:", selectedRows);
-  }, []);
+  const handleRowSelectionChange = useCallback((selectedRows: number[]) => {},
+  []);
 
   const data = [
     {

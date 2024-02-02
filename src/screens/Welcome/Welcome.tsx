@@ -209,7 +209,6 @@ console.log('sssss')
         ? PERMISSIONS.IOS.CAMERA
         : PERMISSIONS.ANDROID.CAMERA;
     const status = await request(permission);
-    console.log("Camera Permission Status:", status);
   };
 
   const requestLocationPermission = async () => {
@@ -220,7 +219,6 @@ console.log('sssss')
             ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
             : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
         const status = await request(permission);
-        console.log("Location Permission Status:", status, Platform.OS);
       }
     );
   };

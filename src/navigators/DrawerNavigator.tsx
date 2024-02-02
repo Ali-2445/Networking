@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, LogBox, Image } from "react-native";
+import React, { useEffect } from "react";
+import { View, Text, LogBox, Image, Alert } from "react-native";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -22,6 +22,9 @@ import { useRoute } from "@react-navigation/native";
 import Commisssioning from "@/screens/Commisssioning/Commisssioning";
 import Bell from "@/theme/assets/svgs/Bell";
 import Avatar from "@/theme/assets/images/Avatar.png";
+import { LocationPermission } from "@/theme/utils";
+import { set } from "zod";
+import WifiManager from "react-native-wifi-reborn";
 
 const DrawerNavigator = () => {
   LogBox.ignoreAllLogs();
@@ -29,11 +32,36 @@ const DrawerNavigator = () => {
   const { backgrounds, colors, fonts, layout, gutters } = useTheme();
   const Drawer = createDrawerNavigator<ApplicationStackParamList>();
 
+  const [initialRouteName, setInitialRouteName] = React.useState<string | null>(
+    null
+  );
+
   const isItemActive = (routeName: string, currentRouteName: string) => {
     return routeName === currentRouteName;
   };
 
   const focusedRouteName = getFocusedRouteNameFromRoute(route) || "Dashboard";
+
+  useEffect(() => {
+    LocationPermission().then(() => {
+      WifiManager.getCurrentWifiSSID().then(
+        (ssid) => {
+          if (ssid.startsWith("spu100")) {
+            setInitialRouteName("Dashboard");
+          } else {
+            setInitialRouteName("DevicePage");
+          }
+        },
+        () => {
+          console.log("Error");
+        }
+      );
+    });
+  }, []);
+
+  if (initialRouteName === null) {
+    return null;
+  }
   return (
     <Drawer.Navigator
       screenOptions={({ navigation }) => ({
@@ -276,7 +304,7 @@ const DrawerNavigator = () => {
           </TouchableOpacity>
         </DrawerContentScrollView>
       )}
-      initialRouteName="DevicePage"
+      initialRouteName={initialRouteName}
     >
       <Drawer.Screen
         name="Dashboard"

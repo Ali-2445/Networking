@@ -167,7 +167,6 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
     const socket = dgram.createSocket("udp4");
     socket.bind(17608);
     socket.on("message", function (msg, rinfo) {
-      console.log(msg);
       var str = String.fromCharCode.apply(null, new Uint8Array(msg));
       setStrArr((previousData) => [...previousData, str]);
     });
@@ -191,26 +190,23 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
     }
   });
 
-  const getWifiInfo = async () => {
-    await WifiManager.getCurrentWifiSSID().then(
+  useEffect(() => {
+    WifiManager.getCurrentWifiSSID().then(
       (ssid) => {
-        alert(ssid);
         setSSID(ssid);
       },
-      () => {
-        console.log("Cannot get current SSID!");
-      }
+      (err) => {}
     );
-  };
+  }, []);
   const getRandomNumber = () =>
     Math.floor(Math.random() * (60 - -60 + 1)) + -60;
 
   useEffect(() => {
-    getWifiInfo();
     const updateState = () => {
       setNumber(getRandomNumber());
     };
     const intervalId = setInterval(updateState, 1000);
+
     return () => clearInterval(intervalId);
   }, []);
 

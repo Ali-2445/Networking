@@ -24,7 +24,9 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
   const [selectedDevice, setSelectedDevice] = useState(null);
   const [isConnected, setIsConnected] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [deviceNotFOundPage, setIsDeviceNotFound] = useState(false);
+  const [deviceNotFOundPage, setIsDeviceNotFound] = useState(
+    devices.length == 0
+  );
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
@@ -42,7 +44,6 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
   };
 
   useEffect(() => {
-    console.log("status");
     updateConnectionStatus();
   }, [isFocused]);
 

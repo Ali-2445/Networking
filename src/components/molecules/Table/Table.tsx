@@ -227,7 +227,6 @@ const TableWithPagination: React.FC<TableWithPaginationProps> = ({
 
       Object.keys(data[i]).map((key, index) => {
         if (key !== "id") {
-          console.log("H");
           if (renderCustomRow) {
             rowData.push(
               <>

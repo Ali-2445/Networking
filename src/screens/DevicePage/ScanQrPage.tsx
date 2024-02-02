@@ -86,7 +86,6 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
           const value = match[2];
           extractedValues[key] = value;
         }
-        console.log(extractedValues);
         return extractedValues;
       } else {
         return null;
@@ -101,11 +100,9 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
     password: string | null,
     isHidden: boolean
   ) => {
-    console.log(ssid, "  ", password);
     if (ssid.startsWith("spu100")) {
       WifiManager.getCurrentWifiSSID().then(
         (ssid) => {
-          console.log("Your current connected wifi SSID is " + ssid);
           WifiManager.disconnectFromSSID(ssid);
         },
         () => {
@@ -121,7 +118,6 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
       ).then(
         () => {
           navigation.navigate("Dashboard");
-          console.log("Connected successfully!");
         },
         () => {
           console.log("Connection failed!");
@@ -163,7 +159,6 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
         ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
         : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
     const status = await request(permission);
-    console.log("Location Permission Status:", status, Platform.OS);
   };
 
   useEffect(() => {
@@ -177,7 +172,6 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
-      console.log(state);
       setIsConnected(state.isInternetReachable);
     });
 
