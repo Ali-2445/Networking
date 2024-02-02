@@ -15,6 +15,7 @@ import Info from "@/theme/assets/svgs/info";
 import CustomModal from "@/components/molecules/Modal/Modal";
 import Amp from "@/theme/assets/images/amp.png";
 import { request, PERMISSIONS } from "react-native-permissions";
+import { storage } from "@/App";
 
 type PermissionStep = "storage" | "camera" | "notification";
 
@@ -240,6 +241,7 @@ console.log('sssss')
   };
 
   useEffect(() => {
+    storage.set("firstTime", false);
     requestCameraPermission();
     requestLocationPermission();
   }, []);

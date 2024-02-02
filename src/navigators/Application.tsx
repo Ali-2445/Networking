@@ -9,6 +9,8 @@ import type { ApplicationStackParamList } from "@/types/navigation";
 import DrawerNavigator from "./DrawerNavigator";
 import { calculateHeight } from "@/theme/utils";
 import { RFValue } from "react-native-responsive-fontsize";
+import { storage } from "@/App";
+import { useEffect, useState } from "react";
 
 const Stack = createStackNavigator<ApplicationStackParamList>();
 
@@ -17,7 +19,15 @@ function ApplicationNavigator() {
 
   return (
     <NavigationContainer theme={navigationTheme}>
-      <Stack.Navigator key={variant} screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        key={variant}
+        screenOptions={{ headerShown: false }}
+        initialRouteName={
+          storage.getBoolean("firstTime") == false
+            ? "DrawerNavigator"
+            : "Welcome"
+        }
+      >
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} />
         <Stack.Screen name="Login" component={Login} />

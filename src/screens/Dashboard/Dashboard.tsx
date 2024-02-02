@@ -12,10 +12,9 @@ import CustomPicker from "@/components/molecules/Select/Select";
 import { useState, useEffect, useRef } from "react";
 import { RFValue } from "react-native-responsive-fontsize";
 import HalfCutCircle from "@/theme/assets/svgs/halfCutCircle";
-import NumbersCircle from "@/theme/assets/svgs/NumbersCircle";
-import Lines from "@/theme/assets/svgs/Lines";
 import { ScrollView } from "react-native-gesture-handler";
 import { useQuery } from "@tanstack/react-query";
+import WifiManager from "react-native-wifi-reborn";
 
 const logData = [
   "$GNVTG,000.0,T,,M,000.00,N,000.00,K*7E",
@@ -140,9 +139,15 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
   const [selectedChipId, setSelectedChipId] = useState<number | null>(1);
   const [StrArr, setStrArr] = useState<string[]>(logData);
   const [number, setNumber] = useState(0);
+  const [points, setPoints] = useState([-60, -30, 0, 30, 60]);
 
   const [value1, setValue1] = useState(88);
   const [value2, setValue2] = useState(0);
+  const [vendorId, setVendorId] = useState(4);
+  const [ssid, setSSID] = useState("spu100_111");
+  const [serialNumber, setSerialNumber] = useState(111);
+  const [wifiPass, setWifiPass] = useState("salnav213");
+
   var [_scrollToBottomY, set_scrollToBottomY] = useState(0);
 
   const data = [
@@ -186,10 +191,22 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
     }
   });
 
+  const getWifiInfo = async () => {
+    await WifiManager.getCurrentWifiSSID().then(
+      (ssid) => {
+        alert(ssid);
+        setSSID(ssid);
+      },
+      () => {
+        console.log("Cannot get current SSID!");
+      }
+    );
+  };
   const getRandomNumber = () =>
-    Math.floor(Math.random() * (100 - -100 + 1)) + -100;
+    Math.floor(Math.random() * (60 - -60 + 1)) + -60;
 
   useEffect(() => {
+    getWifiInfo();
     const updateState = () => {
       setNumber(getRandomNumber());
     };
@@ -216,6 +233,71 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
             position: "absolute",
           }}
         />
+        <View style={[layout.row, layout.fullWidth]}>
+          <View>
+            <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
+              Vendor ID : {vendorId}
+            </Text>
+            <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
+              SSID :{ssid}
+            </Text>
+          </View>
+          <View style={{ marginLeft: "auto" }}>
+            <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
+              Device Serial Number : {serialNumber}
+            </Text>
+            <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
+              WiFi Password : {wifiPass}
+            </Text>
+          </View>
+        </View>
+        <View style={[layout.row, layout.fullWidth]}>
+          <View
+            style={[
+              {
+                height: calculateHeight(106),
+                // width: calculateWidth(260),
+                borderRadius: calculateHeight(20),
+              },
+              gutters.padding_10,
+              backgrounds.grayBackground,
+              gutters.marginTop_10,
+              layout.justifyCenter,
+              layout.itemsCenter,
+              layout.fullWidth,
+            ]}
+          >
+            <View
+              style={[
+                layout.row,
+                layout.justifyBetween,
+                ,
+                layout.itemsCenter,
+                gutters.marginBottom_2,
+                { width: calculateWidth(710) },
+                // gutters.marginRight_15,
+              ]}
+            >
+              {points.map((point: number, index: number) => (
+                <View
+                  style={[
+                    layout.itemsCenter,
+                    layout.justifyCenter,
+                    point == 0 && gutters.marginRight_15,
+                  ]}
+                >
+                  <Text style={[fonts.size_12, fonts.typography, fonts[700]]}>
+                    {point}
+                  </Text>
+                  <Text style={[fonts.size_12, fonts.typography, fonts[700]]}>
+                    |
+                  </Text>
+                </View>
+              ))}
+            </View>
+            <HalfCutCircle number={number} />
+          </View>
+        </View>
         <View style={[layout.row, layout.fullWidth]}>
           <View>
             <View
@@ -396,54 +478,6 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
             </View>
 
             {/*  */}
-            <View
-              style={[
-                {
-                  height: calculateHeight(106),
-                  width: calculateWidth(260),
-                  borderRadius: calculateHeight(20),
-                },
-                gutters.padding_10,
-                backgrounds.grayBackground,
-                gutters.marginTop_10,
-                layout.justifyCenter,
-                layout.itemsCenter,
-              ]}
-            >
-              <View
-                style={[
-                  layout.row,
-                  layout.justifyBetween,
-                  ,
-                  layout.itemsCenter,
-                  gutters.marginBottom_5,
-                  { width: calculateWidth(210) },
-                ]}
-              >
-                <Text style={[fonts.size_10, fonts.typography, fonts[500]]}>
-                  -60
-                </Text>
-                <Text style={[fonts.size_10, fonts.typography, fonts[500]]}>
-                  -40
-                </Text>
-                <Text style={[fonts.size_10, fonts.typography, fonts[500]]}>
-                  -20
-                </Text>
-                <Text style={[fonts.size_10, fonts.typography, fonts[500]]}>
-                  0
-                </Text>
-                <Text style={[fonts.size_10, fonts.typography, fonts[500]]}>
-                  20
-                </Text>
-                <Text style={[fonts.size_10, fonts.typography, fonts[500]]}>
-                  40
-                </Text>
-                <Text style={[fonts.size_10, fonts.typography, fonts[500]]}>
-                  60
-                </Text>
-              </View>
-              <HalfCutCircle number={number} />
-            </View>
           </View>
           {/*  */}
 

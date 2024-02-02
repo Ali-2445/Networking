@@ -39,11 +39,14 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
     onCodeScanned: (codes) => {
       if (!isScanned) {
         setIsScanned(true);
-
         const wifiValues = parseWifiData(codes[0].value);
 
         if (wifiValues) {
-          connectToWifi(wifiValues.S, wifiValues.P).finally(() => {
+          connectToWifi(
+            wifiValues?.S,
+            wifiValues?.P,
+            wifiValues?.H === "true" ? true : false
+          ).finally(() => {
             setIsScanned(false);
           });
         } else {
@@ -67,20 +70,39 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
   });
 
   const parseWifiData = (qrCodeValue: string | null | undefined) => {
-    if (!qrCodeValue) {
-      return null;
-    }
+    try {
+      if (!qrCodeValue) {
+        Alert.alert("QR code value is empty.");
+        return;
+      }
 
-    const wifiInfo = qrCodeValue.match(/WIFI:S:(.*?);T:(.*?);P:(.*?);H:(.*?);/);
-    if (wifiInfo && wifiInfo.length === 5) {
-      const [, S, T, P, H] = wifiInfo;
-      return { S, T, P, H };
+      if (qrCodeValue) {
+        const regex = /([STPH]):([^;]+)/g;
+
+        const extractedValues = {};
+        let match;
+        while ((match = regex.exec(qrCodeValue)) !== null) {
+          var key = match[1];
+          const value = match[2];
+          extractedValues[key] = value;
+        }
+        console.log(extractedValues);
+        return extractedValues;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      throw error;
     }
-    return null;
   };
-  const connectToWifi = async (ssid: string, password: string | null) => {
+
+  const connectToWifi = async (
+    ssid: string,
+    password: string | null,
+    isHidden: boolean
+  ) => {
     console.log(ssid, "  ", password);
-    if (ssid.startsWith("SPU100")) {
+    if (ssid.startsWith("spu100")) {
       WifiManager.getCurrentWifiSSID().then(
         (ssid) => {
           console.log("Your current connected wifi SSID is " + ssid);
@@ -98,6 +120,7 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
         false
       ).then(
         () => {
+          navigation.navigate("Dashboard");
           console.log("Connected successfully!");
         },
         () => {
