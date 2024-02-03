@@ -6,8 +6,8 @@ import DashboardFan from "@/theme/assets/images/DashboardFan.png";
 import dgram from "react-native-udp";
 
 import type { ApplicationScreenProps } from "@/types/navigation";
-import { Image, View, Text, Pressable } from "react-native";
-import { calculateHeight, calculateWidth } from "@/theme/utils";
+import { Image, View, Text, Pressable, Alert } from "react-native";
+import { calculateHeight, calculateWidth, isTablet } from "@/theme/utils";
 import CustomPicker from "@/components/molecules/Select/Select";
 import { useState, useEffect, useRef } from "react";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -352,7 +352,9 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                       fonts.dodgerBlue,
                       {
                         fontFamily: "NotoSans-Regular",
-                        fontSize: getFontSize(72),
+                        fontSize: isTablet()
+                          ? getFontSize(72)
+                          : getFontSize(30),
                       },
                     ]}
                   >
@@ -419,7 +421,9 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                     style={[
                       {
                         fontFamily: "NotoSans-Regular",
-                        fontSize: getFontSize(72),
+                        fontSize: isTablet()
+                          ? getFontSize(72)
+                          : getFontSize(30),
                       },
 
                       fonts.bold,
@@ -434,7 +438,9 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                       fonts.dodgerBlue,
                       {
                         fontFamily: "NotoSans-Regular",
-                        fontSize: getFontSize(72),
+                        fontSize: isTablet()
+                          ? getFontSize(72)
+                          : getFontSize(30),
                       },
                     ]}
                   >

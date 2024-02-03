@@ -24,6 +24,7 @@ import { useIsFocused } from "@react-navigation/native";
 import CustomModal from "@/components/molecules/Modal/Modal";
 import Info from "@/theme/assets/svgs/info";
 import WifiManager from "react-native-wifi-reborn";
+import dgram from "react-native-udp";
 
 import { LocationPermission } from "@/theme/utils";
 function DevicePage({ navigation }: ApplicationScreenProps) {
@@ -38,7 +39,28 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
     devices.length == 0
   );
   const [wifiSSID, setWifiSSID] = useState("");
+  const [udpConnected, setUdpConnected] = useState(false);
+  const [StrArr, setStrArr] = useState<string[]>([]);
+  const [vendorId, setVendorId] = useState<string | number>("N/A");
 
+  useEffect(() => {
+    const socket = dgram.createSocket("udp4");
+    socket.bind(17608);
+    socket.on("message", function (msg, rinfo) {
+      socket.on("listening", () => setUdpConnected(true));
+      var str = String.fromCharCode.apply(null, new Uint8Array(msg));
+      setStrArr((previousData) => [...previousData, str]);
+
+      const message = msg.toString();
+
+      const parts = message.split(",");
+      switch (parts[0]) {
+        case "$PTMSX":
+          setVendorId(parts[3]);
+          break;
+      }
+    });
+  }, []);
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
       console.log(state);
@@ -69,7 +91,7 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
           setWifiSSID(ssid);
         },
         () => {
-          console.log("Error");
+          console.log("Device Page Error");
         }
       );
     });
@@ -80,7 +102,7 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
         style={[layout.flex_1, backgrounds.offWhite]}
         showsVerticalScrollIndicator={false}
       >
-        {!deviceNotFOundPage ? (
+        {(udpConnected && vendorId == 4) || vendorId == "4" ? (
           <View style={[gutters.marginTop_82, gutters.marginLeft_66]}>
             <Text style={[fonts.size_24, fonts[600], fonts.typography]}>
               Devices:
