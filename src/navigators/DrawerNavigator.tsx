@@ -57,6 +57,7 @@ const DrawerNavigator = () => {
           }
         },
         () => {
+          setInitialRouteName("DevicePage");
           console.log("Error");
         }
       );
