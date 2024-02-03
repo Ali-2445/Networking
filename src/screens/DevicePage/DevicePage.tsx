@@ -102,7 +102,7 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
         style={[layout.flex_1, backgrounds.offWhite]}
         showsVerticalScrollIndicator={false}
       >
-        {(udpConnected && vendorId == 4) || vendorId == "4" ? (
+        {udpConnected && (vendorId == 4 || vendorId == "4") ? (
           <View style={[gutters.marginTop_82, gutters.marginLeft_66]}>
             <Text style={[fonts.size_24, fonts[600], fonts.typography]}>
               Devices:
