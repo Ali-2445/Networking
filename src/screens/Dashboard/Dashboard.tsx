@@ -6,8 +6,8 @@ import DashboardFan from "@/theme/assets/images/DashboardFan.png";
 import dgram from "react-native-udp";
 
 import type { ApplicationScreenProps } from "@/types/navigation";
-import { Image, View, Text, Pressable, Alert } from "react-native";
-import { calculateHeight, calculateWidth, isTablet } from "@/theme/utils";
+import { Image, View, Text, Pressable, Linking } from "react-native";
+import { calculateHeight, calculateWidth } from "@/theme/utils";
 import CustomPicker from "@/components/molecules/Select/Select";
 import { useState, useEffect, useRef } from "react";
 import { RFValue } from "react-native-responsive-fontsize";
@@ -15,6 +15,8 @@ import HalfCutCircle from "@/theme/assets/svgs/halfCutCircle";
 import { ScrollView } from "react-native-gesture-handler";
 import { useQuery } from "@tanstack/react-query";
 import WifiManager from "react-native-wifi-reborn";
+import CustomModal from "@/components/molecules/Modal/Modal";
+import Info from "@/theme/assets/svgs/info";
 
 function Dashboard({ navigation }: ApplicationScreenProps) {
   const scrollViewRef = useRef<ScrollView>(null);
@@ -93,6 +95,9 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
   const [ssid, setSSID] = useState("spu100_111");
   const [serialNumber, setSerialNumber] = useState(111);
   const [wifiPass, setWifiPass] = useState("salnav213");
+  const [usdConnected, setUdpConnected] = useState(false);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   var [_scrollToBottomY, set_scrollToBottomY] = useState(0);
 
@@ -103,7 +108,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
   ];
 
   const chips = [
-    { name: "Heading", id: 1 },
+    { name: "HDT", id: 1 },
     { name: "GPS", id: 2 },
     { name: "RTK", id: 3 },
     { name: "AIS", id: 4 },
@@ -126,88 +131,125 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
         return "";
     }
   }
+  function convertToDMS(lat) {
+    // Split the input into degrees and decimal minutes
 
+    // Extract the direction (N/S)
+    const direction = lat.slice(-1);
+    // Extract the numeric part of the latitude
+    const numericPart = lat.slice(0, -1);
+
+    // Extract degrees and minutes from the numeric part
+    const degrees = parseInt(numericPart.slice(0, 2), 10);
+    const minutes = parseInt(numericPart.slice(2, 4), 10);
+    // Convert the remainder to seconds
+    const decimalMinutes = parseFloat("0." + numericPart.slice(4));
+    const seconds = decimalMinutes * 60;
+
+    // Format the output
+    return `${degrees}° ${minutes}' ${seconds.toFixed(3)}" ${direction}`;
+  }
   useEffect(() => {
-    const socket = dgram.createSocket("udp4");
-    socket.bind(17608);
+    const socket = dgram.createSocket({
+      type: "udp4",
+      debug: true,
+    });
+    socket.bind(17608, function () {
+      setIsModalVisible(true);
+    });
     socket.on("message", function (msg, rinfo) {
-      console.log(msg);
-      var str = String.fromCharCode.apply(null, new Uint8Array(msg));
-      setStrArr((previousData) => [...previousData, str]);
+      setIsModalVisible(false);
+      if (rinfo.port != "60183") {
+      }
 
       const message = msg.toString();
-
       const parts = message.split(",");
-
-      switch (parts[0]) {
-        case "$GNGGA":
-          setUtcTimeGga(parts[1]);
-          setLatitudeGga(parts[2] + " " + parts[3]);
-          setLongitudeGga(parts[4] + " " + parts[5]);
-          setFixQuality(qualityCases(parts[6]));
-          setNumSatellites(parts[7]);
-          setHorizontalDilution(parts[8]);
-          setAltitudeGga(parts[9] + " " + parts[10]);
-          setGeoidalSeparation(parts[11] + " " + parts[12]);
-          setAgeOfDgpsData(parts[13]);
-          setDiffRefStationId(parts[14]);
-          break;
-        case "$GNVTG":
-          setTrueTrackDegreesVtg(parts[1] + " " + parts[2]);
-          setMagneticTrackDegrees(parts[3] + " " + parts[4]);
-          setSpeedKnotsVtg(parts[5] + " " + parts[6]);
-          setSpeedKphVtg(parts[7] + " " + parts[8].split("*")[0]);
-          break;
-        case "$GNZDA":
-          setUtcTimeZda(parts[1]);
-          setDayZda(parts[2]);
-          setMonthZda(parts[3]);
-          setYearZda(parts[4]);
-          setLocalZoneHoursZda(parts[5]);
-          setLocalZoneMinutesZda(parts[6].split("*")[0]);
-          break;
-        case "$HEROT":
-          setRateOfTurnHerot(parts[1]);
-          setRotStatusHerot(parts[2].split("*")[0]);
-          break;
-        case "$GNHDT":
-          setTrueHeadingHdt(parts[1] + " " + parts[2].split("*")[0]);
-          break;
-        case "$PTMSX":
-          setMessageVersion(parts[1]);
-          setUniqueDeviceId(parts[2]);
-          setVendorId(parts[3]);
-          setModelId(parts[4]);
-          setGnssPosSatCount(parts[5]);
-          setGnssHdgSatCount(parts[6]);
-          setGnssAntennaBaseline(parts[7]);
-          setUhfFrequency(parts[8]);
-          setPoweredByBattery(parts[9].charAt(0)); // Assuming the battery indicator is the first character before the checksum
-          break;
-        case "$PTMSG":
-          setMessageVersion(parts[1]);
-          // parts[2], parts[3], and parts[4] are N/A and therefore not used
-          setJammingStatus(parts[5]); // Make sure to convert this to the description using a function or a map
-          setSpoofingStatus(parts[6]); // Convert this to the description similarly
-          // parts[7] and parts[8] are N/A and not used
-          // Checksum is typically not stored in state as it's used for validating the message
-          setJammingStatus(jammingDescriptions[parts[5]] || "Unknown");
-          break;
+      if (
+        parts[0] === "$PTMSX" && parts[3] != "4"
+          ? parts[0] == "$PTMSX"
+            ? true
+            : true
+          : false
+      ) {
+        setIsModalVisible(true);
+        socket.close();
+      } else {
+        var str = String.fromCharCode.apply(null, new Uint8Array(msg));
+        setStrArr((previousData) => [...previousData, str]);
+        switch (parts[0]) {
+          case "$GNGGA":
+            setUtcTimeGga(parts[1]);
+            setLatitudeGga(parts[2] + " " + parts[3]);
+            setLongitudeGga(parts[4] + " " + parts[5]);
+            setFixQuality(qualityCases(parts[6]));
+            setNumSatellites(parts[7]);
+            setHorizontalDilution(parts[8]);
+            setAltitudeGga(parts[9] + " " + parts[10]);
+            setGeoidalSeparation(parts[11] + " " + parts[12]);
+            setAgeOfDgpsData(parts[13]);
+            setDiffRefStationId(parts[14]);
+            break;
+          case "$GNVTG":
+            setTrueTrackDegreesVtg(parts[1] + " " + parts[2]);
+            setMagneticTrackDegrees(parts[3] + " " + parts[4]);
+            setSpeedKnotsVtg(parts[5] + " " + parts[6]);
+            setSpeedKphVtg(parts[7] + " " + parts[8].split("*")[0]);
+            break;
+          case "$GNZDA":
+            setUtcTimeZda(parts[1]);
+            setDayZda(parts[2]);
+            setMonthZda(parts[3]);
+            setYearZda(parts[4]);
+            setLocalZoneHoursZda(parts[5]);
+            setLocalZoneMinutesZda(parts[6].split("*")[0]);
+            break;
+          case "$HEROT":
+            setRateOfTurnHerot(parts[1]);
+            setRotStatusHerot(parts[2].split("*")[0]);
+            break;
+          case "$GNHDT":
+            setTrueHeadingHdt(parts[1] + " " + parts[2].split("*")[0]);
+            break;
+          case "$PTMSX":
+            setMessageVersion(parts[1]);
+            setUniqueDeviceId(parts[2]);
+            setVendorId(parts[3]);
+            setModelId(parts[4]);
+            setGnssPosSatCount(parts[5]);
+            setGnssHdgSatCount(parts[6]);
+            setGnssAntennaBaseline(parts[7]);
+            setUhfFrequency(parts[8]);
+            setPoweredByBattery(parts[9].charAt(0)); // Assuming the battery indicator is the first character before the checksum
+            break;
+          case "$PTMSG":
+            setMessageVersion(parts[1]);
+            // parts[2], parts[3], and parts[4] are N/A and therefore not used
+            setJammingStatus(parts[5]); // Make sure to convert this to the description using a function or a map
+            setSpoofingStatus(parts[6]); // Convert this to the description similarly
+            // parts[7] and parts[8] are N/A and not used
+            // Checksum is typically not stored in state as it's used for validating the message
+            setJammingStatus(jammingDescriptions[parts[5]] || "Unknown");
+            break;
+        }
       }
     });
+    return () => {
+      // ComponentWillUnmount equivalent actions here
+      socket.close();
+    };
   }, []);
   const getFontSize = (size: number) => {
     return RFValue(size, 1200);
   };
 
-  const filteredData = StrArr.filter((item) => {
+  let filteredData = StrArr.filter((item) => {
     switch (selectedChipId) {
       case 1:
         return item.includes("$HEROT") || item.includes("$GNHDT");
       case 2:
-        return item.includes("$GNGGA") || item.includes("$GPG");
+        return item.includes("$G") || item.includes("$G");
       case 3:
-        return item.includes("$GNZDA") || item.includes("$PTM");
+        return item.includes("$PTM");
       case 4:
         return item.includes("!AIV");
       default:
@@ -218,6 +260,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
   const getWifiInfo = async () => {
     await WifiManager.getCurrentWifiSSID().then(
       (ssid) => {
+        alert(ssid);
         setSSID(ssid);
       },
       () => {
@@ -261,16 +304,10 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
             <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
               Vendor ID : {vendorId}
             </Text>
-            <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
-              SSID :{ssid}
-            </Text>
           </View>
           <View style={{ marginLeft: "auto" }}>
             <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
               Device Serial Number : {uniqueDeviceId}
-            </Text>
-            <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
-              WiFi Password : {wifiPass}
             </Text>
           </View>
         </View>
@@ -319,6 +356,19 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
               ))}
             </View>
             <HalfCutCircle number={rateOfTurnHerot} />
+            <Text
+              style={[
+                fonts[600],
+                fonts.typography,
+                gutters.marginTop_10,
+                {
+                  fontFamily: "NotoSans-Regular",
+                  fontSize: getFontSize(16),
+                },
+              ]}
+            >
+              ROT
+            </Text>
           </View>
         </View>
         <View style={[layout.row, layout.fullWidth]}>
@@ -332,7 +382,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                   borderRadius: calculateHeight(20),
                   height: calculateHeight(212),
 
-                  width: calculateWidth(260),
+                  width: calculateWidth(400),
                 },
               ]}
             >
@@ -352,9 +402,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                       fonts.dodgerBlue,
                       {
                         fontFamily: "NotoSans-Regular",
-                        fontSize: isTablet()
-                          ? getFontSize(72)
-                          : getFontSize(30),
+                        fontSize: getFontSize(72),
                       },
                     ]}
                   >
@@ -382,26 +430,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                       },
                     ]}
                   >
-                    HDC
-                  </Text>
-                  <View
-                    style={[
-                      { height: 1, backgroundColor: colors.lightBlack },
-                      layout.fullWidth,
-                    ]}
-                  />
-
-                  <Text
-                    style={[
-                      fonts[400],
-                      fonts.typography,
-                      {
-                        fontFamily: "NotoSans-Regular",
-                        fontSize: getFontSize(16),
-                      },
-                    ]}
-                  >
-                    SRC
+                    HDT
                   </Text>
                 </View>
               </View>
@@ -419,32 +448,17 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                 >
                   <Text
                     style={[
-                      {
-                        fontFamily: "NotoSans-Regular",
-                        fontSize: isTablet()
-                          ? getFontSize(72)
-                          : getFontSize(30),
-                      },
-
-                      fonts.bold,
-                      fonts.lightBlack,
-                    ]}
-                  >
-                    {value2 ? 0 : "00"}
-                  </Text>
-                  <Text
-                    style={[
                       fonts.bold,
                       fonts.dodgerBlue,
                       {
                         fontFamily: "NotoSans-Regular",
-                        fontSize: isTablet()
-                          ? getFontSize(72)
-                          : getFontSize(30),
+                        fontSize: getFontSize(72),
                       },
                     ]}
                   >
-                    {value2 || "--"}°
+                    {Math.round(parseFloat(trueTrackDegreesVtg) * 10) / 10 ||
+                      "--"}
+                    °
                   </Text>
                 </View>
                 <View
@@ -470,25 +484,6 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                   >
                     COG
                   </Text>
-                  <View
-                    style={[
-                      { height: 1, backgroundColor: colors.lightBlack },
-                      layout.fullWidth,
-                    ]}
-                  />
-
-                  <Text
-                    style={[
-                      fonts[400],
-                      fonts.typography,
-                      {
-                        fontFamily: "NotoSans-Regular",
-                        fontSize: getFontSize(16),
-                      },
-                    ]}
-                  >
-                    SRC
-                  </Text>
                 </View>
               </View>
             </View>
@@ -509,50 +504,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                 height: calculateHeight(68),
               },
             ]}
-          >
-            <View style={[layout.row, layout.itemsCenter]}>
-              <Text
-                style={[
-                  fonts[400],
-                  fonts.typography,
-                  { fontSize: getFontSize(12) },
-                ]}
-              >
-                VESSEL NAME
-              </Text>
-              <Text
-                style={[
-                  fonts[400],
-                  fonts.typography,
-                  { marginLeft: "auto", fontSize: getFontSize(12) },
-                ]}
-              >
-                : XXX
-              </Text>
-            </View>
-            <View
-              style={[layout.row, layout.itemsCenter, gutters.marginTop_10]}
-            >
-              <Text
-                style={[
-                  { fontSize: getFontSize(12) },
-                  fonts[400],
-                  fonts.typography,
-                ]}
-              >
-                VESSEL IMO
-              </Text>
-              <Text
-                style={[
-                  fonts[400],
-                  fonts.typography,
-                  { marginLeft: "auto", fontSize: getFontSize(12) },
-                ]}
-              >
-                : XXX
-              </Text>
-            </View>
-          </View>
+          ></View>
 
           {/*  */}
 
@@ -562,14 +514,14 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
               gutters.paddingRight_10,
               backgrounds.grayBackground,
               layout.itemsCenter,
-              gutters.marginLeft_62,
+              gutters.marginLeft_10,
               layout.justifyCenter,
               {
                 borderRadius: calculateHeight(20),
                 height: calculateHeight(303),
 
-                width: calculateWidth(261),
-                gap: calculateHeight(10),
+                width: calculateWidth(325),
+                gap: calculateHeight(30),
               },
             ]}
           >
@@ -587,34 +539,50 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                 style={[
                   layout.fullHeight,
                   layout.justifyCenter,
-                  { width: calculateWidth(175) },
+                  { width: calculateWidth(225) },
                 ]}
               >
                 <Text
                   style={[
-                    fonts[600],
+                    fonts[400],
                     fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(24) },
+                    { textAlign: "right", fontSize: getFontSize(20) },
                   ]}
                 >
-                  {latitudeGga}’ N
+                  {`${parseInt(latitudeGga.substring(0, 2))}° ${parseInt(
+                    latitudeGga.substring(2, 4)
+                  )}' ${(
+                    parseFloat(
+                      latitudeGga.substring(4, latitudeGga.length - 1)
+                    ) * 60
+                  ).toFixed(2)}" ${latitudeGga.slice(-1)}`}
                 </Text>
                 <Text
                   style={[
-                    fonts[600],
+                    fonts[400],
                     fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(24) },
+                    { textAlign: "right", fontSize: getFontSize(20) },
                   ]}
                 >
-                  {longitudeGga} W
+                  {`${parseInt(longitudeGga.substring(0, 3))}° ${parseInt(
+                    longitudeGga.substring(3, 5)
+                  )}' ${(
+                    parseFloat(
+                      longitudeGga.substring(5, longitudeGga.length - 1)
+                    ) * 60
+                  ).toFixed(2)}" ${longitudeGga.slice(-1)}`}
                 </Text>
               </View>
-              <CustomPicker
-                items={data}
-                onValueChange={(value: any) => setSelectedValue(value)}
-                placeholder="Select an option"
-                selectedValue={selectedValue}
-              />
+              <Text
+                style={[
+                  fonts[600],
+                  fonts.typography,
+                  { textAlign: "right", fontSize: getFontSize(24) },
+                  gutters.marginLeft_5,
+                ]}
+              >
+                GPS
+              </Text>
             </View>
 
             {/*  */}
@@ -631,34 +599,57 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                 style={[
                   layout.fullHeight,
                   layout.justifyCenter,
-                  { width: calculateWidth(175) },
+                  { width: calculateWidth(225) },
                 ]}
               >
                 <Text
                   style={[
-                    fonts[600],
+                    fonts[400],
                     fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(24) },
+                    { textAlign: "right", fontSize: getFontSize(20) },
                   ]}
                 >
-                  {utcTimeGga}
+                  {utcTimeZda.substring(0, 2)}:{utcTimeZda.substring(2, 4)}:
+                  {utcTimeZda.substring(4, 6)}
                 </Text>
                 <Text
                   style={[
-                    fonts[600],
+                    fonts[400],
                     fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(24) },
+                    { textAlign: "right", fontSize: getFontSize(20) },
                   ]}
                 >
-                  12-Aug-2021
+                  {dayZda}.
+                  {
+                    [
+                      "Jan",
+                      "Feb",
+                      "Mar",
+                      "Apr",
+                      "May",
+                      "Jun",
+                      "Jul",
+                      "Aug",
+                      "Sep",
+                      "Oct",
+                      "Nov",
+                      "Dec",
+                    ][parseInt(monthZda, 10) - 1]
+                  }
+                  .{yearZda}
                 </Text>
               </View>
-              <CustomPicker
-                items={data}
-                onValueChange={(value: any) => setSelectedValue1(value)}
-                placeholder="Select an option"
-                selectedValue={selectedValue1}
-              />
+
+              <Text
+                style={[
+                  fonts[600],
+                  fonts.typography,
+                  { textAlign: "right", fontSize: getFontSize(24) },
+                  gutters.marginLeft_5,
+                ]}
+              >
+                UTC
+              </Text>
             </View>
 
             {/*  */}
@@ -676,15 +667,15 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                 style={[
                   layout.fullHeight,
                   layout.justifyCenter,
-                  { width: calculateWidth(175) },
+                  { width: calculateWidth(225) },
                 ]}
               >
                 <Text
                   style={[
                     // fonts.size_24,
-                    fonts[600],
+                    fonts[400],
                     fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(24) },
+                    { textAlign: "right", fontSize: getFontSize(20) },
                   ]}
                 >
                   GPS Q.IND
@@ -692,21 +683,24 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                 <Text
                   style={[
                     // fonts.size_24,
-                    fonts[600],
+                    fonts[400],
                     fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(24) },
+                    { textAlign: "right", fontSize: getFontSize(20) },
                   ]}
                 >
                   {fixQuality}
                 </Text>
               </View>
-              <CustomPicker
-                items={data}
-                onValueChange={(value: any) => setSelectedValue2(value)}
-                placeholder="Select an option"
-                style={{ width: 200 }} // Add your custom styles here
-                selectedValue={selectedValue2}
-              />
+              <Text
+                style={[
+                  fonts[600],
+                  fonts.typography,
+                  { textAlign: "right", fontSize: getFontSize(24) },
+                  gutters.marginLeft_5,
+                ]}
+              >
+                RTK
+              </Text>
             </View>
           </View>
         </View>
@@ -732,12 +726,15 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                     borderColor:
                       item.id === selectedChipId ? colors.red : colors.blue,
                     borderRadius: calculateHeight(6),
-                    width: calculateWidth(90),
+                    width: calculateWidth(110),
                     height: calculateHeight(34),
                   },
                 ]}
                 key={index}
-                onPress={() => setSelectedChipId(item.id)}
+                onPress={() => {
+                  if (item.id == selectedChipId) filteredData = StrArr;
+                  else setSelectedChipId(item.id);
+                }}
               >
                 <Text style={[fonts.size_12, fonts.blue, fonts[500]]}>
                   {item.name}
@@ -777,6 +774,50 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
           </ScrollView>
         </View>
       </View>
+
+      <CustomModal
+        rightButtonClick={() => {
+          setIsModalVisible(false);
+          navigation.navigate("ScanQr");
+        }}
+        leftButtonClick={() => {
+          Linking.openSettings();
+          setIsModalVisible(false);
+        }}
+        isVisible={isModalVisible}
+        leftButtonText="Go WIfi Settings"
+        rightButtonText="Scan QR Code"
+        onClose={() => {
+          setIsModalVisible(false);
+        }}
+      >
+        <View style={[gutters.marginTop_1, layout.itemsCenter]}>
+          <Info color={colors.danger} style={gutters.marginBottom_1} />
+          <Text
+            style={[
+              fonts.typography,
+              fonts.size_22,
+              fonts[700],
+              gutters.marginTop_20,
+            ]}
+          >
+            Device Not Found
+          </Text>
+          <Text
+            style={[
+              fonts.typography,
+              fonts.size_18,
+              fonts[600],
+              gutters.marginTop_12,
+              gutters.marginBottom_40,
+              gutters.paddingHorizontal_5,
+              { textAlign: "center" },
+            ]}
+          >
+            Please check your Device and try again?
+          </Text>
+        </View>
+      </CustomModal>
     </SafeScreen>
   );
 }

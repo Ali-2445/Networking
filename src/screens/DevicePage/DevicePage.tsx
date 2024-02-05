@@ -33,7 +33,6 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
   const { t } = useTranslation(["startup"]);
   const [devices, setDevices] = useState([SPU]);
   const [selectedDevice, setSelectedDevice] = useState(null);
-  const [isConnected, setIsConnected] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [deviceNotFOundPage, setIsDeviceNotFound] = useState(
     devices.length == 0
@@ -42,40 +41,31 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
   const [udpConnected, setUdpConnected] = useState(false);
   const [StrArr, setStrArr] = useState<string[]>([]);
   const [vendorId, setVendorId] = useState<string | number>("N/A");
+  const [isConnected, setIsConnected] = useState(false);
+  const [connectionType, setConnectionType] = useState(false);
 
-  useEffect(() => {
-    const socket = dgram.createSocket("udp4");
-    socket.bind(17608);
-    socket.on("message", function (msg, rinfo) {
-      socket.on("listening", () => setUdpConnected(true));
-      var str = String.fromCharCode.apply(null, new Uint8Array(msg));
-      setStrArr((previousData) => [...previousData, str]);
 
-      const message = msg.toString();
-
-      const parts = message.split(",");
-      switch (parts[0]) {
-        case "$PTMSX":
-          setVendorId(parts[3]);
-          break;
-      }
-    });
-  }, []);
-  useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener((state) => {
-      console.log(state);
-      setIsConnected(state.isInternetReachable);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
+ 
   const updateConnectionStatus = () => {
     NetInfo.fetch().then((state) => {
       setIsConnected(state.isInternetReachable);
     });
   };
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsConnected(state.isConnected);
+    });
 
+    // Fetch the initial network state
+    NetInfo.fetch().then(state => {
+      console.log(state)
+      setIsConnected(state.isConnected);
+    });
+
+
+    // Cleanup subscription on component unmount
+    return () => unsubscribe();
+  }, []);
   useEffect(() => {
     updateConnectionStatus();
   }, [isFocused]);
@@ -102,7 +92,7 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
         style={[layout.flex_1, backgrounds.offWhite]}
         showsVerticalScrollIndicator={false}
       >
-        {udpConnected && (vendorId == 4 || vendorId == "4") ? (
+        {true? (
           <View style={[gutters.marginTop_82, gutters.marginLeft_66]}>
             <Text style={[fonts.size_24, fonts[600], fonts.typography]}>
               Devices:
@@ -127,14 +117,12 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
                   onTouchEnd={() => {
                     handleDevicePress(index);
                     if (!isConnected) {
-                      setIsModalVisible(true);
-                      setIsDeviceNotFound(true);
+                     // setIsModalVisible(true);
+
+                     navigation.navigate("Dashboard");
+                    //  setIsDeviceNotFound(true);
                     } else {
-                      if (wifiSSID.startsWith("spu100")) {
                         navigation.navigate("Dashboard");
-                      } else {
-                        Alert.alert("Please connect with SPU wifi");
-                      }
                     }
                   }}
                 >
@@ -202,14 +190,14 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
             setIsModalVisible(false);
           }}
         >
-          <View style={[gutters.marginTop_60, layout.itemsCenter]}>
-            <Info color={colors.danger} />
+          <View style={[gutters.marginTop_30, layout.itemsCenter]}>
+            <Info color={colors.danger}  />
             <Text
               style={[
                 fonts.typography,
                 fonts.size_22,
                 fonts[700],
-                gutters.marginTop_20,
+                gutters.marginTop_5,
               ]}
             >
               No Wifi Connection
@@ -219,7 +207,7 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
                 fonts.typography,
                 fonts.size_18,
                 fonts[600],
-                gutters.marginTop_12,
+                gutters.marginTop_5,
                 gutters.marginBottom_24,
                 gutters.paddingHorizontal_5,
                 { textAlign: "center" },

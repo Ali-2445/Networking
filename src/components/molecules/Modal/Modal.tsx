@@ -134,8 +134,8 @@ const styles = StyleSheet.create({
   modalContent: {
     backgroundColor: "white",
     borderRadius: calculateHeight(6),
-    width: calculateWidth(518),
-    height: calculateHeight(348),
+    width: calculateWidth(550),
+    height: calculateHeight(300),
   },
 });
 

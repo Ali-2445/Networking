@@ -57,7 +57,7 @@ const DrawerNavigator = () => {
           }
         },
         () => {
-          setInitialRouteName("DevicePage");
+          setInitialRouteName("Dashboard");
           console.log("Error");
         }
       );
@@ -88,29 +88,7 @@ const DrawerNavigator = () => {
           fontWeight: "700",
           color: colors.white,
         },
-        headerRight: () => (
-          <View
-            style={{
-              flexDirection: "row",
-              marginRight: calculateWidth(20),
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <TouchableOpacity onPress={() => {}}>
-              <Bell />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {}}
-              style={{ marginLeft: calculateWidth(16) }}
-            >
-              <Image
-                source={Avatar}
-                style={{ width: 30, height: 30, borderRadius: 15 }}
-              />
-            </TouchableOpacity>
-          </View>
-        ),
+       
         drawerContentContainerStyle: { backgroundColor: colors.blue, flex: 1 },
         drawerStyle: { width: calculateWidth(400) },
       })}
@@ -136,7 +114,7 @@ const DrawerNavigator = () => {
               {
                 width: calculateWidth(270),
                 borderRadius: calculateWidth(12),
-
+                
                 backgroundColor: isItemActive("Dashboard", focusedRouteName)
                   ? colors.white
                   : colors.blue,
@@ -157,7 +135,7 @@ const DrawerNavigator = () => {
             />
             <Text
               style={[
-                fonts.size_20,
+                fonts.size_16,
                 fonts[400],
                 fonts.white,
                 gutters.marginLeft_20,
@@ -196,7 +174,7 @@ const DrawerNavigator = () => {
             />
             <Text
               style={[
-                fonts.size_20,
+                fonts.size_16,
                 fonts[400],
 
                 gutters.marginLeft_20,
@@ -206,119 +184,6 @@ const DrawerNavigator = () => {
               ]}
             >
               Device
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[
-              gutters.paddingHorizontal_20,
-              gutters.paddingVertical_10,
-              layout.row,
-              layout.itemsCenter,
-              {
-                width: calculateWidth(270),
-                borderRadius: calculateWidth(12),
-
-                backgroundColor: isItemActive(
-                  "Commisssioning",
-                  focusedRouteName
-                )
-                  ? colors.white
-                  : colors.blue,
-              },
-            ]}
-            onPress={() => {
-              if (isSpu) {
-                props.navigation.navigate("Commisssioning");
-              }
-            }}
-          >
-            <Devices
-              color={
-                isItemActive("Commisssioning", focusedRouteName)
-                  ? colors.blue
-                  : colors.white
-              }
-            />
-            <Text
-              style={[
-                fonts.size_20,
-                fonts[400],
-
-                gutters.marginLeft_20,
-                isItemActive("Commisssioning", focusedRouteName)
-                  ? fonts.blue
-                  : fonts.white,
-              ]}
-            >
-              Commisssioning
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[
-              gutters.paddingHorizontal_20,
-              gutters.paddingVertical_10,
-              layout.row,
-              layout.itemsCenter,
-              {
-                width: calculateWidth(270),
-                borderRadius: calculateWidth(12),
-                backgroundColor: isItemActive("Logs", focusedRouteName)
-                  ? colors.white
-                  : colors.blue,
-              },
-            ]}
-            onPress={() => {
-              if (isSpu) {
-                props.navigation.navigate("Logs");
-              }
-            }}
-          >
-            <Logs
-              color={
-                isItemActive("Logs", focusedRouteName)
-                  ? colors.blue
-                  : colors.white
-              }
-            />
-            <Text
-              style={[
-                fonts.size_20,
-                fonts[400],
-
-                gutters.marginLeft_20,
-                isItemActive("Logs", focusedRouteName)
-                  ? fonts.blue
-                  : fonts.white,
-              ]}
-            >
-              Logs
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[
-              gutters.paddingHorizontal_20,
-              gutters.paddingVertical_10,
-              layout.row,
-              layout.itemsCenter,
-              { width: calculateWidth(270) },
-            ]}
-            onPress={() => {
-              props.navigation.navigate("Login");
-            }}
-          >
-            <Logout />
-            <Text
-              style={[
-                fonts.size_20,
-                fonts[400],
-                fonts.white,
-                gutters.marginLeft_20,
-              ]}
-            >
-              Login
             </Text>
           </TouchableOpacity>
         </DrawerContentScrollView>

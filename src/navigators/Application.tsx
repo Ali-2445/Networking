@@ -43,7 +43,7 @@ function ApplicationNavigator() {
               height: calculateHeight(76),
             },
             headerLeft: () => null,
-            headerTitleStyle: { fontSize: RFValue(20, 900), fontWeight: "700" },
+            headerTitleStyle: { fontSize: RFValue(14, 900), fontWeight: "700" },
           }}
         />
       </Stack.Navigator>

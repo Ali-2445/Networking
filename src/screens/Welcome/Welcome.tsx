@@ -223,20 +223,6 @@ console.log('sssss')
     );
   };
 
-  const handlePermissionClick = () => {
-    // Handle the logic for each permission step
-    if (permissionStep === "storage") {
-      // Handle storage permission logic
-      showPermissionModal("camera");
-    } else if (permissionStep === "camera") {
-      // Handle camera permission logic
-      showPermissionModal("notification");
-    } else if (permissionStep === "notification") {
-      // Handle notification permission logic
-      setIsModalVisible(false);
-      navigation.navigate("DrawerNavigator");
-    }
-  };
 
   useEffect(() => {
     storage.set("firstTime", false);
@@ -303,46 +289,11 @@ console.log('sssss')
                 marginBottom: calculateHeight(68),
               },
             ]}
-            onPress={() => showPermissionModal("storage")}
+            onPress={() => 
+              navigation.navigate("DrawerNavigator")}
           />
         </View>
       </View>
-      <CustomModal
-        leftButtonClick={() => setIsModalVisible(false)}
-        rightButtonClick={handlePermissionClick}
-        isVisible={isModalVisible}
-      >
-        <View style={[gutters.marginTop_60, layout.itemsCenter]}>
-          <Info />
-          <Text
-            style={[
-              fonts.typography,
-              fonts.size_22,
-              fonts[700],
-              gutters.marginTop_20,
-            ]}
-          >
-            {permissionStep === "storage"
-              ? "Storage Management Permission"
-              : permissionStep === "camera"
-              ? "Camera Permission"
-              : permissionStep === "notification"
-              ? "Notification Permission"
-              : "Permission"}
-          </Text>
-          <Text
-            style={[
-              fonts.typography,
-              fonts.size_18,
-              fonts[600],
-              gutters.marginTop_12,
-              gutters.marginBottom_24,
-            ]}
-          >
-            Do you want to continue ?
-          </Text>
-        </View>
-      </CustomModal>
     </SafeScreen>
   );
 }

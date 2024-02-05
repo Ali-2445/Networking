@@ -296,7 +296,7 @@ export default ScanQrPage;
 
 const styles = StyleSheet.create({
   button: {
-    width: calculateWidth(94),
+    width: calculateWidth(130),
     height: calculateHeight(34),
     backgroundColor: "transparent",
     borderRadius: calculateHeight(6),
