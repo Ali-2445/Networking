@@ -44,24 +44,21 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
   const [isConnected, setIsConnected] = useState(false);
   const [connectionType, setConnectionType] = useState(false);
 
-
- 
   const updateConnectionStatus = () => {
     NetInfo.fetch().then((state) => {
       setIsConnected(state.isInternetReachable);
     });
   };
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(state => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
       setIsConnected(state.isConnected);
     });
 
     // Fetch the initial network state
-    NetInfo.fetch().then(state => {
-      console.log(state)
+    NetInfo.fetch().then((state) => {
+      console.log(state);
       setIsConnected(state.isConnected);
     });
-
 
     // Cleanup subscription on component unmount
     return () => unsubscribe();
@@ -87,138 +84,138 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
     });
   }, []);
   return (
-    <SafeScreen>
-      <ScrollView
-        style={[layout.flex_1, backgrounds.offWhite]}
-        showsVerticalScrollIndicator={false}
-      >
-        {true? (
-          <View style={[gutters.marginTop_82, gutters.marginLeft_66]}>
-            <Text style={[fonts.size_24, fonts[600], fonts.typography]}>
-              Devices:
-            </Text>
-            {devices &&
-              devices.length > 0 &&
-              devices.map((device, index) => (
-                <View
-                  key={index}
-                  style={[
-                    {
-                      height: calculateHeight(217),
-                      width: calculateWidth(295),
-                      borderRadius: calculateWidth(10),
-                      borderWidth: selectedDevice === index ? 2 : 0,
-                      borderColor: colors.blue,
-                    },
-                    layout.itemsCenter,
-                    layout.justifyCenter,
-                    gutters.marginTop_81,
-                  ]}
-                  onTouchEnd={() => {
-                    handleDevicePress(index);
-                    if (!isConnected) {
-                     // setIsModalVisible(true);
+    // <SafeScreen>
+    <ScrollView
+      style={[layout.flex_1, backgrounds.offWhite]}
+      showsVerticalScrollIndicator={false}
+    >
+      {true ? (
+        <View style={[gutters.marginTop_82, gutters.marginLeft_66]}>
+          <Text style={[fonts.size_24, fonts[600], fonts.typography]}>
+            Devices:
+          </Text>
+          {devices &&
+            devices.length > 0 &&
+            devices.map((device, index) => (
+              <View
+                key={index}
+                style={[
+                  {
+                    height: calculateHeight(217),
+                    width: calculateWidth(295),
+                    borderRadius: calculateWidth(10),
+                    borderWidth: selectedDevice === index ? 2 : 0,
+                    borderColor: colors.blue,
+                  },
+                  layout.itemsCenter,
+                  layout.justifyCenter,
+                  gutters.marginTop_81,
+                ]}
+                onTouchEnd={() => {
+                  handleDevicePress(index);
+                  if (!isConnected) {
+                    // setIsModalVisible(true);
 
-                     navigation.navigate("Dashboard");
+                    navigation.navigate("Dashboard");
                     //  setIsDeviceNotFound(true);
-                    } else {
-                        navigation.navigate("Dashboard");
-                    }
+                  } else {
+                    navigation.navigate("Dashboard");
+                  }
+                }}
+              >
+                <Image
+                  source={device}
+                  style={{
+                    height: calculateHeight(156),
+                    width: calculateWidth(214),
                   }}
-                >
-                  <Image
-                    source={device}
-                    style={{
-                      height: calculateHeight(156),
-                      width: calculateWidth(214),
-                    }}
-                    resizeMode="contain"
-                  />
-                </View>
-              ))}
-          </View>
-        ) : (
-          <View style={[gutters.marginTop_30]}>
-            <Text
-              style={[
-                fonts.size_24,
-                fonts[600],
-                fonts.typography,
-                { alignSelf: "center" },
-              ]}
-            >
-              Device Not Found
+                  resizeMode="contain"
+                />
+              </View>
+            ))}
+        </View>
+      ) : (
+        <View style={[gutters.marginTop_30]}>
+          <Text
+            style={[
+              fonts.size_24,
+              fonts[600],
+              fonts.typography,
+              { alignSelf: "center" },
+            ]}
+          >
+            Device Not Found
+          </Text>
+
+          <View
+            style={[
+              gutters.marginTop_40,
+              gutters.marginLeft_40,
+              {
+                gap: calculateHeight(10),
+              },
+            ]}
+          >
+            <Text style={[fonts.size_16, fonts[600], fonts.typography]}>
+              CONNECTED WIFI : .......
             </Text>
 
-            <View
-              style={[
-                gutters.marginTop_40,
-                gutters.marginLeft_40,
-                {
-                  gap: calculateHeight(10),
-                },
-              ]}
-            >
-              <Text style={[fonts.size_16, fonts[600], fonts.typography]}>
-                CONNECTED WIFI : .......
-              </Text>
-
-              <Text style={[fonts.size_16, fonts[600], fonts.typography]}>
-                DEVICE ID : ........
-              </Text>
-              <Text style={[fonts.size_16, fonts[600], fonts.typography]}>
-                DEVICE MODEL : ........
-              </Text>
-            </View>
-          </View>
-        )}
-
-        <CustomModal
-          rightButtonClick={() => {
-            setIsModalVisible(false);
-            setIsDeviceNotFound(false);
-            navigation.navigate("ScanQr");
-          }}
-          leftButtonClick={() => {
-            Linking.openSettings();
-            setIsModalVisible(false);
-          }}
-          isVisible={isModalVisible}
-          leftButtonText="Go WIfi Settings"
-          rightButtonText="Scan QR Code"
-          onClose={() => {
-            setIsModalVisible(false);
-          }}
-        >
-          <View style={[gutters.marginTop_30, layout.itemsCenter]}>
-            <Info color={colors.danger}  />
-            <Text
-              style={[
-                fonts.typography,
-                fonts.size_22,
-                fonts[700],
-                gutters.marginTop_5,
-              ]}
-            >
-              No Wifi Connection
+            <Text style={[fonts.size_16, fonts[600], fonts.typography]}>
+              DEVICE ID : ........
             </Text>
-            <Text
-              style={[
-                fonts.typography,
-                fonts.size_18,
-                fonts[600],
-                gutters.marginTop_5,
-                gutters.marginBottom_24,
-                gutters.paddingHorizontal_5,
-                { textAlign: "center" },
-              ]}
-            >
-              Please check your wifi connection and try again?
+            <Text style={[fonts.size_16, fonts[600], fonts.typography]}>
+              DEVICE MODEL : ........
             </Text>
           </View>
-        </CustomModal>
-      </ScrollView>
-    </SafeScreen>
+        </View>
+      )}
+
+      <CustomModal
+        rightButtonClick={() => {
+          setIsModalVisible(false);
+          setIsDeviceNotFound(false);
+          navigation.navigate("ScanQr");
+        }}
+        leftButtonClick={() => {
+          Linking.openSettings();
+          setIsModalVisible(false);
+        }}
+        isVisible={isModalVisible}
+        leftButtonText="Go WIfi Settings"
+        rightButtonText="Scan QR Code"
+        onClose={() => {
+          setIsModalVisible(false);
+        }}
+      >
+        <View style={[gutters.marginTop_30, layout.itemsCenter]}>
+          <Info color={colors.danger} />
+          <Text
+            style={[
+              fonts.typography,
+              fonts.size_22,
+              fonts[700],
+              gutters.marginTop_5,
+            ]}
+          >
+            No Wifi Connection
+          </Text>
+          <Text
+            style={[
+              fonts.typography,
+              fonts.size_18,
+              fonts[600],
+              gutters.marginTop_5,
+              gutters.marginBottom_24,
+              gutters.paddingHorizontal_5,
+              { textAlign: "center" },
+            ]}
+          >
+            Please check your wifi connection and try again?
+          </Text>
+        </View>
+      </CustomModal>
+    </ScrollView>
+    // </SafeScreen>
   );
 }
 

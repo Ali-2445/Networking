@@ -5,8 +5,8 @@ import { calculateHeight, calculateWidth } from "@/theme/utils";
 function Close(props: any) {
   return (
     <Svg
-      width={props.width | calculateWidth(20)}
-      height={props.height | calculateHeight(20)}
+      width={props.width | 20}
+      height={props.height | 20}
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

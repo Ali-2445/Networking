@@ -6,7 +6,7 @@ import {
 } from "@react-navigation/drawer";
 
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
-import { DevicePage, LogsScreen, Dashboard } from "@/screens";
+import { DevicePage, LogsScreen, Dashboard, Status } from "@/screens";
 import type { ApplicationStackParamList } from "@/types/navigation";
 import { useTheme } from "@/theme";
 import Hamburger from "@/theme/assets/svgs/Hamburger";
@@ -56,9 +56,10 @@ const DrawerNavigator = () => {
             setInitialRouteName("DevicePage");
           }
         },
-        () => {
+        (err) => {
+          setSpu(true);
           setInitialRouteName("Dashboard");
-          console.log("Error");
+          console.log("Error : ", err);
         }
       );
     });
@@ -88,7 +89,7 @@ const DrawerNavigator = () => {
           fontWeight: "700",
           color: colors.white,
         },
-       
+
         drawerContentContainerStyle: { backgroundColor: colors.blue, flex: 1 },
         drawerStyle: { width: calculateWidth(400) },
       })}
@@ -114,7 +115,7 @@ const DrawerNavigator = () => {
               {
                 width: calculateWidth(270),
                 borderRadius: calculateWidth(12),
-                
+
                 backgroundColor: isItemActive("Dashboard", focusedRouteName)
                   ? colors.white
                   : colors.blue,
@@ -186,6 +187,45 @@ const DrawerNavigator = () => {
               Device
             </Text>
           </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[
+              gutters.paddingHorizontal_20,
+              gutters.paddingVertical_10,
+              layout.row,
+              layout.itemsCenter,
+              {
+                width: calculateWidth(270),
+                borderRadius: calculateWidth(12),
+
+                backgroundColor: isItemActive("Status", focusedRouteName)
+                  ? colors.white
+                  : colors.blue,
+              },
+            ]}
+            onPress={() => props.navigation.navigate("Status")}
+          >
+            <Logout
+              color={
+                isItemActive("Status", focusedRouteName)
+                  ? colors.blue
+                  : colors.white
+              }
+            />
+            <Text
+              style={[
+                fonts.size_16,
+                fonts[400],
+
+                gutters.marginLeft_20,
+                isItemActive("Status", focusedRouteName)
+                  ? fonts.blue
+                  : fonts.white,
+              ]}
+            >
+              Status
+            </Text>
+          </TouchableOpacity>
         </DrawerContentScrollView>
       )}
       initialRouteName={initialRouteName}
@@ -216,6 +256,13 @@ const DrawerNavigator = () => {
         component={LogsScreen}
         options={{
           title: "Logs",
+        }}
+      />
+      <Drawer.Screen
+        name="Status"
+        component={Status}
+        options={{
+          title: "Status",
         }}
       />
     </Drawer.Navigator>

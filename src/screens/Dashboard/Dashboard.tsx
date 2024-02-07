@@ -163,6 +163,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
       }
 
       const message = msg.toString();
+
       const parts = message.split(",");
       if (
         parts[0] === "$PTMSX" && parts[3] != "4"

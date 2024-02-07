@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/theme";
 import ApplicationNavigator from "./navigators/Application";
 import "./translations";
 import { Provider } from "react-redux";
-import { store } from "./redux/store";
+import store from "./redux/store";
 const queryClient = new QueryClient();
 
 export const storage = new MMKV();

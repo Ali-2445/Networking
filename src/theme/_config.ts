@@ -19,6 +19,7 @@ const colorsLight = {
   black: "rgba(0, 0, 0, 1)",
   red: "rgba(255, 16, 16, 1)",
   danger: "rgba(234, 84, 85, 1)",
+  green: "#28C76F",
 } as const;
 
 const colorsDark = {
@@ -38,6 +39,7 @@ const colorsDark = {
   black: "rgba(0, 0, 0, 1)",
   red: "rgba(255, 16, 16, 1)",
   danger: "rgba(234, 84, 85, 1)",
+  green: "#28C76F",
 } as const;
 
 const sizes = [
