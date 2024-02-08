@@ -18,7 +18,7 @@ function Status({ navigation }: ApplicationScreenProps) {
     isConnected,
     vendorId,
   } = useSelector((state) => state.udpSlice);
-  const { routerName } = useSelector((state) => state.netInfo);
+  const { routerName, serialNumber } = useSelector((state) => state.netInfo);
 
   return (
     <View
@@ -97,7 +97,9 @@ function Status({ navigation }: ApplicationScreenProps) {
         >
           Device Serial Number
         </Text>
-        <Text style={[fonts[400], fonts.size_20, fonts.typography]}>: 111</Text>
+        <Text style={[fonts[400], fonts.size_20, fonts.typography]}>
+          : {serialNumber || "N/A"}
+        </Text>
       </View>
 
       <View

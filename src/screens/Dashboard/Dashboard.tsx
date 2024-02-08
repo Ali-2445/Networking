@@ -28,6 +28,7 @@ import {
   setROTStatus,
   setUdpVendorId,
 } from "@/redux/slices/UDPdata.slice";
+import { updateSerialNumber } from "@/redux/slices/NetInfo.slice";
 
 function Dashboard({ navigation }: ApplicationScreenProps) {
   const scrollViewRef = useRef<ScrollView>(null);
@@ -222,6 +223,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
             break;
           case "$PTMSX":
             dispatch(setUdpVendorId(parts[3]));
+            dispatch(updateSerialNumber(parts[2]));
             setMessageVersion(parts[1]);
             setUniqueDeviceId(parts[2]);
             setVendorId(parts[3]);
