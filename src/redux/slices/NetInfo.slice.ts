@@ -27,10 +27,4 @@ const netInfoSlice = createSlice({
 export const { updateConnectionStatus, updateRouterName } =
   netInfoSlice.actions;
 
-export const fetchNetInfo = () => async (dispatch: any) => {
-  const netInfoState = await NetInfo.fetch();
-  dispatch(updateConnectionStatus(netInfoState.isConnected));
-  dispatch(updateRouterName(netInfoState.routerName));
-};
-
 export default netInfoSlice.reducer;

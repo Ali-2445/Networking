@@ -17,9 +17,21 @@ import { useQuery } from "@tanstack/react-query";
 import WifiManager from "react-native-wifi-reborn";
 import CustomModal from "@/components/molecules/Modal/Modal";
 import Info from "@/theme/assets/svgs/info";
+import { UseDispatch, useDispatch } from "react-redux";
+import {
+  fetchUdpData,
+  setAISStatus,
+  setGPSStatus,
+  setHDTStatus,
+  setIsConnected,
+  setPTMStatus,
+  setROTStatus,
+  setUdpVendorId,
+} from "@/redux/slices/UDPdata.slice";
 
 function Dashboard({ navigation }: ApplicationScreenProps) {
   const scrollViewRef = useRef<ScrollView>(null);
+  const dispatch = useDispatch();
   const { layout, gutters, fonts, backgrounds, colors } = useTheme();
   const { t } = useTranslation(["startup"]);
 
@@ -92,7 +104,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
 
   const [value1, setValue1] = useState(88);
   const [value2, setValue2] = useState(0);
-  const [ssid, setSSID] = useState("spu100_111");
+  const [ssid, setSSID] = useState("N/A");
   const [serialNumber, setSerialNumber] = useState(111);
   const [wifiPass, setWifiPass] = useState("salnav213");
   const [usdConnected, setUdpConnected] = useState(false);
@@ -131,24 +143,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
         return "";
     }
   }
-  function convertToDMS(lat) {
-    // Split the input into degrees and decimal minutes
 
-    // Extract the direction (N/S)
-    const direction = lat.slice(-1);
-    // Extract the numeric part of the latitude
-    const numericPart = lat.slice(0, -1);
-
-    // Extract degrees and minutes from the numeric part
-    const degrees = parseInt(numericPart.slice(0, 2), 10);
-    const minutes = parseInt(numericPart.slice(2, 4), 10);
-    // Convert the remainder to seconds
-    const decimalMinutes = parseFloat("0." + numericPart.slice(4));
-    const seconds = decimalMinutes * 60;
-
-    // Format the output
-    return `${degrees}° ${minutes}' ${seconds.toFixed(3)}" ${direction}`;
-  }
   useEffect(() => {
     const socket = dgram.createSocket({
       type: "udp4",
@@ -156,9 +151,12 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
     });
     socket.bind(17608, function () {
       setIsModalVisible(true);
+      dispatch(setIsConnected(false));
     });
     socket.on("message", function (msg, rinfo) {
       setIsModalVisible(false);
+      dispatch(setIsConnected(false));
+
       if (rinfo.port != "60183") {
       }
 
@@ -172,11 +170,22 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
             : true
           : false
       ) {
+        dispatch(setIsConnected(false));
         setIsModalVisible(true);
         socket.close();
       } else {
+        dispatch(setIsConnected(true));
+
         var str = String.fromCharCode.apply(null, new Uint8Array(msg));
+        dispatch(fetchUdpData(str));
+        dispatch(setHDTStatus(str.includes("$HEROT" || "$GNHDT")));
+        dispatch(setGPSStatus(str.includes("$G" || "$GNHDT")));
+        dispatch(setPTMStatus(str.includes("$PTM")));
+        dispatch(setAISStatus(str.includes("!AIV")));
+        dispatch(setROTStatus(str.includes("$ROT")));
+
         setStrArr((previousData) => [...previousData, str]);
+
         switch (parts[0]) {
           case "$GNGGA":
             setUtcTimeGga(parts[1]);
@@ -212,6 +221,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
             setTrueHeadingHdt(parts[1] + " " + parts[2].split("*")[0]);
             break;
           case "$PTMSX":
+            dispatch(setUdpVendorId(parts[3]));
             setMessageVersion(parts[1]);
             setUniqueDeviceId(parts[2]);
             setVendorId(parts[3]);
@@ -261,7 +271,6 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
   const getWifiInfo = async () => {
     await WifiManager.getCurrentWifiSSID().then(
       (ssid) => {
-        alert(ssid);
         setSSID(ssid);
       },
       () => {
@@ -547,7 +556,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                   style={[
                     fonts[400],
                     fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(20) },
+                    { textAlign: "right", fontSize: getFontSize(16) },
                   ]}
                 >
                   {`${parseInt(latitudeGga.substring(0, 2))}° ${parseInt(
@@ -562,7 +571,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                   style={[
                     fonts[400],
                     fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(20) },
+                    { textAlign: "right", fontSize: getFontSize(16) },
                   ]}
                 >
                   {`${parseInt(longitudeGga.substring(0, 3))}° ${parseInt(
@@ -578,7 +587,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                 style={[
                   fonts[600],
                   fonts.typography,
-                  { textAlign: "right", fontSize: getFontSize(24) },
+                  { textAlign: "right", fontSize: getFontSize(22) },
                   gutters.marginLeft_5,
                 ]}
               >
@@ -607,7 +616,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                   style={[
                     fonts[400],
                     fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(20) },
+                    { textAlign: "right", fontSize: getFontSize(16) },
                   ]}
                 >
                   {utcTimeZda.substring(0, 2)}:{utcTimeZda.substring(2, 4)}:
@@ -617,7 +626,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                   style={[
                     fonts[400],
                     fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(20) },
+                    { textAlign: "right", fontSize: getFontSize(16) },
                   ]}
                 >
                   {dayZda}.
@@ -645,7 +654,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                 style={[
                   fonts[600],
                   fonts.typography,
-                  { textAlign: "right", fontSize: getFontSize(24) },
+                  { textAlign: "right", fontSize: getFontSize(22) },
                   gutters.marginLeft_5,
                 ]}
               >
@@ -676,7 +685,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                     // fonts.size_24,
                     fonts[400],
                     fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(20) },
+                    { textAlign: "right", fontSize: getFontSize(16) },
                   ]}
                 >
                   GPS Q.IND
@@ -686,7 +695,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                     // fonts.size_24,
                     fonts[400],
                     fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(20) },
+                    { textAlign: "right", fontSize: getFontSize(16) },
                   ]}
                 >
                   {fixQuality}
@@ -696,7 +705,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
                 style={[
                   fonts[600],
                   fonts.typography,
-                  { textAlign: "right", fontSize: getFontSize(24) },
+                  { textAlign: "right", fontSize: getFontSize(22) },
                   gutters.marginLeft_5,
                 ]}
               >

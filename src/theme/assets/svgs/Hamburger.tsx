@@ -5,8 +5,8 @@ import { calculateHeight, calculateWidth } from "@/theme/utils";
 function Hamburger(props: any) {
   return (
     <Svg
-      width={props.width || calculateWidth(40)}
-      height={props.height || calculateHeight(36)}
+      width={props.width || calculateWidth(60)}
+      height={props.height || calculateHeight(35)}
       viewBox="0 0 40 36"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -24,10 +24,11 @@ import { useIsFocused } from "@react-navigation/native";
 import CustomModal from "@/components/molecules/Modal/Modal";
 import Info from "@/theme/assets/svgs/info";
 import WifiManager from "react-native-wifi-reborn";
-import dgram from "react-native-udp";
-
+import { useDispatch } from "react-redux";
+import { updateRouterName } from "@/redux/slices/NetInfo.slice";
 import { LocationPermission } from "@/theme/utils";
 function DevicePage({ navigation }: ApplicationScreenProps) {
+  const dispatch = useDispatch();
   const { layout, gutters, fonts, backgrounds, colors } = useTheme();
   const isFocused = useIsFocused();
   const { t } = useTranslation(["startup"]);
@@ -51,13 +52,12 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
   };
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
-      setIsConnected(state.isConnected);
+      setIsConnected(state.isInternetReachable);
     });
 
     // Fetch the initial network state
     NetInfo.fetch().then((state) => {
-      console.log(state);
-      setIsConnected(state.isConnected);
+      setIsConnected(state.isInternetReachable);
     });
 
     // Cleanup subscription on component unmount
@@ -75,10 +75,11 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
     LocationPermission().then(() => {
       WifiManager.getCurrentWifiSSID().then(
         (ssid) => {
+          dispatch(updateRouterName(ssid));
           setWifiSSID(ssid);
         },
-        () => {
-          console.log("Device Page Error");
+        (err) => {
+          console.log("Device Page Error", err);
         }
       );
     });
@@ -113,13 +114,17 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
                 ]}
                 onTouchEnd={() => {
                   handleDevicePress(index);
-                  if (!isConnected) {
-                    // setIsModalVisible(true);
 
-                    navigation.navigate("Dashboard");
-                    //  setIsDeviceNotFound(true);
+                  if (!isConnected) {
+                    setIsModalVisible(true);
+                    setIsDeviceNotFound(true);
                   } else {
-                    navigation.navigate("Dashboard");
+                    if (wifiSSID.startsWith("spu100")) {
+                      navigation.navigate("Dashboard");
+                    } else {
+                      Alert.alert("Please connect with SPU wifi");
+                      // navigation.navigate("Dashboard");
+                    }
                   }
                 }}
               >

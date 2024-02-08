@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Image, ScrollView, Text, View, Linking } from "react-native";
-import { useTranslation } from "react-i18next";
+import { Text, View } from "react-native";
 
 import { useTheme } from "@/theme";
-import { SafeScreen } from "@/components/template";
 
 import type { ApplicationScreenProps } from "@/types/navigation";
 import { calculateHeight, calculateWidth } from "@/theme/utils";
+import { useSelector } from "react-redux";
 
 function Status({ navigation }: ApplicationScreenProps) {
   const { layout, gutters, fonts, backgrounds, colors } = useTheme();
-
-  const { t } = useTranslation(["startup"]);
+  const {
+    HDTStatus,
+    GPSStatus,
+    ROTStatus,
+    PTMStatus,
+    AISStatus,
+    isConnected,
+    vendorId,
+  } = useSelector((state) => state.udpSlice);
+  const { routerName } = useSelector((state) => state.netInfo);
 
   return (
     <View
@@ -45,7 +52,7 @@ function Status({ navigation }: ApplicationScreenProps) {
           SSID
         </Text>
         <Text style={[fonts[400], fonts.size_20, fonts.typography]}>
-          : spu100_111
+          : {routerName || "N/A"}
         </Text>
       </View>
 
@@ -67,7 +74,9 @@ function Status({ navigation }: ApplicationScreenProps) {
         >
           Vendor ID
         </Text>
-        <Text style={[fonts[400], fonts.size_20, fonts.typography]}>: 4</Text>
+        <Text style={[fonts[400], fonts.size_20, fonts.typography]}>
+          : {vendorId}
+        </Text>
       </View>
 
       <View
@@ -102,7 +111,15 @@ function Status({ navigation }: ApplicationScreenProps) {
         <Text style={[fonts[400], fonts.size_20, fonts.typography]}>
           Status :
         </Text>
-        <Text style={[fonts[400], fonts.size_20, fonts.green]}> Connected</Text>
+        <Text
+          style={[
+            fonts[400],
+            fonts.size_20,
+            isConnected ? fonts.green : fonts.red,
+          ]}
+        >
+          {isConnected ? " Connected" : " Disconnected"}
+        </Text>
       </View>
 
       <View
@@ -122,7 +139,7 @@ function Status({ navigation }: ApplicationScreenProps) {
               {
                 height: calculateWidth(50),
                 width: calculateWidth(50),
-                backgroundColor: colors.green,
+                backgroundColor: HDTStatus ? colors.green : colors.red,
                 borderWidth: 1,
                 borderColor: colors.gray,
                 borderRadius: 100,
@@ -146,7 +163,7 @@ function Status({ navigation }: ApplicationScreenProps) {
               {
                 height: calculateWidth(50),
                 width: calculateWidth(50),
-                backgroundColor: colors.green,
+                backgroundColor: GPSStatus ? colors.green : colors.red,
                 borderWidth: 1,
                 borderColor: colors.gray,
                 borderRadius: 100,
@@ -170,7 +187,7 @@ function Status({ navigation }: ApplicationScreenProps) {
               {
                 height: calculateWidth(50),
                 width: calculateWidth(50),
-                backgroundColor: colors.green,
+                backgroundColor: ROTStatus ? colors.green : colors.red,
                 borderWidth: 1,
                 borderColor: colors.gray,
                 borderRadius: 100,
@@ -194,7 +211,7 @@ function Status({ navigation }: ApplicationScreenProps) {
               {
                 height: calculateWidth(50),
                 width: calculateWidth(50),
-                backgroundColor: colors.green,
+                backgroundColor: PTMStatus ? colors.green : colors.red,
                 borderWidth: 1,
                 borderColor: colors.gray,
                 borderRadius: 100,
@@ -218,7 +235,7 @@ function Status({ navigation }: ApplicationScreenProps) {
               {
                 height: calculateWidth(50),
                 width: calculateWidth(50),
-                backgroundColor: colors.red,
+                backgroundColor: AISStatus ? colors.green : colors.red,
                 borderWidth: 1,
                 borderColor: colors.gray,
                 borderRadius: 100,

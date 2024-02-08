@@ -203,7 +203,9 @@ const DrawerNavigator = () => {
                   : colors.blue,
               },
             ]}
-            onPress={() => props.navigation.navigate("Status")}
+            onPress={() => {
+              if (isSpu) props.navigation.navigate("Status");
+            }}
           >
             <Logout
               color={
