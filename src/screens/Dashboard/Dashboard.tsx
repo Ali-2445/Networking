@@ -28,7 +28,10 @@ import {
   setROTStatus,
   setUdpVendorId,
 } from "@/redux/slices/UDPdata.slice";
-import { updateSerialNumber } from "@/redux/slices/NetInfo.slice";
+import {
+  updateSerialNumber,
+  updateRouterName,
+} from "@/redux/slices/NetInfo.slice";
 
 function Dashboard({ navigation }: ApplicationScreenProps) {
   const scrollViewRef = useRef<ScrollView>(null);
@@ -111,7 +114,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
   const [usdConnected, setUdpConnected] = useState(false);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  var stringArr = [];
   var [_scrollToBottomY, set_scrollToBottomY] = useState(0);
 
   const data = [
@@ -178,15 +181,30 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
         dispatch(setIsConnected(true));
 
         var str = String.fromCharCode.apply(null, new Uint8Array(msg));
-        dispatch(fetchUdpData(str));
-        dispatch(setHDTStatus(str.includes("$HEROT" || "$GNHDT")));
-        dispatch(setGPSStatus(str.includes("$G" || "$GNHDT")));
-        dispatch(setPTMStatus(str.includes("$PTM")));
-        dispatch(setAISStatus(str.includes("!AIV")));
-        dispatch(setROTStatus(str.includes("$ROT")));
 
         setStrArr((previousData) => [...previousData, str]);
+        dispatch(fetchUdpData(str));
+        stringArr.push(str);
 
+        dispatch(
+          setHDTStatus(
+            stringArr.some((string) => string.includes("$HEROT" || "$GNHDT"))
+          )
+        );
+        dispatch(
+          setGPSStatus(
+            stringArr.some((string) => string.includes("$G" || "$GNHDT"))
+          )
+        );
+        dispatch(
+          setPTMStatus(stringArr.some((string) => string.includes("$PTM")))
+        );
+        dispatch(
+          setAISStatus(stringArr.some((string) => string.includes("!AIV")))
+        );
+        dispatch(
+          setROTStatus(stringArr.some((string) => string.includes("$ROT")))
+        );
         switch (parts[0]) {
           case "$GNGGA":
             setUtcTimeGga(parts[1]);
@@ -274,6 +292,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
     await WifiManager.getCurrentWifiSSID().then(
       (ssid) => {
         setSSID(ssid);
+        dispatch(updateRouterName(ssid));
       },
       () => {
         console.log("Cannot get current SSID!");

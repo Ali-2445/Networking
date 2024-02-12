@@ -25,9 +25,12 @@ import Avatar from "@/theme/assets/images/Avatar.png";
 import { LocationPermission } from "@/theme/utils";
 import { set } from "zod";
 import WifiManager from "react-native-wifi-reborn";
+import { useDispatch } from "react-redux";
+import { updateRouterName } from "@/redux/slices/NetInfo.slice";
 
 const DrawerNavigator = () => {
   LogBox.ignoreAllLogs();
+  const dispatch = useDispatch();
   const route = useRoute();
   const { backgrounds, colors, fonts, layout, gutters } = useTheme();
   const Drawer = createDrawerNavigator<ApplicationStackParamList>();
@@ -48,6 +51,7 @@ const DrawerNavigator = () => {
       WifiManager.getCurrentWifiSSID().then(
         (ssid) => {
           if (ssid.startsWith("spu100")) {
+            dispatch(updateRouterName(ssid));
             setSpu(true);
             setInitialRouteName("Dashboard");
           } else {

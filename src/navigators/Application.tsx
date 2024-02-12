@@ -40,7 +40,6 @@ function ApplicationNavigator() {
             headerTitle: "Connect Wifi",
             headerStyle: {
               backgroundColor: colors.blue,
-              height: calculateHeight(76),
             },
             headerLeft: () => null,
             headerTitleStyle: { fontSize: RFValue(14, 900), fontWeight: "700" },
