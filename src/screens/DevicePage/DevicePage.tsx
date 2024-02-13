@@ -119,12 +119,12 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
                     setIsModalVisible(true);
                     setIsDeviceNotFound(true);
                   } else {
-                    if (wifiSSID.startsWith("spu100")) {
-                      navigation.navigate("Dashboard");
-                    } else {
-                      Alert.alert("Please connect with SPU wifi");
-                      // navigation.navigate("Dashboard");
-                    }
+                    // if (wifiSSID.startsWith("spu100")) {
+                    navigation.navigate("Dashboard");
+                    // } else {
+                    //   Alert.alert("Please connect with SPU wifi");
+                    //   // navigation.navigate("Dashboard");
+                    // }
                   }
                 }}
               >

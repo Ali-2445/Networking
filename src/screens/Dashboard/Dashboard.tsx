@@ -15,7 +15,6 @@ import HalfCutCircle from "@/theme/assets/svgs/halfCutCircle";
 import { ScrollView } from "react-native-gesture-handler";
 import { useQuery } from "@tanstack/react-query";
 import WifiManager from "react-native-wifi-reborn";
-import CustomModal from "@/components/molecules/Modal/Modal";
 import Info from "@/theme/assets/svgs/info";
 import { UseDispatch, useDispatch } from "react-redux";
 import {
@@ -32,6 +31,7 @@ import {
   updateSerialNumber,
   updateRouterName,
 } from "@/redux/slices/NetInfo.slice";
+import { ScrollEvent } from "react-native-reanimated";
 
 function Dashboard({ navigation }: ApplicationScreenProps) {
   const scrollViewRef = useRef<ScrollView>(null);
@@ -112,8 +112,10 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
   const [serialNumber, setSerialNumber] = useState(111);
   const [wifiPass, setWifiPass] = useState("salnav213");
   const [usdConnected, setUdpConnected] = useState(false);
+  const [isScrolledUp, setIsScrolledUp] = useState<boolean>(false);
+  const [autoScrollEnabled, setAutoScrollEnabled] = useState<boolean>(true);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
   var stringArr = [];
   var [_scrollToBottomY, set_scrollToBottomY] = useState(0);
 
@@ -154,13 +156,14 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
       debug: true,
     });
     socket.bind(17608, function () {
-      setIsModalVisible(true);
       dispatch(setIsConnected(false));
+      dispatch(setHDTStatus(false));
+      dispatch(setGPSStatus(false));
+      dispatch(setPTMStatus(false));
+      dispatch(setAISStatus(false));
+      dispatch(setROTStatus(false));
     });
     socket.on("message", function (msg, rinfo) {
-      setIsModalVisible(false);
-      dispatch(setIsConnected(false));
-
       if (rinfo.port != "60183") {
       }
 
@@ -175,7 +178,11 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
           : false
       ) {
         dispatch(setIsConnected(false));
-        setIsModalVisible(true);
+        dispatch(setHDTStatus(false));
+        dispatch(setGPSStatus(false));
+        dispatch(setPTMStatus(false));
+        dispatch(setAISStatus(false));
+        dispatch(setROTStatus(false));
         socket.close();
       } else {
         dispatch(setIsConnected(true));
@@ -264,10 +271,6 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
         }
       }
     });
-    return () => {
-      // ComponentWillUnmount equivalent actions here
-      socket.close();
-    };
   }, []);
   const getFontSize = (size: number) => {
     return RFValue(size, 1200);
@@ -299,6 +302,40 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
       }
     );
   };
+
+  const handleScroll = (event: any) => {
+    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
+    const paddingToBottom = 20;
+
+    setIsScrolledUp(
+      contentSize.height - layoutMeasurement.height >
+        contentOffset.y + paddingToBottom
+    );
+  };
+
+  const handleScrollBeginDrag = () => {
+    setIsDragging(true);
+  };
+
+  const handleScrollEndDrag = () => {
+    setIsDragging(false);
+  };
+
+  const handleToggleAutoScroll = () => {
+    setAutoScrollEnabled(!autoScrollEnabled);
+
+    // If auto-scroll is enabled and user is not scrolled up and not dragging, scroll to the end
+    if (autoScrollEnabled && !isScrolledUp && !isDragging) {
+      scrollViewRef.current?.scrollToEnd({ animated: true });
+    }
+  };
+
+  useEffect(() => {
+    if (!isScrolledUp && autoScrollEnabled && !isDragging) {
+      scrollViewRef.current?.scrollToEnd({ animated: true });
+    }
+  }, [StrArr, selectedChipId, autoScrollEnabled, isDragging]);
+
   const getRandomNumber = () =>
     Math.floor(Math.random() * (60 - -60 + 1)) + -60;
 
@@ -347,7 +384,6 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
             style={[
               {
                 height: calculateHeight(106),
-                // width: calculateWidth(260),
                 borderRadius: calculateHeight(20),
               },
               gutters.padding_10,
@@ -777,8 +813,9 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
             ref={scrollViewRef}
             onContentSizeChange={(contentWidth, contentHeight) => {
               set_scrollToBottomY(contentHeight);
-
-              scrollViewRef.current?.scrollTo(_scrollToBottomY);
+              if (!isScrolledUp && autoScrollEnabled && !isDragging) {
+                scrollViewRef.current?.scrollToEnd({ animated: true });
+              }
             }}
             style={[
               {
@@ -793,6 +830,10 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
               gutters.paddingVertical_15,
             ]}
             showsVerticalScrollIndicator={false}
+            onScroll={handleScroll}
+            onScrollBeginDrag={handleScrollBeginDrag}
+            onScrollEndDrag={handleScrollEndDrag}
+            scrollEventThrottle={20}
           >
             {filteredData.map((item, index) => (
               <Text
@@ -805,50 +846,6 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
           </ScrollView>
         </View>
       </View>
-
-      <CustomModal
-        rightButtonClick={() => {
-          setIsModalVisible(false);
-          navigation.navigate("ScanQr");
-        }}
-        leftButtonClick={() => {
-          Linking.openSettings();
-          setIsModalVisible(false);
-        }}
-        isVisible={isModalVisible}
-        leftButtonText="Go WIfi Settings"
-        rightButtonText="Scan QR Code"
-        onClose={() => {
-          setIsModalVisible(false);
-        }}
-      >
-        <View style={[gutters.marginTop_1, layout.itemsCenter]}>
-          <Info color={colors.danger} style={gutters.marginBottom_1} />
-          <Text
-            style={[
-              fonts.typography,
-              fonts.size_22,
-              fonts[700],
-              gutters.marginTop_20,
-            ]}
-          >
-            Device Not Found
-          </Text>
-          <Text
-            style={[
-              fonts.typography,
-              fonts.size_18,
-              fonts[600],
-              gutters.marginTop_12,
-              gutters.marginBottom_40,
-              gutters.paddingHorizontal_5,
-              { textAlign: "center" },
-            ]}
-          >
-            Please check your Device and try again?
-          </Text>
-        </View>
-      </CustomModal>
     </SafeScreen>
   );
 }

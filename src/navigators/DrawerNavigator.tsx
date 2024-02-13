@@ -38,7 +38,6 @@ const DrawerNavigator = () => {
   const [initialRouteName, setInitialRouteName] = React.useState<string | null>(
     null
   );
-  const [isSpu, setSpu] = useState(false);
 
   const isItemActive = (routeName: string, currentRouteName: string) => {
     return routeName === currentRouteName;
@@ -50,19 +49,12 @@ const DrawerNavigator = () => {
     LocationPermission().then(() => {
       WifiManager.getCurrentWifiSSID().then(
         (ssid) => {
-          if (ssid.startsWith("spu100")) {
-            dispatch(updateRouterName(ssid));
-            setSpu(true);
-            setInitialRouteName("Dashboard");
-          } else {
-            setSpu(false);
+          dispatch(updateRouterName(ssid));
 
-            setInitialRouteName("DevicePage");
-          }
+          setInitialRouteName("Dashboard");
         },
         (err) => {
-          setSpu(true);
-          setInitialRouteName("Dashboard");
+          setInitialRouteName("DevicePage");
           console.log("Error : ", err);
         }
       );
@@ -105,6 +97,7 @@ const DrawerNavigator = () => {
             backgrounds.blue,
             layout.itemsCenter,
           ]}
+          scrollEnabled={false}
         >
           <View style={{ marginTop: calculateHeight(60) }}>
             <ASL height={calculateHeight(200)} width={calculateWidth(200)} />
@@ -126,9 +119,7 @@ const DrawerNavigator = () => {
               },
             ]}
             onPress={() => {
-              if (isSpu) {
-                props.navigation.navigate("Dashboard");
-              }
+              props.navigation.navigate("Dashboard");
             }}
           >
             <Cube
@@ -208,7 +199,7 @@ const DrawerNavigator = () => {
               },
             ]}
             onPress={() => {
-              if (isSpu) props.navigation.navigate("Status");
+              props.navigation.navigate("Status");
             }}
           >
             <Logout

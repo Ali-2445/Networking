@@ -101,45 +101,40 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
     password: string | null,
     isHidden: boolean
   ) => {
-    if (ssid.startsWith("spu100")) {
-      WifiManager.getCurrentWifiSSID().then(
-        (ssid) => {
-          WifiManager.disconnectFromSSID(ssid);
-        },
-        () => {
-          console.log("Cannot get current SSID!");
-        }
-      );
-      await WifiManager.connectToProtectedSSID(
-        ssid,
-        password,
-        false,
-        false
-      ).then(
-        () => {
-          dispatch(updateRouterName(ssid));
-          navigation.navigate("Dashboard");
-        },
-        (err) => {
-          console.log("Connection failed!");
-        }
-      );
-    } else {
-      setIsScanned(true);
+    // if (ssid.startsWith("spu100")) {
+    WifiManager.getCurrentWifiSSID().then(
+      (ssid) => {
+        WifiManager.disconnectFromSSID(ssid);
+      },
+      () => {
+        console.log("Cannot get current SSID!");
+      }
+    );
+    await WifiManager.connectToProtectedSSID(ssid, password, false, false).then(
+      () => {
+        dispatch(updateRouterName(ssid));
+        navigation.navigate("Dashboard");
+      },
+      (err) => {
+        console.log("Connection failed!");
+      }
+    );
+    // } else {
+    //   setIsScanned(true);
 
-      Alert.alert(
-        "Alert",
-        "Please scan the correct QR code of Wifi Starting with SPU100",
-        [
-          {
-            text: "Cancel",
-            onPress: () => setIsScanned(false),
-            style: "cancel",
-          },
-          { text: "OK", onPress: () => setIsScanned(false) },
-        ]
-      );
-    }
+    //   Alert.alert(
+    //     "Alert",
+    //     "Please scan the correct QR code of Wifi Starting with SPU100",
+    //     [
+    //       {
+    //         text: "Cancel",
+    //         onPress: () => setIsScanned(false),
+    //         style: "cancel",
+    //       },
+    //       { text: "OK", onPress: () => setIsScanned(false) },
+    //     ]
+    //   );
+    // }
   };
 
   const onBack = () => {
