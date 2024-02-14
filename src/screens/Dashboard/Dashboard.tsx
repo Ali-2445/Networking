@@ -164,111 +164,115 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
       dispatch(setROTStatus(false));
     });
     socket.on("message", function (msg, rinfo) {
-      if (rinfo.port != "60183") {
-      }
+      if (rinfo.port == "60183") {
+        const message = msg.toString();
 
-      const message = msg.toString();
+        const parts = message.split(",");
+        if (
+          parts[0] === "$PTMSX" && parts[3] != "4"
+            ? parts[0] == "$PTMSX"
+              ? true
+              : true
+            : false
+        ) {
+          dispatch(setIsConnected(false));
+          dispatch(setHDTStatus(false));
+          dispatch(setGPSStatus(false));
+          dispatch(setPTMStatus(false));
+          dispatch(setAISStatus(false));
+          dispatch(setROTStatus(false));
+          socket.close();
+        } else {
+          dispatch(setIsConnected(true));
 
-      const parts = message.split(",");
-      if (
-        parts[0] === "$PTMSX" && parts[3] != "4"
-          ? parts[0] == "$PTMSX"
-            ? true
-            : true
-          : false
-      ) {
+          var str = String.fromCharCode.apply(null, new Uint8Array(msg));
+
+          setStrArr((previousData) => [...previousData, str]);
+          dispatch(fetchUdpData(str));
+          stringArr.push(str);
+
+          dispatch(
+            setHDTStatus(stringArr.some((string) => string.includes("$GNHDT")))
+          );
+          dispatch(
+            setGPSStatus(
+              stringArr.some((string) => string.includes("$G" || "$GNHDT"))
+            )
+          );
+          dispatch(
+            setPTMStatus(stringArr.some((string) => string.includes("$PTM")))
+          );
+          dispatch(
+            setAISStatus(stringArr.some((string) => string.includes("!AIV")))
+          );
+          dispatch(
+            setROTStatus(stringArr.some((string) => string.includes("$HEROT")))
+          );
+          switch (parts[0]) {
+            case "$GNGGA":
+              setUtcTimeGga(parts[1]);
+              setLatitudeGga(parts[2] + " " + parts[3]);
+              setLongitudeGga(parts[4] + " " + parts[5]);
+              setFixQuality(qualityCases(parts[6]));
+              setNumSatellites(parts[7]);
+              setHorizontalDilution(parts[8]);
+              setAltitudeGga(parts[9] + " " + parts[10]);
+              setGeoidalSeparation(parts[11] + " " + parts[12]);
+              setAgeOfDgpsData(parts[13]);
+              setDiffRefStationId(parts[14]);
+              break;
+            case "$GNVTG":
+              setTrueTrackDegreesVtg(parts[1] + " " + parts[2]);
+              setMagneticTrackDegrees(parts[3] + " " + parts[4]);
+              setSpeedKnotsVtg(parts[5] + " " + parts[6]);
+              setSpeedKphVtg(parts[7] + " " + parts[8].split("*")[0]);
+              break;
+            case "$GNZDA":
+              setUtcTimeZda(parts[1]);
+              setDayZda(parts[2]);
+              setMonthZda(parts[3]);
+              setYearZda(parts[4]);
+              setLocalZoneHoursZda(parts[5]);
+              setLocalZoneMinutesZda(parts[6].split("*")[0]);
+              break;
+            case "$HEROT":
+              setRateOfTurnHerot(parts[1]);
+              setRotStatusHerot(parts[2].split("*")[0]);
+              break;
+            case "$GNHDT":
+              setTrueHeadingHdt(parts[1] + " " + parts[2].split("*")[0]);
+              break;
+            case "$PTMSX":
+              dispatch(setUdpVendorId(parts[3]));
+              dispatch(updateSerialNumber(parts[2]));
+              setMessageVersion(parts[1]);
+              setUniqueDeviceId(parts[2]);
+              setVendorId(parts[3]);
+              setModelId(parts[4]);
+              setGnssPosSatCount(parts[5]);
+              setGnssHdgSatCount(parts[6]);
+              setGnssAntennaBaseline(parts[7]);
+              setUhfFrequency(parts[8]);
+              setPoweredByBattery(parts[9].charAt(0)); // Assuming the battery indicator is the first character before the checksum
+              break;
+            case "$PTMSG":
+              setMessageVersion(parts[1]);
+              // parts[2], parts[3], and parts[4] are N/A and therefore not used
+              setJammingStatus(parts[5]); // Make sure to convert this to the description using a function or a map
+              setSpoofingStatus(parts[6]); // Convert this to the description similarly
+              // parts[7] and parts[8] are N/A and not used
+              // Checksum is typically not stored in state as it's used for validating the message
+              setJammingStatus(jammingDescriptions[parts[5]] || "Unknown");
+              break;
+          }
+        }
+      } else {
         dispatch(setIsConnected(false));
         dispatch(setHDTStatus(false));
         dispatch(setGPSStatus(false));
         dispatch(setPTMStatus(false));
         dispatch(setAISStatus(false));
         dispatch(setROTStatus(false));
-        socket.close();
-      } else {
-        dispatch(setIsConnected(true));
-
-        var str = String.fromCharCode.apply(null, new Uint8Array(msg));
-
-        setStrArr((previousData) => [...previousData, str]);
-        dispatch(fetchUdpData(str));
-        stringArr.push(str);
-
-        dispatch(
-          setHDTStatus(
-            stringArr.some((string) => string.includes("$HEROT" || "$GNHDT"))
-          )
-        );
-        dispatch(
-          setGPSStatus(
-            stringArr.some((string) => string.includes("$G" || "$GNHDT"))
-          )
-        );
-        dispatch(
-          setPTMStatus(stringArr.some((string) => string.includes("$PTM")))
-        );
-        dispatch(
-          setAISStatus(stringArr.some((string) => string.includes("!AIV")))
-        );
-        dispatch(
-          setROTStatus(stringArr.some((string) => string.includes("$ROT")))
-        );
-        switch (parts[0]) {
-          case "$GNGGA":
-            setUtcTimeGga(parts[1]);
-            setLatitudeGga(parts[2] + " " + parts[3]);
-            setLongitudeGga(parts[4] + " " + parts[5]);
-            setFixQuality(qualityCases(parts[6]));
-            setNumSatellites(parts[7]);
-            setHorizontalDilution(parts[8]);
-            setAltitudeGga(parts[9] + " " + parts[10]);
-            setGeoidalSeparation(parts[11] + " " + parts[12]);
-            setAgeOfDgpsData(parts[13]);
-            setDiffRefStationId(parts[14]);
-            break;
-          case "$GNVTG":
-            setTrueTrackDegreesVtg(parts[1] + " " + parts[2]);
-            setMagneticTrackDegrees(parts[3] + " " + parts[4]);
-            setSpeedKnotsVtg(parts[5] + " " + parts[6]);
-            setSpeedKphVtg(parts[7] + " " + parts[8].split("*")[0]);
-            break;
-          case "$GNZDA":
-            setUtcTimeZda(parts[1]);
-            setDayZda(parts[2]);
-            setMonthZda(parts[3]);
-            setYearZda(parts[4]);
-            setLocalZoneHoursZda(parts[5]);
-            setLocalZoneMinutesZda(parts[6].split("*")[0]);
-            break;
-          case "$HEROT":
-            setRateOfTurnHerot(parts[1]);
-            setRotStatusHerot(parts[2].split("*")[0]);
-            break;
-          case "$GNHDT":
-            setTrueHeadingHdt(parts[1] + " " + parts[2].split("*")[0]);
-            break;
-          case "$PTMSX":
-            dispatch(setUdpVendorId(parts[3]));
-            dispatch(updateSerialNumber(parts[2]));
-            setMessageVersion(parts[1]);
-            setUniqueDeviceId(parts[2]);
-            setVendorId(parts[3]);
-            setModelId(parts[4]);
-            setGnssPosSatCount(parts[5]);
-            setGnssHdgSatCount(parts[6]);
-            setGnssAntennaBaseline(parts[7]);
-            setUhfFrequency(parts[8]);
-            setPoweredByBattery(parts[9].charAt(0)); // Assuming the battery indicator is the first character before the checksum
-            break;
-          case "$PTMSG":
-            setMessageVersion(parts[1]);
-            // parts[2], parts[3], and parts[4] are N/A and therefore not used
-            setJammingStatus(parts[5]); // Make sure to convert this to the description using a function or a map
-            setSpoofingStatus(parts[6]); // Convert this to the description similarly
-            // parts[7] and parts[8] are N/A and not used
-            // Checksum is typically not stored in state as it's used for validating the message
-            setJammingStatus(jammingDescriptions[parts[5]] || "Unknown");
-            break;
-        }
       }
     });
   }, []);
