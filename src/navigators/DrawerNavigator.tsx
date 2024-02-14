@@ -25,16 +25,26 @@ import Avatar from "@/theme/assets/images/Avatar.png";
 import { LocationPermission } from "@/theme/utils";
 import { set } from "zod";
 import WifiManager from "react-native-wifi-reborn";
-import { useDispatch } from "react-redux";
-import { updateRouterName } from "@/redux/slices/NetInfo.slice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setConnectionType,
+  setInternetReachable,
+  updateRouterName,
+} from "@/redux/slices/NetInfo.slice";
+import NetInfo from "@react-native-community/netinfo";
+import { useIsFocused } from "@react-navigation/native";
 
 const DrawerNavigator = () => {
   LogBox.ignoreAllLogs();
   const dispatch = useDispatch();
   const route = useRoute();
+  const isFocused = useIsFocused();
   const { backgrounds, colors, fonts, layout, gutters } = useTheme();
+  const { connectionType, internetReachable } = useSelector(
+    (state) => state.netInfo
+  );
   const Drawer = createDrawerNavigator<ApplicationStackParamList>();
-
+  const [isConnected, setIsConnected] = useState(false);
   const [initialRouteName, setInitialRouteName] = React.useState<string | null>(
     null
   );
@@ -46,22 +56,42 @@ const DrawerNavigator = () => {
   const focusedRouteName = getFocusedRouteNameFromRoute(route) || "Dashboard";
 
   useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
+      dispatch(setConnectionType(state.type));
+
+      dispatch(setInternetReachable(state.isInternetReachable));
+    });
+
+    NetInfo.fetch().then((state) => {
+      dispatch(setConnectionType(state.type));
+
+      dispatch(setInternetReachable(state.isInternetReachable));
+    });
+    setInitialRouteName("Dashboard");
+
+    return () => unsubscribe();
+  }, []);
+  useEffect(() => {
     LocationPermission().then(() => {
       WifiManager.getCurrentWifiSSID().then(
         (ssid) => {
           dispatch(updateRouterName(ssid));
 
-          setInitialRouteName("Dashboard");
+          // setInitialRouteName("Dashboard");
         },
         (err) => {
-          setInitialRouteName("DevicePage");
+          // setInitialRouteName("DevicePage");
           console.log("Error : ", err);
         }
       );
     });
   }, []);
 
-  if (initialRouteName === null) {
+  if (
+    initialRouteName === null ||
+    connectionType == "" ||
+    internetReachable == null
+  ) {
     return null;
   }
   return (

@@ -24,12 +24,13 @@ import { useIsFocused } from "@react-navigation/native";
 import CustomModal from "@/components/molecules/Modal/Modal";
 import Info from "@/theme/assets/svgs/info";
 import WifiManager from "react-native-wifi-reborn";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateRouterName } from "@/redux/slices/NetInfo.slice";
 import { LocationPermission } from "@/theme/utils";
 function DevicePage({ navigation }: ApplicationScreenProps) {
   const dispatch = useDispatch();
   const { layout, gutters, fonts, backgrounds, colors } = useTheme();
+  const { vendorId } = useSelector((state) => state.udpSlice);
   const isFocused = useIsFocused();
   const { t } = useTranslation(["startup"]);
   const [devices, setDevices] = useState([SPU]);
@@ -41,7 +42,6 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
   const [wifiSSID, setWifiSSID] = useState("");
   const [udpConnected, setUdpConnected] = useState(false);
   const [StrArr, setStrArr] = useState<string[]>([]);
-  const [vendorId, setVendorId] = useState<string | number>("N/A");
   const [isConnected, setIsConnected] = useState(false);
   const [connectionType, setConnectionType] = useState(false);
 
@@ -115,7 +115,7 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
                 onTouchEnd={() => {
                   handleDevicePress(index);
 
-                  if (!isConnected) {
+                  if (isConnected) {
                     setIsModalVisible(true);
                     setIsDeviceNotFound(true);
                   } else {
@@ -175,7 +175,7 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
         </View>
       )}
 
-      <CustomModal
+      {/* <CustomModal
         rightButtonClick={() => {
           setIsModalVisible(false);
           setIsDeviceNotFound(false);
@@ -216,6 +216,49 @@ function DevicePage({ navigation }: ApplicationScreenProps) {
             ]}
           >
             Please check your wifi connection and try again?
+          </Text>
+        </View>
+      </CustomModal> */}
+      <CustomModal
+        rightButtonClick={() => {
+          setIsModalVisible(false);
+          navigation.navigate("ScanQr");
+        }}
+        leftButtonClick={() => {
+          Linking.openSettings();
+          setIsModalVisible(false);
+        }}
+        isVisible={isModalVisible}
+        leftButtonText="Go WIfi Settings"
+        rightButtonText="Scan QR Code"
+        onClose={() => {
+          setIsModalVisible(false);
+        }}
+      >
+        <View style={[gutters.marginTop_1, layout.itemsCenter]}>
+          <Info color={colors.danger} style={gutters.marginBottom_1} />
+          <Text
+            style={[
+              fonts.typography,
+              fonts.size_22,
+              fonts[700],
+              gutters.marginTop_20,
+            ]}
+          >
+            Device Not Found
+          </Text>
+          <Text
+            style={[
+              fonts.typography,
+              fonts.size_18,
+              fonts[600],
+              gutters.marginTop_12,
+              gutters.marginBottom_40,
+              gutters.paddingHorizontal_5,
+              { textAlign: "center" },
+            ]}
+          >
+            Please check your Device and try again?
           </Text>
         </View>
       </CustomModal>

@@ -223,78 +223,76 @@ console.log('sssss')
     );
   };
 
-
   useEffect(() => {
     storage.set("firstTime", false);
     requestCameraPermission();
     requestLocationPermission();
   }, []);
   return (
-    <SafeScreen>
-      <View style={[layout.flex_1, layout.row]}>
+    // <SafeScreen>
+    <View style={[layout.flex_1, layout.row]}>
+      <View
+        style={[
+          {
+            width: calculateWidth(207),
+          },
+          layout.fullHeight,
+          backgrounds.blue,
+          layout.justifyCenter,
+        ]}
+      ></View>
+      <View style={[layout.flex_1, backgrounds.offWhite]}>
+        <View
+          style={{
+            marginTop: calculateHeight(123),
+            marginLeft: calculateWidth(106),
+          }}
+        >
+          <Text style={[fonts.size_48, fonts[700], fonts.blue]}>SPU-100</Text>
+          <Text style={[fonts.size_21, fonts[700], fonts.blue]}>
+            non-Portable Piloting Unit
+          </Text>
+        </View>
+
+        <Image
+          source={Amp}
+          style={{
+            height: calculateHeight(521),
+            width: calculateWidth(400),
+            resizeMode: "contain",
+            marginLeft: "auto",
+          }}
+        />
+
         <View
           style={[
-            {
-              width: calculateWidth(207),
-            },
-            layout.fullHeight,
-            backgrounds.blue,
+            layout.itemsCenter,
             layout.justifyCenter,
+            {
+              position: "absolute",
+              top: calculateHeight(330),
+              marginLeft: -calculateWidth(150),
+            },
           ]}
-        ></View>
-        <View style={[layout.flex_1, backgrounds.offWhite]}>
-          <View
-            style={{
-              marginTop: calculateHeight(123),
-              marginLeft: calculateWidth(106),
-            }}
-          >
-            <Text style={[fonts.size_48, fonts[700], fonts.blue]}>SPU-100</Text>
-            <Text style={[fonts.size_21, fonts[700], fonts.blue]}>
-              non-Portable Piloting Unit
-            </Text>
-          </View>
-
-          <Image
-            source={Amp}
-            style={{
-              height: calculateHeight(521),
-              width: calculateWidth(400),
-              resizeMode: "contain",
-              marginLeft: "auto",
-            }}
-          />
-
-          <View
-            style={[
-              layout.itemsCenter,
-              layout.justifyCenter,
-              {
-                position: "absolute",
-                top: calculateHeight(330),
-                marginLeft: -calculateWidth(150),
-              },
-            ]}
-          >
-            <Circle />
-            <ASL style={{ position: "absolute" }} />
-          </View>
-
-          <Button
-            text="Get Started"
-            containerStyle={[
-              {
-                marginTop: "auto",
-                marginLeft: calculateWidth(160),
-                marginBottom: calculateHeight(68),
-              },
-            ]}
-            onPress={() => 
-              navigation.navigate("DrawerNavigator")}
-          />
+        >
+          <Circle />
+          <ASL style={{ position: "absolute" }} />
         </View>
+
+        <Button
+          text="Get Started"
+          containerStyle={[
+            {
+              marginTop: "auto",
+              marginLeft: calculateWidth(160),
+              marginBottom: calculateHeight(68),
+            },
+          ]}
+          onPress={() => navigation.navigate("DrawerNavigator")}
+        />
       </View>
-    </SafeScreen>
+    </View>
+    // </SafeScreen>
   );
 }
 

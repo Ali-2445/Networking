@@ -5,12 +5,16 @@ interface NetInfoState {
   isConnected: boolean;
   routerName: String;
   serialNumber: String;
+  internetReachable: Boolean | null;
+  connectionType: String;
 }
 
 const initialState: NetInfoState = {
   isConnected: false,
   routerName: "",
   serialNumber: "",
+  connectionType: "",
+  internetReachable: null,
 };
 
 const netInfoSlice = createSlice({
@@ -26,10 +30,22 @@ const netInfoSlice = createSlice({
     updateSerialNumber(state, action: PayloadAction<string>) {
       state.serialNumber = action.payload;
     },
+    setInternetReachable(state, action: PayloadAction<boolean | null>) {
+      state.internetReachable = action.payload;
+    },
+    setConnectionType(state, action: PayloadAction<string>) {
+      console.log(action.payload);
+      state.connectionType = action.payload;
+    },
   },
 });
 
-export const { updateConnectionStatus, updateRouterName, updateSerialNumber } =
-  netInfoSlice.actions;
+export const {
+  updateConnectionStatus,
+  updateRouterName,
+  updateSerialNumber,
+  setConnectionType,
+  setInternetReachable,
+} = netInfoSlice.actions;
 
 export default netInfoSlice.reducer;
