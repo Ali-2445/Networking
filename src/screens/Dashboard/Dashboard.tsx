@@ -353,504 +353,503 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
   }, []);
 
   return (
-    <SafeScreen>
-      <View
-        style={[
-          layout.flex_1,
-          gutters.paddingHorizontal_36,
-          gutters.paddingVertical_30,
-          backgrounds.white,
-        ]}
-      >
-        <Image
-          source={DashboardFan}
-          style={{
-            height: calculateHeight(900),
-            width: calculateWidth(820),
-            zIndex: -10,
-            position: "absolute",
-          }}
-        />
-        <View style={[layout.row, layout.fullWidth]}>
-          <View>
-            <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
-              Vendor ID : {vendorId}
-            </Text>
-          </View>
-          <View style={{ marginLeft: "auto" }}>
-            <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
-              Device Serial Number : {uniqueDeviceId}
-            </Text>
-          </View>
+    // <SafeScreen>
+    <View
+      style={[
+        layout.flex_1,
+        gutters.paddingHorizontal_36,
+        gutters.paddingVertical_30,
+        backgrounds.white,
+      ]}
+    >
+      <Image
+        source={DashboardFan}
+        style={{
+          height: calculateHeight(900),
+          width: calculateWidth(820),
+          zIndex: -10,
+          position: "absolute",
+        }}
+      />
+      <View style={[layout.row, layout.fullWidth]}>
+        <View>
+          <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
+            Vendor ID : {vendorId}
+          </Text>
         </View>
-        <View style={[layout.row, layout.fullWidth]}>
+        <View style={{ marginLeft: "auto" }}>
+          <Text style={[fonts.size_16, fonts.typography, fonts[600]]}>
+            Device Serial Number : {uniqueDeviceId}
+          </Text>
+        </View>
+      </View>
+      <View style={[layout.row, layout.fullWidth]}>
+        <View
+          style={[
+            {
+              height: calculateHeight(106),
+              borderRadius: calculateHeight(20),
+            },
+            gutters.padding_10,
+            backgrounds.grayBackground,
+            gutters.marginTop_10,
+            layout.justifyCenter,
+            layout.itemsCenter,
+            layout.fullWidth,
+          ]}
+        >
           <View
             style={[
+              layout.row,
+              layout.justifyBetween,
+              ,
+              layout.itemsCenter,
+              gutters.marginBottom_2,
+              { width: calculateWidth(710) },
+              // gutters.marginRight_15,
+            ]}
+          >
+            {points.map((point: number, index: number) => (
+              <View
+                style={[
+                  layout.itemsCenter,
+                  layout.justifyCenter,
+                  point == 0 && gutters.marginRight_15,
+                ]}
+              >
+                <Text style={[fonts.size_12, fonts.typography, fonts[700]]}>
+                  {point}
+                </Text>
+                <Text style={[fonts.size_12, fonts.typography, fonts[700]]}>
+                  |
+                </Text>
+              </View>
+            ))}
+          </View>
+          <HalfCutCircle number={rateOfTurnHerot} />
+          <Text
+            style={[
+              fonts[600],
+              fonts.typography,
+              gutters.marginTop_10,
               {
-                height: calculateHeight(106),
-                borderRadius: calculateHeight(20),
+                fontFamily: "NotoSans-Regular",
+                fontSize: getFontSize(16),
               },
+            ]}
+          >
+            ROT
+          </Text>
+        </View>
+      </View>
+      <View style={[layout.row, layout.fullWidth]}>
+        <View>
+          <View
+            style={[
               gutters.padding_10,
               backgrounds.grayBackground,
-              gutters.marginTop_10,
-              layout.justifyCenter,
+              layout.itemsCenter,
+              {
+                borderRadius: calculateHeight(20),
+                height: calculateHeight(212),
+
+                width: calculateWidth(400),
+              },
+            ]}
+          >
+            <View style={[layout.flex_1, layout.row]}>
+              <View
+                style={[
+                  layout.flex_1,
+                  gutters.paddingHorizontal_8,
+                  layout.row,
+                  layout.itemsCenter,
+                  layout.justifyCenter,
+                ]}
+              >
+                <Text
+                  style={[
+                    fonts.bold,
+                    fonts.dodgerBlue,
+                    {
+                      fontFamily: "NotoSans-Regular",
+                      fontSize: getFontSize(72),
+                    },
+                  ]}
+                >
+                  {Math.round(parseFloat(trueHeadingHdt) * 10) / 10 || "--"}°
+                </Text>
+              </View>
+              <View
+                style={[
+                  {
+                    height: calculateHeight(77),
+
+                    alignSelf: "center",
+                  },
+                  layout.itemsCenter,
+                  layout.justifyAround,
+                ]}
+              >
+                <Text
+                  style={[
+                    fonts[600],
+                    fonts.typography,
+                    {
+                      fontFamily: "NotoSans-Regular",
+                      fontSize: getFontSize(16),
+                    },
+                  ]}
+                >
+                  HDT
+                </Text>
+              </View>
+            </View>
+
+            {/*  */}
+            <View style={[layout.flex_1, layout.row]}>
+              <View
+                style={[
+                  layout.flex_1,
+                  gutters.paddingHorizontal_8,
+                  layout.row,
+                  layout.itemsCenter,
+                  layout.justifyCenter,
+                ]}
+              >
+                <Text
+                  style={[
+                    fonts.bold,
+                    fonts.dodgerBlue,
+                    {
+                      fontFamily: "NotoSans-Regular",
+                      fontSize: getFontSize(72),
+                    },
+                  ]}
+                >
+                  {Math.round(parseFloat(trueTrackDegreesVtg) * 10) / 10 ||
+                    "--"}
+                  °
+                </Text>
+              </View>
+              <View
+                style={[
+                  {
+                    height: calculateHeight(77),
+
+                    alignSelf: "center",
+                  },
+                  layout.itemsCenter,
+                  layout.justifyAround,
+                ]}
+              >
+                <Text
+                  style={[
+                    fonts[600],
+                    fonts.typography,
+                    {
+                      fontFamily: "NotoSans-Regular",
+                      fontSize: getFontSize(16),
+                    },
+                  ]}
+                >
+                  COG
+                </Text>
+              </View>
+            </View>
+          </View>
+
+          {/*  */}
+        </View>
+        {/*  */}
+
+        <View
+          style={[
+            gutters.paddingVertical_15,
+            gutters.paddingHorizontal_10,
+            backgrounds.grayBackground,
+
+            gutters.marginLeft_15,
+            {
+              borderRadius: calculateHeight(20),
+              height: calculateHeight(68),
+            },
+          ]}
+        ></View>
+
+        {/*  */}
+
+        <View
+          style={[
+            gutters.paddingVertical_10,
+            gutters.paddingRight_10,
+            backgrounds.grayBackground,
+            layout.itemsCenter,
+            gutters.marginLeft_10,
+            layout.justifyCenter,
+            {
+              borderRadius: calculateHeight(20),
+              height: calculateHeight(303),
+
+              width: calculateWidth(325),
+              gap: calculateHeight(30),
+            },
+          ]}
+        >
+          {/*  */}
+
+          <View
+            style={[
+              layout.row,
               layout.itemsCenter,
               layout.fullWidth,
+              { height: calculateHeight(72) },
             ]}
           >
             <View
               style={[
-                layout.row,
-                layout.justifyBetween,
-                ,
-                layout.itemsCenter,
-                gutters.marginBottom_2,
-                { width: calculateWidth(710) },
-                // gutters.marginRight_15,
+                layout.fullHeight,
+                layout.justifyCenter,
+                { width: calculateWidth(225) },
               ]}
             >
-              {points.map((point: number, index: number) => (
-                <View
-                  style={[
-                    layout.itemsCenter,
-                    layout.justifyCenter,
-                    point == 0 && gutters.marginRight_15,
-                  ]}
-                >
-                  <Text style={[fonts.size_12, fonts.typography, fonts[700]]}>
-                    {point}
-                  </Text>
-                  <Text style={[fonts.size_12, fonts.typography, fonts[700]]}>
-                    |
-                  </Text>
-                </View>
-              ))}
+              <Text
+                style={[
+                  fonts[400],
+                  fonts.typography,
+                  { textAlign: "right", fontSize: getFontSize(16) },
+                ]}
+              >
+                {`${parseInt(latitudeGga.substring(0, 2))}° ${parseInt(
+                  latitudeGga.substring(2, 4)
+                )}' ${(
+                  parseFloat(latitudeGga.substring(4, latitudeGga.length - 1)) *
+                  60
+                ).toFixed(2)}" ${latitudeGga.slice(-1)}`}
+              </Text>
+              <Text
+                style={[
+                  fonts[400],
+                  fonts.typography,
+                  { textAlign: "right", fontSize: getFontSize(16) },
+                ]}
+              >
+                {`${parseInt(longitudeGga.substring(0, 3))}° ${parseInt(
+                  longitudeGga.substring(3, 5)
+                )}' ${(
+                  parseFloat(
+                    longitudeGga.substring(5, longitudeGga.length - 1)
+                  ) * 60
+                ).toFixed(2)}" ${longitudeGga.slice(-1)}`}
+              </Text>
             </View>
-            <HalfCutCircle number={rateOfTurnHerot} />
             <Text
               style={[
                 fonts[600],
                 fonts.typography,
-                gutters.marginTop_10,
-                {
-                  fontFamily: "NotoSans-Regular",
-                  fontSize: getFontSize(16),
-                },
+                { textAlign: "right", fontSize: getFontSize(22) },
+                gutters.marginLeft_5,
               ]}
             >
-              ROT
+              GPS
+            </Text>
+          </View>
+
+          {/*  */}
+
+          <View
+            style={[
+              layout.row,
+              layout.itemsCenter,
+              layout.fullWidth,
+              { height: calculateHeight(72) },
+            ]}
+          >
+            <View
+              style={[
+                layout.fullHeight,
+                layout.justifyCenter,
+                { width: calculateWidth(225) },
+              ]}
+            >
+              <Text
+                style={[
+                  fonts[400],
+                  fonts.typography,
+                  { textAlign: "right", fontSize: getFontSize(16) },
+                ]}
+              >
+                {utcTimeZda.substring(0, 2)}:{utcTimeZda.substring(2, 4)}:
+                {utcTimeZda.substring(4, 6)}
+              </Text>
+              <Text
+                style={[
+                  fonts[400],
+                  fonts.typography,
+                  { textAlign: "right", fontSize: getFontSize(16) },
+                ]}
+              >
+                {dayZda}.
+                {
+                  [
+                    "Jan",
+                    "Feb",
+                    "Mar",
+                    "Apr",
+                    "May",
+                    "Jun",
+                    "Jul",
+                    "Aug",
+                    "Sep",
+                    "Oct",
+                    "Nov",
+                    "Dec",
+                  ][parseInt(monthZda, 10) - 1]
+                }
+                .{yearZda}
+              </Text>
+            </View>
+
+            <Text
+              style={[
+                fonts[600],
+                fonts.typography,
+                { textAlign: "right", fontSize: getFontSize(22) },
+                gutters.marginLeft_5,
+              ]}
+            >
+              UTC
+            </Text>
+          </View>
+
+          {/*  */}
+
+          <View
+            style={[
+              layout.row,
+              layout.itemsCenter,
+              layout.fullWidth,
+
+              { height: calculateHeight(72) },
+            ]}
+          >
+            <View
+              style={[
+                layout.fullHeight,
+                layout.justifyCenter,
+                { width: calculateWidth(225) },
+              ]}
+            >
+              <Text
+                style={[
+                  // fonts.size_24,
+                  fonts[400],
+                  fonts.typography,
+                  { textAlign: "right", fontSize: getFontSize(16) },
+                ]}
+              >
+                GPS Q.IND
+              </Text>
+              <Text
+                style={[
+                  // fonts.size_24,
+                  fonts[400],
+                  fonts.typography,
+                  { textAlign: "right", fontSize: getFontSize(16) },
+                ]}
+              >
+                {fixQuality}
+              </Text>
+            </View>
+            <Text
+              style={[
+                fonts[600],
+                fonts.typography,
+                { textAlign: "right", fontSize: getFontSize(22) },
+                gutters.marginLeft_5,
+              ]}
+            >
+              RTK
             </Text>
           </View>
         </View>
-        <View style={[layout.row, layout.fullWidth]}>
-          <View>
-            <View
-              style={[
-                gutters.padding_10,
-                backgrounds.grayBackground,
-                layout.itemsCenter,
-                {
-                  borderRadius: calculateHeight(20),
-                  height: calculateHeight(212),
+      </View>
 
-                  width: calculateWidth(400),
+      <View style={[layout.flex_1, gutters.marginTop_100]}>
+        <View
+          style={[
+            layout.fullWidth,
+            layout.row,
+            gutters.marginBottom_10,
+            ,
+            { gap: calculateWidth(10) },
+          ]}
+        >
+          {chips.map((item, index) => (
+            <Pressable
+              style={[
+                layout.itemsCenter,
+                layout.justifyCenter,
+
+                {
+                  borderWidth: 1,
+                  borderColor:
+                    item.id === selectedChipId ? colors.red : colors.blue,
+                  borderRadius: calculateHeight(6),
+                  width: calculateWidth(110),
+                  height: calculateHeight(34),
                 },
               ]}
+              key={index}
+              onPress={() => {
+                if (item.id == selectedChipId) filteredData = StrArr;
+                else setSelectedChipId(item.id);
+              }}
             >
-              <View style={[layout.flex_1, layout.row]}>
-                <View
-                  style={[
-                    layout.flex_1,
-                    gutters.paddingHorizontal_8,
-                    layout.row,
-                    layout.itemsCenter,
-                    layout.justifyCenter,
-                  ]}
-                >
-                  <Text
-                    style={[
-                      fonts.bold,
-                      fonts.dodgerBlue,
-                      {
-                        fontFamily: "NotoSans-Regular",
-                        fontSize: getFontSize(72),
-                      },
-                    ]}
-                  >
-                    {Math.round(parseFloat(trueHeadingHdt) * 10) / 10 || "--"}°
-                  </Text>
-                </View>
-                <View
-                  style={[
-                    {
-                      height: calculateHeight(77),
-
-                      alignSelf: "center",
-                    },
-                    layout.itemsCenter,
-                    layout.justifyAround,
-                  ]}
-                >
-                  <Text
-                    style={[
-                      fonts[600],
-                      fonts.typography,
-                      {
-                        fontFamily: "NotoSans-Regular",
-                        fontSize: getFontSize(16),
-                      },
-                    ]}
-                  >
-                    HDT
-                  </Text>
-                </View>
-              </View>
-
-              {/*  */}
-              <View style={[layout.flex_1, layout.row]}>
-                <View
-                  style={[
-                    layout.flex_1,
-                    gutters.paddingHorizontal_8,
-                    layout.row,
-                    layout.itemsCenter,
-                    layout.justifyCenter,
-                  ]}
-                >
-                  <Text
-                    style={[
-                      fonts.bold,
-                      fonts.dodgerBlue,
-                      {
-                        fontFamily: "NotoSans-Regular",
-                        fontSize: getFontSize(72),
-                      },
-                    ]}
-                  >
-                    {Math.round(parseFloat(trueTrackDegreesVtg) * 10) / 10 ||
-                      "--"}
-                    °
-                  </Text>
-                </View>
-                <View
-                  style={[
-                    {
-                      height: calculateHeight(77),
-
-                      alignSelf: "center",
-                    },
-                    layout.itemsCenter,
-                    layout.justifyAround,
-                  ]}
-                >
-                  <Text
-                    style={[
-                      fonts[600],
-                      fonts.typography,
-                      {
-                        fontFamily: "NotoSans-Regular",
-                        fontSize: getFontSize(16),
-                      },
-                    ]}
-                  >
-                    COG
-                  </Text>
-                </View>
-              </View>
-            </View>
-
-            {/*  */}
-          </View>
-          {/*  */}
-
-          <View
-            style={[
-              gutters.paddingVertical_15,
-              gutters.paddingHorizontal_10,
-              backgrounds.grayBackground,
-
-              gutters.marginLeft_15,
-              {
-                borderRadius: calculateHeight(20),
-                height: calculateHeight(68),
-              },
-            ]}
-          ></View>
-
-          {/*  */}
-
-          <View
-            style={[
-              gutters.paddingVertical_10,
-              gutters.paddingRight_10,
-              backgrounds.grayBackground,
-              layout.itemsCenter,
-              gutters.marginLeft_10,
-              layout.justifyCenter,
-              {
-                borderRadius: calculateHeight(20),
-                height: calculateHeight(303),
-
-                width: calculateWidth(325),
-                gap: calculateHeight(30),
-              },
-            ]}
-          >
-            {/*  */}
-
-            <View
-              style={[
-                layout.row,
-                layout.itemsCenter,
-                layout.fullWidth,
-                { height: calculateHeight(72) },
-              ]}
-            >
-              <View
-                style={[
-                  layout.fullHeight,
-                  layout.justifyCenter,
-                  { width: calculateWidth(225) },
-                ]}
-              >
-                <Text
-                  style={[
-                    fonts[400],
-                    fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(16) },
-                  ]}
-                >
-                  {`${parseInt(latitudeGga.substring(0, 2))}° ${parseInt(
-                    latitudeGga.substring(2, 4)
-                  )}' ${(
-                    parseFloat(
-                      latitudeGga.substring(4, latitudeGga.length - 1)
-                    ) * 60
-                  ).toFixed(2)}" ${latitudeGga.slice(-1)}`}
-                </Text>
-                <Text
-                  style={[
-                    fonts[400],
-                    fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(16) },
-                  ]}
-                >
-                  {`${parseInt(longitudeGga.substring(0, 3))}° ${parseInt(
-                    longitudeGga.substring(3, 5)
-                  )}' ${(
-                    parseFloat(
-                      longitudeGga.substring(5, longitudeGga.length - 1)
-                    ) * 60
-                  ).toFixed(2)}" ${longitudeGga.slice(-1)}`}
-                </Text>
-              </View>
-              <Text
-                style={[
-                  fonts[600],
-                  fonts.typography,
-                  { textAlign: "right", fontSize: getFontSize(22) },
-                  gutters.marginLeft_5,
-                ]}
-              >
-                GPS
+              <Text style={[fonts.size_12, fonts.blue, fonts[500]]}>
+                {item.name}
               </Text>
-            </View>
-
-            {/*  */}
-
-            <View
-              style={[
-                layout.row,
-                layout.itemsCenter,
-                layout.fullWidth,
-                { height: calculateHeight(72) },
-              ]}
-            >
-              <View
-                style={[
-                  layout.fullHeight,
-                  layout.justifyCenter,
-                  { width: calculateWidth(225) },
-                ]}
-              >
-                <Text
-                  style={[
-                    fonts[400],
-                    fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(16) },
-                  ]}
-                >
-                  {utcTimeZda.substring(0, 2)}:{utcTimeZda.substring(2, 4)}:
-                  {utcTimeZda.substring(4, 6)}
-                </Text>
-                <Text
-                  style={[
-                    fonts[400],
-                    fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(16) },
-                  ]}
-                >
-                  {dayZda}.
-                  {
-                    [
-                      "Jan",
-                      "Feb",
-                      "Mar",
-                      "Apr",
-                      "May",
-                      "Jun",
-                      "Jul",
-                      "Aug",
-                      "Sep",
-                      "Oct",
-                      "Nov",
-                      "Dec",
-                    ][parseInt(monthZda, 10) - 1]
-                  }
-                  .{yearZda}
-                </Text>
-              </View>
-
-              <Text
-                style={[
-                  fonts[600],
-                  fonts.typography,
-                  { textAlign: "right", fontSize: getFontSize(22) },
-                  gutters.marginLeft_5,
-                ]}
-              >
-                UTC
-              </Text>
-            </View>
-
-            {/*  */}
-
-            <View
-              style={[
-                layout.row,
-                layout.itemsCenter,
-                layout.fullWidth,
-
-                { height: calculateHeight(72) },
-              ]}
-            >
-              <View
-                style={[
-                  layout.fullHeight,
-                  layout.justifyCenter,
-                  { width: calculateWidth(225) },
-                ]}
-              >
-                <Text
-                  style={[
-                    // fonts.size_24,
-                    fonts[400],
-                    fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(16) },
-                  ]}
-                >
-                  GPS Q.IND
-                </Text>
-                <Text
-                  style={[
-                    // fonts.size_24,
-                    fonts[400],
-                    fonts.typography,
-                    { textAlign: "right", fontSize: getFontSize(16) },
-                  ]}
-                >
-                  {fixQuality}
-                </Text>
-              </View>
-              <Text
-                style={[
-                  fonts[600],
-                  fonts.typography,
-                  { textAlign: "right", fontSize: getFontSize(22) },
-                  gutters.marginLeft_5,
-                ]}
-              >
-                RTK
-              </Text>
-            </View>
-          </View>
+            </Pressable>
+          ))}
         </View>
-
-        <View style={[layout.flex_1, gutters.marginTop_100]}>
-          <View
-            style={[
-              layout.fullWidth,
-              layout.row,
-              gutters.marginBottom_10,
-              ,
-              { gap: calculateWidth(10) },
-            ]}
-          >
-            {chips.map((item, index) => (
-              <Pressable
-                style={[
-                  layout.itemsCenter,
-                  layout.justifyCenter,
-
-                  {
-                    borderWidth: 1,
-                    borderColor:
-                      item.id === selectedChipId ? colors.red : colors.blue,
-                    borderRadius: calculateHeight(6),
-                    width: calculateWidth(110),
-                    height: calculateHeight(34),
-                  },
-                ]}
-                key={index}
-                onPress={() => {
-                  if (item.id == selectedChipId) filteredData = StrArr;
-                  else setSelectedChipId(item.id);
-                }}
-              >
-                <Text style={[fonts.size_12, fonts.blue, fonts[500]]}>
-                  {item.name}
-                </Text>
-              </Pressable>
-            ))}
-          </View>
-          <ScrollView
-            ref={scrollViewRef}
-            onContentSizeChange={(contentWidth, contentHeight) => {
-              set_scrollToBottomY(contentHeight);
-              if (!isScrolledUp && autoScrollEnabled && !isDragging) {
-                scrollViewRef.current?.scrollToEnd({ animated: true });
-              }
-            }}
-            style={[
-              {
-                borderWidth: 1,
-                borderColor: colors.blue,
-                borderRadius: calculateHeight(20),
-              },
-            ]}
-            contentContainerStyle={[
-              gutters.paddingLeft_15,
-              gutters.paddingRight_25,
-              gutters.paddingVertical_15,
-            ]}
-            showsVerticalScrollIndicator={false}
-            onScroll={handleScroll}
-            onScrollBeginDrag={handleScrollBeginDrag}
-            onScrollEndDrag={handleScrollEndDrag}
-            scrollEventThrottle={20}
-          >
-            {filteredData.map((item, index) => (
-              <Text
-                key={index}
-                style={[fonts.size_16, fonts.blue, fonts[600], fonts.black]}
-              >
-                {item}
-              </Text>
-            ))}
-          </ScrollView>
-        </View>
+        <ScrollView
+          ref={scrollViewRef}
+          onContentSizeChange={(contentWidth, contentHeight) => {
+            set_scrollToBottomY(contentHeight);
+            if (!isScrolledUp && autoScrollEnabled && !isDragging) {
+              scrollViewRef.current?.scrollToEnd({ animated: true });
+            }
+          }}
+          style={[
+            {
+              borderWidth: 1,
+              borderColor: colors.blue,
+              borderRadius: calculateHeight(20),
+            },
+          ]}
+          contentContainerStyle={[
+            gutters.paddingLeft_15,
+            gutters.paddingRight_25,
+            gutters.paddingVertical_15,
+          ]}
+          showsVerticalScrollIndicator={false}
+          onScroll={handleScroll}
+          onScrollBeginDrag={handleScrollBeginDrag}
+          onScrollEndDrag={handleScrollEndDrag}
+          scrollEventThrottle={20}
+        >
+          {filteredData.map((item, index) => (
+            <Text
+              key={index}
+              style={[fonts.size_16, fonts.blue, fonts[600], fonts.black]}
+            >
+              {item}
+            </Text>
+          ))}
+        </ScrollView>
       </View>
-    </SafeScreen>
+    </View>
+    // </SafeScreen>
   );
 }
 
