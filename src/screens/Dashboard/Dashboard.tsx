@@ -159,10 +159,6 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
   }
 
   const getSocketMessages = (socket: any) => {
-    if (connectionType != "wifi") {
-      setIsModalVisible(true);
-      return;
-    }
     socket.on("message", function (msg, rinfo) {
       if (rinfo.port != "60183") {
       }
@@ -285,19 +281,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
       dispatch(setROTStatus(false));
     });
 
-    console.log("CONNECTION ", internetReachable);
-
-    if (internetReachable == null) {
-      return;
-    } else if (internetReachable == true) {
-      setIsModalVisible(true);
-      return;
-    }
-    if (internetReachable == false) {
-      console.log("INSIDE STATE", internetReachable);
-
-      getSocketMessages(socket);
-    }
+    getSocketMessages(socket);
   }, []);
   const getFontSize = (size: number) => {
     return RFValue(size, 1200);
@@ -376,7 +360,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
   }, []);
 
   return (
-    <SafeScreen>
+    <>
       <View
         style={[
           layout.flex_1,
@@ -919,7 +903,7 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
           </Text>
         </View>
       </CustomModal>
-    </SafeScreen>
+    </>
   );
 }
 
