@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* NetworkingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* NetworkingTests.m */; };
+		00E356F31AD99517003FC87E /* SALSPU100Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SALSPU100Tests.m */; };
 		0350A0F283C5415EABEC6BDF /* NotoSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44CD4272F96D4941B6A62380 /* NotoSans-Italic.ttf */; };
 		050A5CC48C164437A874075B /* NotoSans_Condensed-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 17D0B381D78844719BA6F017 /* NotoSans_Condensed-Italic.ttf */; };
 		058D8A67A1EC4CD681456670 /* NotoSans_ExtraCondensed-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2460AFB36BE441A3ADFC4ED8 /* NotoSans_ExtraCondensed-Medium.ttf */; };
-		0C80B921A6F3F58F76C31292 /* libPods-Networking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-Networking.a */; };
+		0C80B921A6F3F58F76C31292 /* libPods-SALSPU100.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-SALSPU100.a */; };
 		0CEB7EEF267646BC85FE2FF5 /* NotoSans-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C66E7E987AB4663ABF2B11C /* NotoSans-Black.ttf */; };
 		10E5CFB63E954C2BAC2C3F67 /* NotoSans_Condensed-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FCA411AD306B4F2BBA6AA6A9 /* NotoSans_Condensed-SemiBold.ttf */; };
 		129A884B700F4B00B9E1E273 /* NotoSans_SemiCondensed-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AAF5769444DD4D44921FFB1A /* NotoSans_SemiCondensed-Light.ttf */; };
@@ -48,7 +48,7 @@
 		62582F06F57D466DACC77B61 /* NotoSans-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5440870EBAF1419CAB57381C /* NotoSans-LightItalic.ttf */; };
 		6A672BFB36704ED599EE6BBD /* NotoSans_SemiCondensed-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5447D4B413B54AF0A99ED5DA /* NotoSans_SemiCondensed-ExtraBold.ttf */; };
 		6D7ED01DDC074AD2A4CAC932 /* NotoSans_Condensed-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D2B5FDE6FFB2433A9CD57FF2 /* NotoSans_Condensed-Black.ttf */; };
-		7699B88040F8A987B510C191 /* libPods-Networking-NetworkingTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Networking-NetworkingTests.a */; };
+		7699B88040F8A987B510C191 /* libPods-SALSPU100-SALSPU100Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-SALSPU100-SALSPU100Tests.a */; };
 		79BA9EAFA061436BB86DE2AD /* NotoSans-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C97142F737F641FD98084CEC /* NotoSans-MediumItalic.ttf */; };
 		7FE12D0398594915AD5F775C /* NotoSans_Condensed-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 342D595EE1F04BF3B7255FE0 /* NotoSans_Condensed-ExtraBold.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -94,29 +94,29 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = Networking;
+			remoteInfo = SALSPU100;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* NetworkingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetworkingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* SALSPU100Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SALSPU100Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* NetworkingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkingTests.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* SALSPU100Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SALSPU100Tests.m; sourceTree = "<group>"; };
 		02B1BFF847814D159FFC7656 /* NotoSans-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-Medium.ttf"; path = "../src/theme/assets/fonts/NotoSans-Medium.ttf"; sourceTree = "<group>"; };
 		03CCAAD4058442BC99687C61 /* NotoSans_ExtraCondensed-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_ExtraCondensed-LightItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans_ExtraCondensed-LightItalic.ttf"; sourceTree = "<group>"; };
-		04D944832B7168AD00FBC15E /* Networking.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Networking.entitlements; path = Networking/Networking.entitlements; sourceTree = "<group>"; };
+		04D944832B7168AD00FBC15E /* SALSPU100.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = SALSPU100.entitlements; path = SALSPU100/SALSPU100.entitlements; sourceTree = "<group>"; };
 		068A942DBADF4596BB0987F3 /* NotoSans_SemiCondensed-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_SemiCondensed-ThinItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans_SemiCondensed-ThinItalic.ttf"; sourceTree = "<group>"; };
 		0BD1FFD0210E47159C705E59 /* NotoSans_ExtraCondensed-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_ExtraCondensed-Black.ttf"; path = "../src/theme/assets/fonts/NotoSans_ExtraCondensed-Black.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Networking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Networking.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Networking/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Networking/AppDelegate.mm; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Networking/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Networking/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Networking/main.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* SALSPU100.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SALSPU100.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = SALSPU100/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = SALSPU100/AppDelegate.mm; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SALSPU100/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SALSPU100/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SALSPU100/main.m; sourceTree = "<group>"; };
 		178895C563E140C6B8AFF95E /* NotoSans-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-SemiBoldItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		17D0B381D78844719BA6F017 /* NotoSans_Condensed-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_Condensed-Italic.ttf"; path = "../src/theme/assets/fonts/NotoSans_Condensed-Italic.ttf"; sourceTree = "<group>"; };
 		18EA9FC8864B4DE6876A83B3 /* NotoSans-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-ExtraBoldItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
-		19F6CBCC0A4E27FBF8BF4A61 /* libPods-Networking-NetworkingTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Networking-NetworkingTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		19F6CBCC0A4E27FBF8BF4A61 /* libPods-SALSPU100-SALSPU100Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SALSPU100-SALSPU100Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A8A29B03FA140878508F440 /* NotoSans_SemiCondensed-Black.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_SemiCondensed-Black.ttf"; path = "../src/theme/assets/fonts/NotoSans_SemiCondensed-Black.ttf"; sourceTree = "<group>"; };
 		1A8F1B3EBA6C473AA3CABC2D /* NotoSans_Condensed-BoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_Condensed-BoldItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans_Condensed-BoldItalic.ttf"; sourceTree = "<group>"; };
 		1B71E0F555C3458D8C958E1C /* NotoSans_SemiCondensed-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_SemiCondensed-SemiBoldItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans_SemiCondensed-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 		342D595EE1F04BF3B7255FE0 /* NotoSans_Condensed-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_Condensed-ExtraBold.ttf"; path = "../src/theme/assets/fonts/NotoSans_Condensed-ExtraBold.ttf"; sourceTree = "<group>"; };
 		358F55EF5A2E418D97DB17C5 /* NotoSans_ExtraCondensed-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_ExtraCondensed-Italic.ttf"; path = "../src/theme/assets/fonts/NotoSans_ExtraCondensed-Italic.ttf"; sourceTree = "<group>"; };
 		38F4E04254D1446BA22118AE /* NotoSans_SemiCondensed-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_SemiCondensed-ExtraLightItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans_SemiCondensed-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
-		3B4392A12AC88292D35C810B /* Pods-Networking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Networking.debug.xcconfig"; path = "Target Support Files/Pods-Networking/Pods-Networking.debug.xcconfig"; sourceTree = "<group>"; };
+		3B4392A12AC88292D35C810B /* Pods-SALSPU100.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SALSPU100.debug.xcconfig"; path = "Target Support Files/Pods-SALSPU100/Pods-SALSPU100.debug.xcconfig"; sourceTree = "<group>"; };
 		3D8F0B0D8E614CD8BBB8C8E6 /* NotoSans_SemiCondensed-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_SemiCondensed-Regular.ttf"; path = "../src/theme/assets/fonts/NotoSans_SemiCondensed-Regular.ttf"; sourceTree = "<group>"; };
 		3E76A78F94C24F7690A4AE98 /* NotoSans_ExtraCondensed-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_ExtraCondensed-MediumItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans_ExtraCondensed-MediumItalic.ttf"; sourceTree = "<group>"; };
 		42ECDAFF00DC4B119D7106F9 /* NotoSans_SemiCondensed-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_SemiCondensed-ExtraBoldItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans_SemiCondensed-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
@@ -139,12 +139,12 @@
 		5440870EBAF1419CAB57381C /* NotoSans-LightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-LightItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans-LightItalic.ttf"; sourceTree = "<group>"; };
 		5447D4B413B54AF0A99ED5DA /* NotoSans_SemiCondensed-ExtraBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_SemiCondensed-ExtraBold.ttf"; path = "../src/theme/assets/fonts/NotoSans_SemiCondensed-ExtraBold.ttf"; sourceTree = "<group>"; };
 		549C943115974437A5244AA5 /* NotoSans_SemiCondensed-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_SemiCondensed-Medium.ttf"; path = "../src/theme/assets/fonts/NotoSans_SemiCondensed-Medium.ttf"; sourceTree = "<group>"; };
-		5709B34CF0A7D63546082F79 /* Pods-Networking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Networking.release.xcconfig"; path = "Target Support Files/Pods-Networking/Pods-Networking.release.xcconfig"; sourceTree = "<group>"; };
+		5709B34CF0A7D63546082F79 /* Pods-SALSPU100.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SALSPU100.release.xcconfig"; path = "Target Support Files/Pods-SALSPU100/Pods-SALSPU100.release.xcconfig"; sourceTree = "<group>"; };
 		576FDB983C45439A80EA9DAE /* NotoSans_SemiCondensed-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_SemiCondensed-SemiBold.ttf"; path = "../src/theme/assets/fonts/NotoSans_SemiCondensed-SemiBold.ttf"; sourceTree = "<group>"; };
 		599A0EC3D0EE45A28F9B43B9 /* NotoSans-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-ExtraLightItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		5AB17D20969B47EC9B17AE08 /* NotoSans-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-BlackItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans-BlackItalic.ttf"; sourceTree = "<group>"; };
-		5B7EB9410499542E8C5724F5 /* Pods-Networking-NetworkingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Networking-NetworkingTests.debug.xcconfig"; path = "Target Support Files/Pods-Networking-NetworkingTests/Pods-Networking-NetworkingTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5DCACB8F33CDC322A6C60F78 /* libPods-Networking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Networking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B7EB9410499542E8C5724F5 /* Pods-SALSPU100-SALSPU100Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SALSPU100-SALSPU100Tests.debug.xcconfig"; path = "Target Support Files/Pods-SALSPU100-SALSPU100Tests/Pods-SALSPU100-SALSPU100Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		5DCACB8F33CDC322A6C60F78 /* libPods-SALSPU100.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SALSPU100.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E57E0318C7E458DB30BEFEA /* NotoSans_Condensed-ExtraLightItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_Condensed-ExtraLightItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans_Condensed-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
 		69BB68953E9B4B8B93BEBC83 /* NotoSans-ExtraLight.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-ExtraLight.ttf"; path = "../src/theme/assets/fonts/NotoSans-ExtraLight.ttf"; sourceTree = "<group>"; };
 		70636D6FAC1A4252BDA751CA /* NotoSans-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-SemiBold.ttf"; path = "../src/theme/assets/fonts/NotoSans-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -155,8 +155,8 @@
 		7F003F8DE8D94F0188E143EC /* NotoSans_ExtraCondensed-SemiBoldItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_ExtraCondensed-SemiBoldItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans_ExtraCondensed-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		80311D6DCE4C402DA79989CF /* NotoSans_ExtraCondensed-BlackItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_ExtraCondensed-BlackItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans_ExtraCondensed-BlackItalic.ttf"; sourceTree = "<group>"; };
 		807F313D4823458686D70B55 /* NotoSans-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-Light.ttf"; path = "../src/theme/assets/fonts/NotoSans-Light.ttf"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Networking/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		89C6BE57DB24E9ADA2F236DE /* Pods-Networking-NetworkingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Networking-NetworkingTests.release.xcconfig"; path = "Target Support Files/Pods-Networking-NetworkingTests/Pods-Networking-NetworkingTests.release.xcconfig"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SALSPU100/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		89C6BE57DB24E9ADA2F236DE /* Pods-SALSPU100-SALSPU100Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SALSPU100-SALSPU100Tests.release.xcconfig"; path = "Target Support Files/Pods-SALSPU100-SALSPU100Tests/Pods-SALSPU100-SALSPU100Tests.release.xcconfig"; sourceTree = "<group>"; };
 		9DC43E625C63470789DA0899 /* NotoSans_Condensed-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_Condensed-MediumItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans_Condensed-MediumItalic.ttf"; sourceTree = "<group>"; };
 		A0C89E1D4AED49C29FF5C74A /* NotoSans_Condensed-ThinItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_Condensed-ThinItalic.ttf"; path = "../src/theme/assets/fonts/NotoSans_Condensed-ThinItalic.ttf"; sourceTree = "<group>"; };
 		A5312725891844C0B69C2C4B /* NotoSans_ExtraCondensed-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans_ExtraCondensed-Thin.ttf"; path = "../src/theme/assets/fonts/NotoSans_ExtraCondensed-Thin.ttf"; sourceTree = "<group>"; };
@@ -196,7 +196,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7699B88040F8A987B510C191 /* libPods-Networking-NetworkingTests.a in Frameworks */,
+				7699B88040F8A987B510C191 /* libPods-SALSPU100-SALSPU100Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,20 +204,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* libPods-Networking.a in Frameworks */,
+				0C80B921A6F3F58F76C31292 /* libPods-SALSPU100.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* NetworkingTests */ = {
+		00E356EF1AD99517003FC87E /* SALSPU100Tests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* NetworkingTests.m */,
+				00E356F21AD99517003FC87E /* SALSPU100Tests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = NetworkingTests;
+			path = SALSPU100Tests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -228,10 +228,10 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* Networking */ = {
+		13B07FAE1A68108700A75B9A /* SALSPU100 */ = {
 			isa = PBXGroup;
 			children = (
-				04D944832B7168AD00FBC15E /* Networking.entitlements */,
+				04D944832B7168AD00FBC15E /* SALSPU100.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -239,15 +239,15 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = Networking;
+			name = SALSPU100;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				5DCACB8F33CDC322A6C60F78 /* libPods-Networking.a */,
-				19F6CBCC0A4E27FBF8BF4A61 /* libPods-Networking-NetworkingTests.a */,
+				5DCACB8F33CDC322A6C60F78 /* libPods-SALSPU100.a */,
+				19F6CBCC0A4E27FBF8BF4A61 /* libPods-SALSPU100-SALSPU100Tests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -262,9 +262,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* Networking */,
+				13B07FAE1A68108700A75B9A /* SALSPU100 */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* NetworkingTests */,
+				00E356EF1AD99517003FC87E /* SALSPU100Tests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
@@ -278,8 +278,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Networking.app */,
-				00E356EE1AD99517003FC87E /* NetworkingTests.xctest */,
+				13B07F961A680F5B00A75B9A /* SALSPU100.app */,
+				00E356EE1AD99517003FC87E /* SALSPU100Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -366,10 +366,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-Networking.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-Networking.release.xcconfig */,
-				5B7EB9410499542E8C5724F5 /* Pods-Networking-NetworkingTests.debug.xcconfig */,
-				89C6BE57DB24E9ADA2F236DE /* Pods-Networking-NetworkingTests.release.xcconfig */,
+				3B4392A12AC88292D35C810B /* Pods-SALSPU100.debug.xcconfig */,
+				5709B34CF0A7D63546082F79 /* Pods-SALSPU100.release.xcconfig */,
+				5B7EB9410499542E8C5724F5 /* Pods-SALSPU100-SALSPU100Tests.debug.xcconfig */,
+				89C6BE57DB24E9ADA2F236DE /* Pods-SALSPU100-SALSPU100Tests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -377,9 +377,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* NetworkingTests */ = {
+		00E356ED1AD99517003FC87E /* SALSPU100Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "NetworkingTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "SALSPU100Tests" */;
 			buildPhases = (
 				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -393,14 +393,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = NetworkingTests;
-			productName = NetworkingTests;
-			productReference = 00E356EE1AD99517003FC87E /* NetworkingTests.xctest */;
+			name = SALSPU100Tests;
+			productName = SALSPU100Tests;
+			productReference = 00E356EE1AD99517003FC87E /* SALSPU100Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* Networking */ = {
+		13B07F861A680F5B00A75B9A /* SALSPU100 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Networking" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "SALSPU100" */;
 			buildPhases = (
 				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -415,9 +415,9 @@
 			);
 			dependencies = (
 			);
-			name = Networking;
-			productName = Networking;
-			productReference = 13B07F961A680F5B00A75B9A /* Networking.app */;
+			name = SALSPU100;
+			productName = SALSPU100;
+			productReference = 13B07F961A680F5B00A75B9A /* SALSPU100.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -437,7 +437,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Networking" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "SALSPU100" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -450,8 +450,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* Networking */,
-				00E356ED1AD99517003FC87E /* NetworkingTests */,
+				13B07F861A680F5B00A75B9A /* SALSPU100 */,
+				00E356ED1AD99517003FC87E /* SALSPU100Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -570,15 +570,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Networking/Pods-Networking-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SALSPU100/Pods-SALSPU100-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Networking/Pods-Networking-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SALSPU100/Pods-SALSPU100-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Networking/Pods-Networking-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SALSPU100/Pods-SALSPU100-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
@@ -596,7 +596,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Networking-NetworkingTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SALSPU100-SALSPU100Tests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -618,7 +618,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Networking-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-SALSPU100-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -631,15 +631,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Networking-NetworkingTests/Pods-Networking-NetworkingTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SALSPU100-SALSPU100Tests/Pods-SALSPU100-SALSPU100Tests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Networking-NetworkingTests/Pods-Networking-NetworkingTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SALSPU100-SALSPU100Tests/Pods-SALSPU100-SALSPU100Tests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Networking-NetworkingTests/Pods-Networking-NetworkingTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SALSPU100-SALSPU100Tests/Pods-SALSPU100-SALSPU100Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
@@ -648,15 +648,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Networking/Pods-Networking-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SALSPU100/Pods-SALSPU100-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Networking/Pods-Networking-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SALSPU100/Pods-SALSPU100-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Networking/Pods-Networking-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SALSPU100/Pods-SALSPU100-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
@@ -665,15 +665,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Networking-NetworkingTests/Pods-Networking-NetworkingTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SALSPU100-SALSPU100Tests/Pods-SALSPU100-SALSPU100Tests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Networking-NetworkingTests/Pods-Networking-NetworkingTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SALSPU100-SALSPU100Tests/Pods-SALSPU100-SALSPU100Tests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Networking-NetworkingTests/Pods-Networking-NetworkingTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SALSPU100-SALSPU100Tests/Pods-SALSPU100-SALSPU100Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -702,7 +702,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* NetworkingTests.m in Sources */,
+				00E356F31AD99517003FC87E /* SALSPU100Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,7 +720,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* Networking */;
+			target = 13B07F861A680F5B00A75B9A /* SALSPU100 */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -728,7 +728,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-Networking-NetworkingTests.debug.xcconfig */;
+			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-SALSPU100-SALSPU100Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = HW9F5C8ZMT;
@@ -736,7 +736,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = NetworkingTests/Info.plist;
+				INFOPLIST_FILE = SALSPU100Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -750,18 +750,18 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.networking.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Networking.app/Networking";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SALSPU100.app/SALSPU100";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-Networking-NetworkingTests.release.xcconfig */;
+			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-SALSPU100-SALSPU100Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = HW9F5C8ZMT;
-				INFOPLIST_FILE = NetworkingTests/Info.plist;
+				INFOPLIST_FILE = SALSPU100Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -775,21 +775,22 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.networking.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Networking.app/Networking";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SALSPU100.app/SALSPU100";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-Networking.debug.xcconfig */;
+			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-SALSPU100.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Networking/Networking.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SALSPU100/SALSPU100.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HW9F5C8ZMT;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = Networking/Info.plist;
+				INFOPLIST_FILE = SALSPU100/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "SAL SPU-100";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -801,7 +802,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.networking.app;
-				PRODUCT_NAME = Networking;
+				PRODUCT_NAME = SALSPU100;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -811,14 +812,15 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-Networking.release.xcconfig */;
+			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-SALSPU100.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Networking/Networking.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SALSPU100/SALSPU100.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HW9F5C8ZMT;
-				INFOPLIST_FILE = Networking/Info.plist;
+				INFOPLIST_FILE = SALSPU100/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "SAL SPU-100";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -830,7 +832,7 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.networking.app;
-				PRODUCT_NAME = Networking;
+				PRODUCT_NAME = SALSPU100;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1000,7 +1002,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "NetworkingTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "SALSPU100Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -1009,7 +1011,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Networking" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "SALSPU100" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -1018,7 +1020,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Networking" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "SALSPU100" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
