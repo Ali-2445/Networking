@@ -1,4 +1,4 @@
-package com.networking;
+package com.smartmarine.spu100;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

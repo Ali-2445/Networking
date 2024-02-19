@@ -73,9 +73,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.networking"
+    namespace "com.smartmarine.spu100"
     defaultConfig {
-        applicationId "com.networking"
+        applicationId "com.smartmarine.spu100"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
