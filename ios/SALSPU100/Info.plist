@@ -60,7 +60,6 @@
 	<string>We need access to Wi-Fi information for getting SSID</string>
 	<key>Privacy - Location Always and When In Use Usage Description</key>
 	<string>$(PRODUCT_NAME) needs access to your Location for connecting Wifi and getting SSID.</string>
-
 	<key>UIAppFonts</key>
 	<array>
 		<string>NotoSans-Black.ttf</string>
@@ -151,16 +150,9 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UISupportedInterfaceOrientations</key>
-<array>
-    <string>UIInterfaceOrientationPortrait</string> 
-</array>
-
 	<key>com.apple.developer.networking.HotspotConfiguration</key>
 	<true/>
 	<key>com.apple.developer.networking.wifi-info</key>
