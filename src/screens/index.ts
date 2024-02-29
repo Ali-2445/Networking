@@ -8,3 +8,4 @@ export { default as LogsScreen } from "./Logs/Logs";
 export { default as Dashboard } from "./Dashboard/Dashboard";
 export { default as ScanQrPage } from "./DevicePage/ScanQrPage";
 export { default as Status } from "./Status/Status";
+export { default as Error } from "./Error/Error";

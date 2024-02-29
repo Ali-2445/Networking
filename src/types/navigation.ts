@@ -13,6 +13,7 @@ export type ApplicationStackParamList = {
   Commisssioning: undefined;
   ScanQr: undefined;
   Status: undefined;
+  Error: undefined;
 };
 
 export type ApplicationScreenProps =

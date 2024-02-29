@@ -16,11 +16,17 @@ import CustomModal from "@/components/molecules/Modal/Modal";
 import Amp from "@/theme/assets/images/amp.png";
 import { request, PERMISSIONS } from "react-native-permissions";
 import { storage } from "@/App";
+import { LocationPermission } from "@/theme/utils";
+import WifiManager from "react-native-wifi-reborn";
+import { useDispatch, useSelector } from "react-redux";
+import { updateRouterName } from "@/redux/slices/NetInfo.slice";
 
 type PermissionStep = "storage" | "camera" | "notification";
 
 function Welcome({ navigation }: ApplicationScreenProps) {
+  const dispatch = useDispatch();
   const { layout, gutters, fonts, backgrounds } = useTheme();
+  const { routerName } = useSelector((state: any) => state.netInfo);
   const { t } = useTranslation(["startup"]);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -31,6 +37,19 @@ function Welcome({ navigation }: ApplicationScreenProps) {
     setPermissionStep(step);
     setIsModalVisible(true);
   };
+
+  useEffect(() => {
+    LocationPermission().then(() => {
+      WifiManager.getCurrentWifiSSID().then(
+        (ssid) => {
+          dispatch(updateRouterName(ssid));
+        },
+        (err) => {
+          console.log("Error : ", err);
+        }
+      );
+    });
+  }, []);
   /* useEffect(() => {
     const socket = dgram.createSocket('udp4')
     socket.bind(17608)
@@ -288,7 +307,13 @@ console.log('sssss')
               marginBottom: calculateHeight(68),
             },
           ]}
-          onPress={() => navigation.navigate("DrawerNavigator")}
+          onPress={() => {
+            if (!routerName.toLowerCase().startsWith("spu100")) {
+              navigation.navigate("Error");
+            } else {
+              navigation.navigate("DrawerNavigator");
+            }
+          }}
         />
       </View>
     </View>
