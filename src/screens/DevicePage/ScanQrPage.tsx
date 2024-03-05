@@ -35,7 +35,8 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
   const { hasPermission, requestPermission } = useCameraPermission();
   const device = useCameraDevice("back");
   const [isScanned, setIsScanned] = useState(false);
-  const [isConnected, setIsConnected] = useState(true);
+  const [isConnected, setIsConnected] = useState(false);
+  const [isInternetReachable, setIsInternetReachable] = useState(false);
 
   const codeScanner = useCodeScanner({
     codeTypes: ["qr", "ean-13"],
@@ -101,40 +102,50 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
     password: string | null,
     isHidden: boolean
   ) => {
-    // if (ssid.startsWith("spu100")) {
-    WifiManager.getCurrentWifiSSID().then(
-      (ssid) => {
-        WifiManager.disconnectFromSSID(ssid);
-      },
-      () => {
-        console.log("Cannot get current SSID!");
-      }
-    );
-    await WifiManager.connectToProtectedSSID(ssid, password, false, false).then(
-      () => {
-        dispatch(updateRouterName(ssid));
-        navigation.navigate("Dashboard");
-      },
-      (err) => {
-        console.log("Connection failed!");
-      }
-    );
-    // } else {
-    //   setIsScanned(true);
+    if (ssid.toLowerCase().startsWith("spu100")) {
+      WifiManager.getCurrentWifiSSID().then(
+        (ssid) => {
+          WifiManager.disconnectFromSSID(ssid);
+        },
+        () => {
+          console.log("Cannot get current SSID!");
+        }
+      );
+      await WifiManager.connectToProtectedSSID(
+        ssid,
+        password,
+        false,
+        false
+      ).then(
+        () => {
+          setIsConnected(true);
+          setIsScanned(true);
+          dispatch(updateRouterName(ssid));
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "DrawerNavigator" }],
+          });
+        },
+        (err) => {
+          console.log("Connection failed!");
+        }
+      );
+    } else {
+      setIsScanned(true);
 
-    //   Alert.alert(
-    //     "Alert",
-    //     "Please scan the correct QR code of Wifi Starting with SPU100",
-    //     [
-    //       {
-    //         text: "Cancel",
-    //         onPress: () => setIsScanned(false),
-    //         style: "cancel",
-    //       },
-    //       { text: "OK", onPress: () => setIsScanned(false) },
-    //     ]
-    //   );
-    // }
+      Alert.alert(
+        "Alert",
+        "Please scan the correct QR code of Wifi Starting with SPU100",
+        [
+          {
+            text: "Cancel",
+            onPress: () => setIsScanned(false),
+            style: "cancel",
+          },
+          { text: "OK", onPress: () => setIsScanned(false) },
+        ]
+      );
+    }
   };
 
   const onBack = () => {
@@ -143,9 +154,16 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
 
   const Continue = () => {
     if (isConnected) {
-      navigation.navigate("Dashboard");
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "DrawerNavigator" }],
+      });
     } else {
-      Alert.alert("Please connect to the internet");
+      if (!isInternetReachable) {
+        Alert.alert("Please connect to the internet");
+      } else {
+        Alert.alert("Please connect to the SPU Wifi");
+      }
     }
   };
 
@@ -169,7 +187,7 @@ function ScanQrPage({ navigation }: ApplicationScreenProps) {
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener((state) => {
-      setIsConnected(state.isInternetReachable);
+      setIsInternetReachable(state.isInternetReachable);
     });
 
     return () => unsubscribe();

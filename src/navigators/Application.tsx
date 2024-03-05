@@ -65,7 +65,7 @@ function ApplicationNavigator() {
             headerStyle: {
               backgroundColor: colors.blue,
             },
-            headerLeft: () => null,
+            headerLeftLabelVisible: false,
             headerTitleStyle: { fontSize: RFValue(14, 900), fontWeight: "700" },
           }}
         />

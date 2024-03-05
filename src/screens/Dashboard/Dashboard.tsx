@@ -9,7 +9,7 @@ import type { ApplicationScreenProps } from "@/types/navigation";
 import { Image, View, Text, Pressable, Linking } from "react-native";
 import { calculateHeight, calculateWidth } from "@/theme/utils";
 import CustomPicker from "@/components/molecules/Select/Select";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { RFValue } from "react-native-responsive-fontsize";
 import HalfCutCircle from "@/theme/assets/svgs/halfCutCircle";
 import { ScrollView } from "react-native-gesture-handler";
@@ -158,6 +158,17 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
     }
   }
 
+  function checkNullValues(inputString: string) {
+    const values = inputString.split(",");
+    var nullNotFound = true;
+    for (let value of values) {
+      if (value.trim() === "") {
+        nullNotFound = false;
+      }
+    }
+    return nullNotFound;
+  }
+
   const getSocketMessages = (socket: any) => {
     socket.on("message", function (msg, rinfo) {
       if (rinfo.port != "60183") {
@@ -189,23 +200,6 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
         dispatch(fetchUdpData(str));
         stringArr.push(str);
 
-        dispatch(
-          setHDTStatus(stringArr.some((string) => string.includes("$GNHDT")))
-        );
-        dispatch(
-          setGPSStatus(
-            stringArr.some((string) => string.includes("$G" || "$GNHDT"))
-          )
-        );
-        dispatch(
-          setPTMStatus(stringArr.some((string) => string.includes("$PTM")))
-        );
-        dispatch(
-          setAISStatus(stringArr.some((string) => string.includes("!AIV")))
-        );
-        dispatch(
-          setROTStatus(stringArr.some((string) => string.includes("$HEROT")))
-        );
         switch (parts[0]) {
           case "$GNGGA":
             setUtcTimeGga(parts[1]);
@@ -350,15 +344,59 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
   const getRandomNumber = () =>
     Math.floor(Math.random() * (60 - -60 + 1)) + -60;
 
+  var checkHDT: boolean;
+  var checkGPS: boolean;
+  var checkAIS: boolean;
+
+  var checkROT: boolean;
+
+  var checkPTM: boolean;
+
+  const updateStatus = useMemo(() => {
+    StrArr.map((item, index) => {
+      if (item.includes("$GNHDT")) {
+        checkHDT = checkNullValues(item);
+        if (checkHDT == false) {
+          return;
+        }
+      } else if (item.includes("$G" || "$GNHDT")) {
+        checkGPS = checkNullValues(item);
+        if (checkGPS == false) {
+          return;
+        }
+      } else if (item.includes("!AIV")) {
+        checkAIS = checkNullValues(item);
+        if (checkAIS == false) {
+          return;
+        }
+      } else if (item.includes("$HEROT")) {
+        checkROT = checkNullValues(item);
+        if (checkROT == false) {
+          return;
+        }
+      } else if (item.includes("$PTM")) {
+        checkPTM = checkNullValues(item);
+        if (checkPTM == false) {
+          return;
+        }
+      }
+    });
+    dispatch(setHDTStatus(checkHDT));
+    dispatch(setGPSStatus(checkGPS));
+    dispatch(setPTMStatus(checkPTM));
+    dispatch(setAISStatus(checkAIS));
+    dispatch(setROTStatus(checkROT));
+  }, [StrArr]);
+
   useEffect(() => {
     getWifiInfo();
+    // updateStatus();
     const updateState = () => {
       setNumber(getRandomNumber());
     };
     const intervalId = setInterval(updateState, 1000);
     return () => clearInterval(intervalId);
   }, []);
-
   return (
     <>
       <View

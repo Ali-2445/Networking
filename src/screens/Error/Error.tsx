@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, View, StatusBar } from "react-native";
 import { useTranslation } from "react-i18next";
 
 import { useTheme } from "@/theme";
@@ -10,14 +10,18 @@ import { calculateHeight, calculateWidth } from "@/theme/utils";
 import ASL from "@/theme/assets/svgs/ASL";
 import Button from "@/components/molecules/Button/Button";
 import Fan from "@/theme/assets/images/Fan.png";
-import { Input } from "@/components/molecules";
-import { useQuery } from "@tanstack/react-query";
+import { useNavigation } from "@react-navigation/native";
 
 function Error({ navigation }: ApplicationScreenProps) {
+  const { navigate } = useNavigation();
   const { layout, gutters, fonts, backgrounds, colors } = useTheme();
 
+  const onScanPress = () => {
+    navigate("ScanQr");
+  };
   return (
     <SafeScreen>
+      <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
       <View style={[layout.flex_1, backgrounds.offWhite]}>
         <Image
           source={Fan}
@@ -60,6 +64,15 @@ function Error({ navigation }: ApplicationScreenProps) {
               You are not connected to the device, make sure you are connected
               to the SPU-100 device first.
             </Text>
+          </View>
+          <View
+            style={[
+              { alignItems: "center", justifyContent: "center" },
+              layout.fullWidth,
+              gutters.marginTop_15,
+            ]}
+          >
+            <Button text={"Scan QR Code"} onPress={onScanPress} />
           </View>
         </View>
       </View>
