@@ -22,12 +22,27 @@ function ApplicationNavigator() {
   const dispatch = useDispatch();
   const { routerName } = useSelector((state: any) => state.netInfo);
   const { variant, navigationTheme, colors } = useTheme();
+  const [initialRoutee, setRoute] = useState(null);
 
   useEffect(() => {
     LocationPermission().then(() => {
       WifiManager.getCurrentWifiSSID().then(
         (ssid) => {
           dispatch(updateRouterName(ssid));
+          let initialRoute =
+            storage.getBoolean("firstTime") == false
+              ? "DrawerNavigator"
+              : "Welcome";
+          if (initialRoute === "DrawerNavigator") {
+            if (!ssid.toLowerCase().startsWith("spu100")) {
+              initialRoute = "Error";
+            } else {
+              initialRoute = "DrawerNavigator";
+            }
+
+            setRoute(initialRoute);
+          }
+          setRoute(initialRoute);
         },
         (err) => {
           console.log("Error : ", err);
@@ -36,19 +51,15 @@ function ApplicationNavigator() {
     });
   }, []);
 
-  let initialRoute =
-    storage.getBoolean("firstTime") == false ? "DrawerNavigator" : "Welcome";
-  if (initialRoute === "DrawerNavigator") {
-    if (!routerName.toLowerCase().startsWith("spu100")) {
-      initialRoute = "Error";
-    }
+  if (initialRoutee == null) {
+    return null;
   }
   return (
     <NavigationContainer theme={navigationTheme}>
       <Stack.Navigator
         key={variant}
         screenOptions={{ headerShown: false }}
-        initialRouteName={initialRoute}
+        initialRouteName={initialRoutee}
       >
         <Stack.Screen name="Welcome" component={Welcome} />
         <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} />
