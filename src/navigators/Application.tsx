@@ -35,7 +35,8 @@ function ApplicationNavigator() {
               : "Welcome";
           if (initialRoute === "DrawerNavigator") {
             if (!ssid.toLowerCase().startsWith("spu100")) {
-              initialRoute = "Error";
+              // initialRoute = "Error";
+              initialRoute = "DrawerNavigator";
             } else {
               initialRoute = "DrawerNavigator";
             }

@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Text, View } from "react-native";
+import { Text, View, Switch } from "react-native";
 
 import { useTheme } from "@/theme";
 
 import type { ApplicationScreenProps } from "@/types/navigation";
 import { calculateHeight, calculateWidth } from "@/theme/utils";
 import { useSelector } from "react-redux";
+import { Input } from "@/components/molecules";
+import Button from "@/components/molecules/Button/Button";
+import { saveValue, getValue } from "@/theme/utils";
 
 function Status({ navigation }: ApplicationScreenProps) {
   const { layout, gutters, fonts, backgrounds, colors } = useTheme();
@@ -19,6 +22,26 @@ function Status({ navigation }: ApplicationScreenProps) {
     vendorId,
   } = useSelector((state) => state.udpSlice);
   const { routerName, serialNumber } = useSelector((state) => state.netInfo);
+
+  const [isEnabled, setIsEnabled] = useState(false);
+
+  const onToggle = () => {
+    saveValue("scanEnabled", !isEnabled);
+    setIsEnabled(!isEnabled);
+  };
+
+  const getScanValue = async () => {
+    const value = getValue("scanEnabled");
+    if (value === null) {
+      saveValue("scanEnabled", false);
+    } else {
+      setIsEnabled(value);
+    }
+  };
+
+  useEffect(() => {
+    getScanValue();
+  }, []);
 
   return (
     <View
@@ -243,6 +266,64 @@ function Status({ navigation }: ApplicationScreenProps) {
                 borderRadius: 100,
               },
             ]}
+          />
+        </View>
+
+        <View
+          style={[
+            gutters.marginTop_10,
+            layout.itemsCenter,
+            layout.row,
+            gutters.marginTop_30,
+          ]}
+        >
+          <Text
+            style={[
+              fonts[400],
+              fonts.size_20,
+              fonts.typography,
+              fonts[600],
+              gutters.marginRight_25,
+            ]}
+          >
+            QR Scan Function
+          </Text>
+          <Switch
+            trackColor={{ false: "#767577", true: colors.blue }}
+            thumbColor={isEnabled ? "#fff" : "#f4f3f4"}
+            ios_backgroundColor="#3e3e3e"
+            onValueChange={onToggle}
+            value={isEnabled}
+          />
+        </View>
+
+        <View
+          style={[
+            gutters.marginTop_10,
+            layout.itemsCenter,
+            layout.row,
+            gutters.marginTop_30,
+            gutters.paddingRight_10,
+            { gap: calculateWidth(10) },
+          ]}
+        >
+          <Text
+            style={[
+              fonts[400],
+              fonts.size_20,
+              fonts.typography,
+              fonts[600],
+              // layout.flex_1,
+            ]}
+          >
+            Heading Offset
+          </Text>
+          <Input
+            containerStyles={{ borderRadius: 5, width: calculateWidth(360) }}
+          />
+          <Button
+            text="Set"
+            containerStyle={{ width: calculateWidth(160), borderRadius: 5 }}
           />
         </View>
       </View>

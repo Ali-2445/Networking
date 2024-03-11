@@ -1,8 +1,8 @@
 import { Dimensions, Platform, PixelRatio } from "react-native";
 import { PERMISSIONS, request } from "react-native-permissions";
 
-import NetInfo from "@react-native-community/netinfo";
 import WifiManager from "react-native-wifi-reborn";
+import { MMKV } from "react-native-mmkv";
 
 const screenHeight = Dimensions.get("window").height;
 const screenWidth = Dimensions.get("window").width;
@@ -53,6 +53,16 @@ const isTablet = () => {
     );
 };
 
+const saveValue = (key: string, value: string | boolean) => {
+  const storage = new MMKV();
+  storage.set(key, value);
+};
+
+const getValue = (key: string) => {
+  const storage = new MMKV();
+  return storage.getBoolean(key);
+};
+
 export {
   calculateHeight,
   calculateWidth,
@@ -60,4 +70,6 @@ export {
   LocationPermission,
   getWifiSSID,
   isTablet,
+  saveValue,
+  getValue,
 };

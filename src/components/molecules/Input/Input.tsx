@@ -53,7 +53,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
           value={value || localValue}
           onChangeText={(value) => {
             setValue(value);
-            onChnageText(value);
+            // onChnageText(value);
           }}
           cellCount={6}
           rootStyle={styles.codeFieldRoot}
