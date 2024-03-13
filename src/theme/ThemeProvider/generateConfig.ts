@@ -1,10 +1,7 @@
 import { config } from '@/theme/_config';
 import { hasProperty } from '@/types/guards/theme';
 
-import type {
-	FulfilledThemeConfiguration,
-	Variant,
-} from '@/types/theme/config';
+import type { Variant } from '@/types/theme/config';
 
 export default (variant: Variant) => {
 	const { variants, ...defaultConfig } = config;
@@ -34,11 +31,12 @@ export default (variant: Variant) => {
 			? variantConfig.navigationColors
 			: {}),
 	};
+
 	const colors = {
-		...defaultConfig.colors,
-		...(variantConfig && hasProperty(variantConfig, 'colors')
-			? variantConfig.colors
-			: {}),
+		...fontColors,
+		...backgroundColors,
+		...borderColors,
+		...navigationColors,
 	};
 
 	return {
@@ -55,5 +53,5 @@ export default (variant: Variant) => {
 			colors: borderColors,
 		},
 		navigationColors,
-	} as const satisfies FulfilledThemeConfiguration;
+	} as const;
 };

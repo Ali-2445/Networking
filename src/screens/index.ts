@@ -1,2 +1,11 @@
-export { default as Startup } from './Startup/Startup';
-export { default as Example } from './Example/Example';
+export { default as Startup } from "./Startup/Startup";
+export { default as Example } from "./Example/Example";
+export { default as Welcome } from "./Welcome/Welcome";
+export { default as DevicePage } from "./DevicePage/DevicePage";
+export { default as Login } from "./Login/Login";
+export { default as TwoFactor } from "./Login/TwoFactor";
+export { default as LogsScreen } from "./Logs/Logs";
+export { default as Dashboard } from "./Dashboard/Dashboard";
+export { default as ScanQrPage } from "./DevicePage/ScanQrPage";
+export { default as Status } from "./Status/Status";
+export { default as Error } from "./Error/Error";
