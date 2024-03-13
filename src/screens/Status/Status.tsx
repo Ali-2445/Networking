@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Switch } from "react-native";
+import { Text, View, Switch,ScrollView } from "react-native";
 
 import { useTheme } from "@/theme";
 
@@ -62,6 +62,11 @@ function Status({ navigation }: ApplicationScreenProps) {
   }, []);
 
   return (
+    <ScrollView
+    style={[layout.flex_1, backgrounds.offWhite]}
+    showsVerticalScrollIndicator={false}
+    automaticallyAdjustKeyboardInsets={true}
+  >
     <View
       style={[
         layout.flex_1,
@@ -349,6 +354,7 @@ function Status({ navigation }: ApplicationScreenProps) {
         </View>
       </View>
     </View>
+    </ScrollView>
   );
 }
 

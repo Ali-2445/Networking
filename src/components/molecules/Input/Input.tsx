@@ -43,7 +43,8 @@ const CustomInput: React.FC<CustomInputProps> = ({
   const [propss, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
-  });
+  })
+  console.log("localVal",localValue)
   return (
     <View style={[styles.container]}>
       {phoneVerification ? (
@@ -92,14 +93,14 @@ const CustomInput: React.FC<CustomInputProps> = ({
           <View
             style={[
               styles.inputContainer,
-              { borderColor: colors.blue, elevation: 5 },
+              { borderColor: colors.blue},
               backgrounds.white,
               containerStyles,
             ]}
           >
             {iconLeft && <>{iconLeft}</>}
             <TextInput
-              style={[styles.input, fonts.size_16]}
+              style={[styles.input, fonts.size_16,fonts.black]}
               onChangeText={(value) => {
                 setValue(value);
                 onChangeText(value);
@@ -131,18 +132,17 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flexDirection: "row",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
     borderRadius: calculateWidth(6),
     paddingHorizontal: calculateWidth(14),
     width: calculateWidth(430),
-    paddingVertical: calculateHeight(7),
-    gap: calculateWidth(10),
+    height: calculateHeight(45),
   },
   input: {
     flex: 1,
-    height: calculateHeight(24),
+    // height: calculateHeight(35),
   },
   iconContainer: {
     // padding: 10,

@@ -24,6 +24,7 @@ import ASL from "@/theme/assets/svgs/ASL";
 import Button from "@/components/molecules/Button/Button";
 import Fan from "@/theme/assets/images/Fan.png";
 import { useNavigation } from "@react-navigation/native";
+import { request, PERMISSIONS } from "react-native-permissions";
 
 function Error({ navigation }: ApplicationScreenProps) {
   const { navigate } = useNavigation();
@@ -38,14 +39,25 @@ function Error({ navigation }: ApplicationScreenProps) {
       setQrScanEnabled(value);
     }
   };
+
+  const requestCameraPermission = async () => {
+    const permission =
+      Platform.OS === "ios"
+        ? PERMISSIONS.IOS.CAMERA
+        : PERMISSIONS.ANDROID.CAMERA;
+    const status = await request(permission);
+  };
   const onScanPress = () => {
-    navigate("ScanQr");
+    requestCameraPermission().then(()=>[
+      navigate("ScanQr")
+
+    ])
   };
 
   const onSettingsPress = async () => {
     const wifiUrl =
-      Platform.OS === "ios" ? "App-Prefs:WIFI" : "wifi://settings";
-    const supported = await Linking.canOpenURL(wifiUrl);
+      Platform.OS === "ios" ?Linking.canOpenURL("App-Prefs:WIFI") : Linking.sendIntent("android.settings.WIFI_SETTINGS");
+    const supported = await wifiUrl;
 
     if (supported) {
       await Linking.openURL(wifiUrl);
