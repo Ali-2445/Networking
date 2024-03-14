@@ -7,6 +7,7 @@ import {
   Linking,
   Platform,
   Alert,
+  ScrollView
 } from "react-native";
 import { useTranslation } from "react-i18next";
 
@@ -25,7 +26,9 @@ import Button from "@/components/molecules/Button/Button";
 import Fan from "@/theme/assets/images/Fan.png";
 import { useNavigation } from "@react-navigation/native";
 import { request, PERMISSIONS } from "react-native-permissions";
+import WifiManager from "react-native-wifi-reborn";
 
+import { LocationPermission } from "@/theme/utils";
 function Error({ navigation }: ApplicationScreenProps) {
   const { navigate } = useNavigation();
   const { layout, gutters, fonts, backgrounds, colors } = useTheme();
@@ -66,24 +69,48 @@ function Error({ navigation }: ApplicationScreenProps) {
     }
   };
 
+  const checkForConnection = async () => [
+    LocationPermission().then(() => {
+      WifiManager.getCurrentWifiSSID().then(
+        (ssid) => {
+       
+          if (ssid.toLowerCase().startsWith("spu100")) {
+            navigate("DrawerNavigator");
+          } else {
+            Alert.alert("Error", "You are not connected with SPU Wifi");
+          }
+        
+        },
+        (err) => {
+          Alert.alert("Error", "Can't check wifi ssid");
+          console.log("Error : ", err);
+        }
+      );
+    }),
+  ];
+
   useEffect(() => {
     checkQrEnabled();
   }, []);
   return (
     <SafeScreen>
+      <View style={[layout.flex_1,backgrounds.white]}>
       <StatusBar backgroundColor={colors.white} barStyle="dark-content" />
-      <View style={[layout.flex_1, backgrounds.offWhite]}>
-        <Image
-          source={Fan}
-          style={{
-            height: calculateHeight(900),
-            width: calculateWidth(820),
-            zIndex: -10,
-            tintColor: colors.grayFan,
-            position: "absolute",
-          }}
-          resizeMode="stretch"
-        />
+      <Image
+        source={Fan}
+        style={{
+          height: calculateHeight(900),
+          width: calculateWidth(820),
+          zIndex: -10,
+          tintColor: colors.grayFan,
+          position: "absolute",
+        }}
+        resizeMode="stretch"
+      />
+      <ScrollView
+        style={[layout.flex_1, { backgroundColor: "transparent" }]}
+        contentContainerStyle={[layout.flex_1]}
+      >
         <View style={[layout.flex_1, layout.itemsCenter, layout.justifyCenter]}>
           <View style={[layout.itemsCenter, layout.justifyCenter, layout.row]}>
             <ASL
@@ -140,7 +167,21 @@ function Error({ navigation }: ApplicationScreenProps) {
               containerStyle={{ width: calculateWidth(310) }}
             />
           </View>
+          <View
+            style={[
+              { alignItems: "center", justifyContent: "center" },
+              layout.fullWidth,
+              gutters.marginTop_15,
+            ]}
+          >
+            <Button
+              text={"Check the connection"}
+              onPress={checkForConnection}
+              containerStyle={{ width: calculateWidth(400) }}
+            />
+          </View>
         </View>
+      </ScrollView>
       </View>
     </SafeScreen>
   );
