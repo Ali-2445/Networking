@@ -44,7 +44,6 @@ const CustomInput: React.FC<CustomInputProps> = ({
     value,
     setValue,
   })
-  console.log("localVal",localValue)
   return (
     <View style={[styles.container]}>
       {phoneVerification ? (

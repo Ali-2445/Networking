@@ -158,16 +158,16 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
     }
   }
 
-  function checkNullValues(inputString: string) {
-    const values = inputString.split(",");
-    var nullNotFound = true;
-    for (let value of values) {
-      if (value.trim() === "") {
-        nullNotFound = false;
-      }
-    }
-    return nullNotFound;
-  }
+  // function checkNullValues(inputString: string) {
+  //   const values = inputString.split(",");
+  //   var nullNotFound = true;
+  //   for (let value of values) {
+  //     if (value.trim() === "") {
+  //       nullNotFound = false;
+  //     }
+  //   }
+  //   return nullNotFound;
+  // }
 
   const getOffSetValue = () => {
     var value = getValue("offSetValue", "string");
@@ -349,49 +349,204 @@ function Dashboard({ navigation }: ApplicationScreenProps) {
   const getRandomNumber = () =>
     Math.floor(Math.random() * (60 - -60 + 1)) + -60;
 
-  var checkHDT: boolean;
-  var checkGPS: boolean;
-  var checkAIS: boolean;
+  // var checkHDT: boolean;
+  // var checkGPS: boolean;
+  // var checkAIS: boolean;
 
-  var checkROT: boolean;
+  // var checkROT: boolean;
 
-  var checkPTM: boolean;
+  // var checkPTM: boolean;
 
-  const updateStatus = useMemo(() => {
-    StrArr.map((item, index) => {
-      if (item.includes("$GNHDT")) {
-        checkHDT = checkNullValues(item);
-        if (checkHDT == false) {
-          return;
-        }
-      } else if (item.includes("$G" || "$GNHDT")) {
-        checkGPS = checkNullValues(item);
-        if (checkGPS == false) {
-          return;
-        }
-      } else if (item.includes("!AIV")) {
-        checkAIS = checkNullValues(item);
-        if (checkAIS == false) {
-          return;
-        }
-      } else if (item.includes("$HEROT")) {
-        checkROT = checkNullValues(item);
-        if (checkROT == false) {
-          return;
-        }
-      } else if (item.includes("$PTM")) {
-        checkPTM = checkNullValues(item);
-        if (checkPTM == false) {
-          return;
+  // const updateStatus = useMemo(() => {
+  //   StrArr.map((item, index) => {
+  //     if (item.includes("$GNHDT")) {
+  //       checkHDT = checkNullValues(item);
+  //       if (checkHDT == false) {
+  //         return;
+  //       }
+  //     } else if (item.includes("$G" || "$GNHDT")) {
+  //       checkGPS = checkNullValues(item);
+  //       if (checkGPS == false) {
+  //         return;
+  //       }
+  //     } else if (item.includes("!AIV")) {
+  //       checkAIS = checkNullValues(item);
+  //       if (checkAIS == false) {
+  //         return;
+  //       }
+  //     } else if (item.includes("$HEROT")) {
+  //       checkROT = checkNullValues(item);
+  //       if (checkROT == false) {
+  //         return;
+  //       }
+  //     } else if (item.includes("$PTM")) {
+  //       checkPTM = checkNullValues(item);
+  //       if (checkPTM == false) {
+  //         return;
+  //       }
+  //     }
+  //   });
+  //   dispatch(setHDTStatus(checkHDT));
+  //   dispatch(setGPSStatus(checkGPS));
+  //   dispatch(setPTMStatus(checkPTM));
+  //   dispatch(setAISStatus(checkAIS));
+  //   dispatch(setROTStatus(checkROT));
+  // }, [StrArr]);
+
+
+  // METHOD_1
+  // function checkNullValues(inputString:string, messageType) {
+  //   const values = inputString.split(",");
+  //   if (messageType === "$PTMSG") {
+  //     return values[5].trim() !== "" && values[6].trim() !== "";
+  //   } else {
+  //     for (let value of values) {
+  //       if (value.trim() === "") {
+  //         return false;
+  //       }
+  //     }
+  //   }
+  //   return true;
+  // }
+  
+  
+  // const updateStatus = useMemo(() => {
+  //   let checkHDT = true;
+  //   let checkGPS = true;
+  //   let checkPTM = true;
+  //   let checkAIS = true;
+  //   let checkROT = true;
+  
+  //   StrArr.forEach((item) => {
+  //     if (item.includes("$GNHDT")) {
+  //       checkHDT = checkNullValues(item, "$GNHDT");
+  //     } else if (item.includes("$GNGGA")) {
+  //       checkGPS = checkNullValues(item, "$GNGGA");
+  //     } else if (item.includes("!AIVDM")) {
+  //       checkAIS = checkNullValues(item, "!AIVDM");
+  //     } else if (item.includes("$HEROT")) {
+  //       checkROT = checkNullValues(item, "$HEROT");
+  //     } else if (item.startsWith("$PTMS")) {
+  //       checkPTM = checkNullValues(item, item.split(',')[0]); 
+  //     }
+  //   });
+  
+  //   dispatch(setHDTStatus(checkHDT));
+  //   dispatch(setGPSStatus(checkGPS));
+  //   dispatch(setPTMStatus(checkPTM));
+  //   dispatch(setAISStatus(checkAIS));
+  //   dispatch(setROTStatus(checkROT));
+  // }, [StrArr, dispatch]);
+
+
+  //METHOD_2
+  // function checkNullValues(inputString, messageType) {
+  //   const values = inputString.split(",");
+  //   if (messageType === "$PTMSG") {
+  //     return values[5].trim() !== "" && values[6].trim() !== "";
+  //   } else {
+  //     for (let value of values) {
+  //       if (value.trim() === "") {
+  //         return false;
+  //       }
+  //     }
+  //   }
+  //   return true;
+  // }
+  
+  
+  // const updateStatus = useMemo(() => {
+  //   const lastValid = {
+  //     HDT: null,
+  //     GPS: null,
+  //     PTM: null,
+  //     AIS: null,
+  //     ROT: null,
+  //   };
+  
+  //   const currentTime = new Date().getTime();
+  //   const VALID_DURATION = 1000; 
+  
+  //   StrArr.forEach((item) => {
+  //     if (item.includes("$GNHDT") && checkNullValues(item, "$GNHDT")) {
+  //       lastValid.HDT = currentTime;
+  //     }
+  //     if (item.includes("$GNGGA") && checkNullValues(item, "$GNGGA")) {
+  //       lastValid.GPS = currentTime; 
+  //     }
+  //     if (item.includes("$PTMS") && checkNullValues(item, "$PTMS")) {
+  //       lastValid.PTM = currentTime;
+  //     }
+  //     if (item.includes("!AIVDM") && checkNullValues(item, "!AIVDM")) {
+  //       lastValid.AIS = currentTime;
+  //     }
+  //     if (item.includes("$HEROT") && checkNullValues(item, "$HEROT")) {
+  //       lastValid.ROT = currentTime;
+  //     }
+  //   });
+  
+  //   dispatch(setHDTStatus(currentTime - (lastValid.HDT || 0) < VALID_DURATION));
+  //   dispatch(setGPSStatus(currentTime - (lastValid.GPS || 0) < VALID_DURATION));
+  //   dispatch(setPTMStatus(currentTime - (lastValid.PTM || 0) < VALID_DURATION));
+  //   dispatch(setAISStatus(currentTime - (lastValid.AIS || 0) < VALID_DURATION));
+  //   dispatch(setROTStatus(currentTime - (lastValid.ROT || 0) < VALID_DURATION));
+  // }, [StrArr, dispatch]);
+
+  function checkNullValues(inputString, messageType) {
+    const values = inputString.split(",");
+    if (messageType === "$PTMSG") {
+      return values[5].trim() !== "" && values[6].trim() !== "";
+    } else if (messageType === "$PTMS") {
+      return true;
+    } else {
+      for (let value of values) {
+        if (value.trim() === "") {
+          return false;
         }
       }
+    }
+    return true;
+  }
+  
+  const updateStatus = useMemo(() => {
+    const lastValid = {
+      HDT: null,
+      GPS: null,
+      PTM: null,
+      AIS: null,
+      ROT: null,
+    };
+  
+    const currentTime = new Date().getTime();
+    const VALID_DURATION = 1000; 
+  
+    StrArr.forEach((item) => {
+      if (item.includes("$GNHDT") && checkNullValues(item, "$GNHDT")) {
+        lastValid.HDT = currentTime;
+      }
+      if (item.includes("$GNGGA") && checkNullValues(item, "$GNGGA")) {
+        lastValid.GPS = currentTime; 
+      }
+      if (item.includes("$PTMS") && checkNullValues(item, "$PTMS")) {
+        lastValid.PTM = currentTime;
+      }
+      if (item.includes("!AIVDM") && checkNullValues(item, "!AIVDM")) {
+        lastValid.AIS = currentTime;
+      }
+      if (item.includes("$HEROT") && checkNullValues(item, "$HEROT")) {
+        lastValid.ROT = currentTime;
+      }
     });
-    dispatch(setHDTStatus(checkHDT));
-    dispatch(setGPSStatus(checkGPS));
-    dispatch(setPTMStatus(checkPTM));
-    dispatch(setAISStatus(checkAIS));
-    dispatch(setROTStatus(checkROT));
-  }, [StrArr]);
+  
+    dispatch(setHDTStatus(currentTime - (lastValid.HDT || 0) < VALID_DURATION));
+    dispatch(setGPSStatus(currentTime - (lastValid.GPS || 0) < VALID_DURATION));
+    dispatch(setPTMStatus(currentTime - (lastValid.PTM || 0) < VALID_DURATION));
+    dispatch(setAISStatus(currentTime - (lastValid.AIS || 0) < VALID_DURATION));
+    dispatch(setROTStatus(currentTime - (lastValid.ROT || 0) < VALID_DURATION));
+  }, [StrArr, dispatch]);
+  
+  
+  
 
   useEffect(() => {
     getWifiInfo();
