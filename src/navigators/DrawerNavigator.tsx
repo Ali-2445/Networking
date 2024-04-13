@@ -75,7 +75,6 @@ const DrawerNavigator = () => {
     LocationPermission().then(() => {
       WifiManager.getCurrentWifiSSID().then(
         (ssid) => {
-          console.log("SSID",ssid)
           dispatch(updateRouterName(ssid));
 
           // setInitialRouteName("Dashboard");
